@@ -5,8 +5,7 @@
   },
   "buttons": {
     "login": "Se connecter",
-    "signup": "Créer un compte",
-    "logout": "Déconnexion"
+    "signup": "Créer un compte"
   },
   "hero": {
     "desc": "Medaldex est ton Pokédex des médailles militaires : ajoute, gère et explore ta collection comme jamais auparavant."
@@ -56,14 +55,13 @@
     "username": "Pseudo",
     "changeUsername": "Changer de pseudo",
     "save": "Enregistrer",
-    "changePassword": "Changer le mot de passe",
-    "oldPassword": "Ancien mot de passe",
-    "newPassword": "Nouveau mot de passe",
-    "confirmPassword": "Confirmer le nouveau mot de passe",
     "deleteTitle": "Supprimer le compte",
     "deleteWarning": "Attention : cette action est irréversible et supprimera toutes vos données.",
     "deleteBtn": "Supprimer mon compte",
     "backDashboard": "Retour Dashboard",
+    "name": "Nom",
+    "email": "Email",
+    "password": "Mot de passe",
     "statsTitle": "Statistiques personnelles",
     "exportTitle": "Exporter ma collection",
     "exportCSV": "Exporter en CSV",

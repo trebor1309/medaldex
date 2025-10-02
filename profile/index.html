@@ -1,106 +1,175 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-i18n="profile.title">Mon profil</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
-<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen">
 
-  <!-- Navbar -->
-  <header class="bg-black border-b border-gray-700 p-4 flex justify-between items-center">
-    <a href="/" class="text-xl font-bold text-gray-200" data-i18n="app.title">Medaldex</a>
-    <div class="flex gap-2">
-      <a href="/dashboard/" class="bg-gray-200 text-black px-4 py-2 rounded" data-i18n="profile.backDashboard">Dashboard</a>
-      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+  <!-- Bouton retour -->
+  <a href="/dashboard/" aria-label="Dashboard"
+     class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800">
+    ←
+  </a>
+
+  <div class="max-w-2xl mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-6 text-center" data-i18n="profile.title">Mon profil</h1>
+
+    <!-- Infos utilisateur -->
+    <div class="bg-gray-900 shadow-md rounded-lg p-6 space-y-4">
+      <p><strong data-i18n="profile.email">Email</strong> : <span id="email"></span></p>
+
+      <label for="username" class="block font-semibold" data-i18n="profile.username">Pseudo</label>
+      <input id="username" type="text"
+             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
+      <button id="saveUsername"
+              class="bg-gray-200 text-black px-4 py-2 rounded font-semibold"
+              data-i18n="profile.changeUsername">Changer de pseudo</button>
+
+      <hr class="border-gray-700"/>
+
+      <!-- Changer mot de passe -->
+      <h2 class="text-xl font-semibold" data-i18n="profile.password">Mot de passe</h2>
+      <input id="oldPassword" type="password" placeholder="Ancien mot de passe"
+             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
+      <input id="newPassword" type="password" placeholder="Nouveau mot de passe"
+             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
+      <input id="confirmPassword" type="password" placeholder="Confirmer mot de passe"
+             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
+      <button id="changePassword"
+              class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold"
+              data-i18n="profile.password">Changer le mot de passe</button>
+
+      <hr class="border-gray-700"/>
+
+      <!-- Export collection -->
+      <h2 class="text-xl font-semibold" data-i18n="profile.exportTitle">Exporter ma collection</h2>
+      <div class="flex space-x-4">
+        <button id="exportCSV"
+                class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded font-semibold"
+                data-i18n="profile.exportCSV">Exporter en CSV</button>
+        <button id="exportPDF"
+                class="bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded font-semibold"
+                data-i18n="profile.exportPDF">Exporter en PDF</button>
+      </div>
+
+      <hr class="border-gray-700"/>
+
+      <!-- Supprimer compte -->
+      <h2 class="text-xl font-semibold text-red-400" data-i18n="profile.deleteTitle">Supprimer le compte</h2>
+      <p class="text-sm text-gray-400" data-i18n="profile.deleteWarning">
+        Attention : cette action est irréversible et supprimera toutes vos données.
+      </p>
+      <button id="deleteAccount"
+              class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold"
+              data-i18n="profile.deleteBtn">Supprimer mon compte</button>
+    </div>
+
+    <!-- Switcher langue -->
+    <div class="mt-6 text-center">
+      <select id="langSwitcher"
+              class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
         <option value="fr">🇫🇷 FR</option>
         <option value="en">🇬🇧 EN</option>
       </select>
-      <button id="logoutBtn" class="bg-gray-800 text-gray-200 px-4 py-2 rounded" data-i18n="buttons.logout">Déconnexion</button>
     </div>
-  </header>
+  </div>
 
-  <!-- Contenu -->
-  <main class="container mx-auto py-12 px-6 max-w-lg flex-1">
-    <h1 class="text-3xl font-bold mb-6" data-i18n="profile.title">Mon profil</h1>
-
-    <!-- Infos utilisateur -->
-    <section class="bg-gray-900 p-6 rounded-lg mb-6">
-      <p><strong>Email :</strong> <span id="userEmail"></span></p>
-      <p><strong data-i18n="profile.username">Pseudo :</strong> <span id="currentUsername"></span></p>
-    </section>
-
-    <!-- Modifier pseudo -->
-    <section class="bg-gray-900 p-6 rounded-lg mb-6">
-      <h2 class="text-lg font-bold mb-4" data-i18n="profile.changeUsername">Changer de pseudo</h2>
-      <form id="usernameForm" class="flex gap-2">
-        <input id="newUsername" type="text" data-i18n-placeholder="auth.username" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600">
-        <button type="submit" class="bg-gray-200 text-black px-4 py-2 rounded font-semibold" data-i18n="profile.save">Enregistrer</button>
-      </form>
-    </section>
-
-    <!-- Supprimer compte -->
-    <section class="bg-gray-900 p-6 rounded-lg">
-      <h2 class="text-lg font-bold mb-4 text-red-400" data-i18n="profile.deleteTitle">Supprimer le compte</h2>
-      <p class="mb-4 text-sm text-gray-400" data-i18n="profile.deleteWarning">
-        Attention : cette action est irréversible et supprimera toutes vos données.
-      </p>
-      <button id="deleteAccount" class="bg-red-600 text-white px-4 py-2 rounded font-semibold" data-i18n="profile.deleteBtn">Supprimer mon compte</button>
-    </section>
-  </main>
-
-  <!-- Script Supabase -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "/config.js";
+    import { loadConfig } from "/config.js";
 
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Vérifier utilisateur connecté
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) window.location.href = "/login/";
-
-    // Charger profil
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("username")
-      .eq("id", user.id)
-      .single();
-
-    document.getElementById("userEmail").innerText = user.email;
-    document.getElementById("currentUsername").innerText = profile?.username || "—";
-
-    // Modifier pseudo
-    document.getElementById("usernameForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const newUsername = document.getElementById("newUsername").value;
-      if (!newUsername) return alert("⚠️ Merci de saisir un pseudo.");
-
-      const { error } = await supabase
-        .from("profiles")
-        .update({ username: newUsername })
-        .eq("id", user.id);
-
-      if (error) {
-        alert("❌ Erreur: " + error.message);
-      } else {
-        alert("✅ Pseudo mis à jour !");
-        document.getElementById("currentUsername").innerText = newUsername;
-        document.getElementById("newUsername").value = "";
-      }
-    });
-
-    // Déconnexion
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await supabase.auth.signOut();
+    if (!user) {
       window.location.href = "/login/";
+    } else {
+      document.getElementById("email").textContent = user.email;
+      // Charger pseudo
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("id", user.id)
+        .single();
+      if (profile) {
+        document.getElementById("username").value = profile.username;
+      }
+    }
+
+    // Sauvegarde pseudo
+    document.getElementById("saveUsername").addEventListener("click", async () => {
+      const newUsername = document.getElementById("username").value.trim();
+      if (!newUsername) return alert("⚠️ Pseudo invalide");
+      const { error } = await supabase.from("profiles").update({ username: newUsername }).eq("id", user.id);
+      if (error) alert("❌ " + error.message);
+      else alert("✅ Pseudo mis à jour");
     });
 
-    // (Optionnel) Supprimer le compte → nécessite une API sécurisée côté backend
+    // Changer mot de passe
+    document.getElementById("changePassword").addEventListener("click", async () => {
+      const oldPass = document.getElementById("oldPassword").value;
+      const newPass = document.getElementById("newPassword").value;
+      const confirmPass = document.getElementById("confirmPassword").value;
+      if (!oldPass || !newPass || newPass !== confirmPass) {
+        alert("⚠️ Vérifie les champs.");
+        return;
+      }
+      const { error } = await supabase.auth.updateUser({ password: newPass });
+      if (error) alert("❌ " + error.message);
+      else alert("✅ Mot de passe changé !");
+    });
+
+    // Export CSV
+    document.getElementById("exportCSV").addEventListener("click", async () => {
+      const { data: medals, error } = await supabase.from("medals").select("*").eq("user_id", user.id);
+      if (error) return alert("❌ " + error.message);
+      if (!medals || medals.length === 0) return alert("⚠️ Aucune médaille trouvée");
+
+      const headers = Object.keys(medals[0]);
+      const rows = medals.map(m => headers.map(h => `"${m[h] || ""}"`).join(","));
+      const csvContent = [headers.join(","), ...rows].join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "medaldex_collection.csv";
+      link.click();
+    });
+
+    // Export PDF (simple)
+    document.getElementById("exportPDF").addEventListener("click", async () => {
+      const { data: medals, error } = await supabase.from("medals").select("*").eq("user_id", user.id);
+      if (error) return alert("❌ " + error.message);
+      if (!medals || medals.length === 0) return alert("⚠️ Aucune médaille trouvée");
+
+      let pdfContent = "Ma collection de médailles\\n\\n";
+      medals.forEach(m => {
+        pdfContent += `Nom: ${m.name || ""}\\nPays: ${m.country || ""}\\nAnnée: ${m.year || ""}\\nÉtat: ${m.state || ""}\\n---\\n`;
+      });
+
+      const blob = new Blob([pdfContent], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "medaldex_collection.pdf";
+      link.click();
+    });
+
+    // Supprimer compte
     document.getElementById("deleteAccount").addEventListener("click", async () => {
-      alert("⚠️ Fonction de suppression de compte à implémenter côté backend pour des raisons de sécurité.");
+      if (!confirm("⚠️ Es-tu sûr ?")) return;
+      const { error } = await supabase.from("profiles").delete().eq("id", user.id);
+      if (error) {
+        alert("❌ " + error.message);
+        return;
+      }
+      await supabase.auth.signOut();
+      alert("✅ Compte supprimé.");
+      window.location.href = "/";
     });
   </script>
 </body>

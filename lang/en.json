@@ -5,8 +5,7 @@
   },
   "buttons": {
     "login": "Log in",
-    "signup": "Sign up",
-    "logout": "Log out"
+    "signup": "Sign up"
   },
   "hero": {
     "desc": "Medaldex is your military medal Pokédex: add, manage and explore your collection like never before."
@@ -36,7 +35,7 @@
       "vg": "Very good",
       "good": "Good",
       "fair": "Fair",
-      "poor": "Worn"
+      "poor": "Poor"
     },
     "state": "Condition"
   },
@@ -56,14 +55,13 @@
     "username": "Username",
     "changeUsername": "Change username",
     "save": "Save",
-    "changePassword": "Change password",
-    "oldPassword": "Old password",
-    "newPassword": "New password",
-    "confirmPassword": "Confirm new password",
     "deleteTitle": "Delete account",
     "deleteWarning": "Warning: this action is irreversible and will delete all your data.",
     "deleteBtn": "Delete my account",
     "backDashboard": "Back to Dashboard",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
     "statsTitle": "Personal statistics",
     "exportTitle": "Export my collection",
     "exportCSV": "Export as CSV",
@@ -74,6 +72,6 @@
     "email": "Email address",
     "password": "Password",
     "haveAccount": "Already have an account?",
-    "noAccount": "No account yet?"
+    "noAccount": "Don't have an account yet?"
   }
 }
