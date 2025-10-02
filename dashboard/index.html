@@ -1,157 +1,116 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="profile.title">Mon profil</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="app.title">Medaldex - Tableau de bord</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 
-  <!-- Navbar -->
-  <header class="bg-black border-b border-gray-700 p-4 flex justify-between items-center">
-    <a href="/" class="text-xl font-bold text-gray-200" data-i18n="app.title">Medaldex</a>
-    <div class="flex gap-2">
-      <a href="/dashboard/" class="bg-gray-200 text-black px-4 py-2 rounded" data-i18n="profile.backDashboard">Retour Dashboard</a>
+  <!-- Header -->
+  <header class="flex justify-between items-center p-4 border-b border-gray-700 bg-gray-900">
+    <h1 class="text-xl font-bold" data-i18n="app.title">Medaldex</h1>
+    <div class="flex items-center gap-4">
       <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
         <option value="fr">🇫🇷 FR</option>
         <option value="en">🇬🇧 EN</option>
       </select>
-      <button id="logoutBtn" class="bg-gray-800 text-gray-200 px-4 py-2 rounded" data-i18n="buttons.logout">Déconnexion</button>
+      <button id="logoutBtn" class="px-3 py-1 bg-red-600 hover:bg-red-500 rounded">
+        Déconnexion
+      </button>
     </div>
   </header>
 
-  <!-- Contenu -->
-  <main class="container mx-auto py-12 px-6 max-w-lg flex-1">
-    <h1 class="text-3xl font-bold mb-6" data-i18n="profile.title">Mon profil</h1>
+  <!-- Main content -->
+  <main class="flex-1 p-6">
+    <h2 class="text-2xl font-semibold mb-4" data-i18n="features.subtitle">Ma collection</h2>
 
-    <!-- Infos utilisateur -->
-    <section class="bg-gray-900 p-6 rounded-lg mb-6">
-      <p><strong>Email :</strong> <span id="userEmail"></span></p>
-      <p><strong data-i18n="profile.username">Pseudo :</strong> <span id="currentUsername"></span></p>
-    </section>
+    <!-- Zone filtres -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <input type="text" id="search" placeholder="Recherche..." 
+        data-i18n-placeholder="filters.search"
+        class="p-2 rounded bg-gray-800 border border-gray-600 flex-1"/>
+      <select id="filterType" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="" data-i18n="filters.allTypes">Tous les types</option>
+        <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
+        <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
+      </select>
+      <select id="filterState" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="" data-i18n="filters.allStates">Tous les états</option>
+        <option value="new" data-i18n="filters.states.new">Neuf</option>
+        <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
+        <option value="good" data-i18n="filters.states.good">Bon</option>
+        <option value="fair" data-i18n="filters.states.fair">Moyen</option>
+        <option value="poor" data-i18n="filters.states.poor">Usé</option>
+      </select>
+    </div>
 
-    <!-- Modifier pseudo -->
-    <section class="bg-gray-900 p-6 rounded-lg mb-6">
-      <h2 class="text-lg font-bold mb-4" data-i18n="profile.changeUsername">Changer de pseudo</h2>
-      <form id="usernameForm" class="flex gap-2">
-        <input id="newUsername" type="text" data-i18n-placeholder="auth.username" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600">
-        <button type="submit" class="bg-gray-200 text-black px-4 py-2 rounded font-semibold" data-i18n="profile.save">Enregistrer</button>
-      </form>
-    </section>
-
-    <!-- Modifier mot de passe -->
-    <section class="bg-gray-900 p-6 rounded-lg mb-6">
-      <h2 class="text-lg font-bold mb-4" data-i18n="profile.changePassword">Changer le mot de passe</h2>
-      <form id="passwordForm" class="space-y-3">
-        <input id="oldPassword" type="password" data-i18n-placeholder="profile.oldPassword" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-        <input id="newPassword" type="password" data-i18n-placeholder="profile.newPassword" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-        <input id="confirmPassword" type="password" data-i18n-placeholder="profile.confirmPassword" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-        <button type="submit" class="bg-gray-200 text-black px-4 py-2 rounded font-semibold" data-i18n="profile.save">Enregistrer</button>
-      </form>
-    </section>
-
-    <!-- Supprimer compte -->
-    <section class="bg-gray-900 p-6 rounded-lg">
-      <h2 class="text-lg font-bold mb-4 text-red-400" data-i18n="profile.deleteTitle">Supprimer le compte</h2>
-      <p class="mb-4 text-sm text-gray-400" data-i18n="profile.deleteWarning">
-        Attention : cette action est irréversible et supprimera toutes vos données.
-      </p>
-      <button id="deleteAccount" class="bg-red-600 text-white px-4 py-2 rounded font-semibold" data-i18n="profile.deleteBtn">Supprimer mon compte</button>
-    </section>
+    <!-- Collection affichée -->
+    <div id="medalsList" class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <!-- Les médailles seront injectées ici -->
+    </div>
   </main>
 
-  <!-- Script Supabase -->
+  <!-- Footer -->
+  <footer class="p-4 text-center border-t border-gray-700 bg-gray-900 text-sm">
+    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
+  </footer>
+
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "/config.js";
+    import { loadConfig } from "/config.js";
 
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Vérifier utilisateur connecté
+    const medalsList = document.getElementById("medalsList");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Vérifier si un utilisateur est connecté
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) window.location.href = "/login/";
-
-    // Charger profil
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("username")
-      .eq("id", user.id)
-      .single();
-
-    document.getElementById("userEmail").innerText = user.email;
-    document.getElementById("currentUsername").innerText = profile?.username || "—";
-
-    // Modifier pseudo
-    document.getElementById("usernameForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const newUsername = document.getElementById("newUsername").value;
-      if (!newUsername) return alert("⚠️ Merci de saisir un pseudo.");
-
-      const { error } = await supabase
-        .from("profiles")
-        .update({ username: newUsername })
-        .eq("id", user.id);
-
-      if (error) {
-        alert("❌ Erreur: " + error.message);
-      } else {
-        alert("✅ Pseudo mis à jour !");
-        document.getElementById("currentUsername").innerText = newUsername;
-        document.getElementById("newUsername").value = "";
-      }
-    });
-
-    // Modifier mot de passe avec ancien + nouveau + confirmation
-    document.getElementById("passwordForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const oldPassword = document.getElementById("oldPassword").value;
-      const newPassword = document.getElementById("newPassword").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-
-      if (!oldPassword || !newPassword || !confirmPassword) {
-        alert("⚠️ Merci de remplir tous les champs.");
-        return;
-      }
-      if (newPassword !== confirmPassword) {
-        alert("⚠️ Les mots de passe ne correspondent pas.");
-        return;
-      }
-
-      // Vérifier l'ancien mot de passe
-      const { error: loginError } = await supabase.auth.signInWithPassword({
-        email: user.email,
-        password: oldPassword
-      });
-
-      if (loginError) {
-        alert("❌ Ancien mot de passe incorrect.");
-        return;
-      }
-
-      // Mettre à jour
-      const { error } = await supabase.auth.updateUser({ password: newPassword });
-      if (error) {
-        alert("❌ Erreur : " + error.message);
-      } else {
-        alert("✅ Mot de passe mis à jour !");
-        document.getElementById("oldPassword").value = "";
-        document.getElementById("newPassword").value = "";
-        document.getElementById("confirmPassword").value = "";
-      }
-    });
+    if (!user) {
+      alert("⚠️ Vous devez être connecté.");
+      window.location.href = "/login/";
+    } else {
+      loadMedals(user.id);
+    }
 
     // Déconnexion
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
+    logoutBtn.addEventListener("click", async () => {
       await supabase.auth.signOut();
-      window.location.href = "/login/";
+      window.location.href = "/";
     });
 
-    // Supprimer compte (placeholder sécurisé backend)
-    document.getElementById("deleteAccount").addEventListener("click", async () => {
-      alert("⚠️ Suppression de compte à implémenter via une fonction sécurisée côté serveur.");
-    });
+    // Charger les médailles depuis Supabase
+    async function loadMedals(userId) {
+      const { data, error } = await supabase
+        .from("medals")
+        .select("*")
+        .eq("user_id", userId);
+
+      if (error) {
+        console.error("Erreur chargement médailles:", error.message);
+        medalsList.innerHTML = "<p class='text-red-400'>Erreur lors du chargement.</p>";
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        medalsList.innerHTML = "<p class='text-gray-400'>Aucune médaille enregistrée.</p>";
+        return;
+      }
+
+      medalsList.innerHTML = data.map(medal => `
+        <div class="bg-gray-800 rounded-lg p-4 shadow hover:shadow-lg transition">
+          ${medal.image_url ? `<img src="${medal.image_url}" alt="${medal.name}" class="w-full h-32 object-contain mb-2">` : ""}
+          <h3 class="font-semibold">${medal.name}</h3>
+          <p class="text-sm text-gray-400">${medal.country || ""} - ${medal.year || ""}</p>
+          <p class="text-sm"><span data-i18n="filters.state">État</span> : ${medal.state || ""}</p>
+          <p class="text-xs text-gray-500 mt-1">${medal.description || ""}</p>
+        </div>
+      `).join("");
+    }
   </script>
 </body>
 </html>
