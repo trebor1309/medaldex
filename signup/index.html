@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-i18n="buttons.signup">Créer un compte</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
-<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white flex items-center justify-center min-h-screen">
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex items-center justify-center">
+
+  <!-- Bouton retour/fermer -->
+  <a href="/" aria-label="Home"
+     class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800">
+    ✕
+  </a>
 
   <div class="bg-gray-900 shadow-xl rounded-lg p-8 w-full max-w-md">
     <h1 class="text-2xl font-bold mb-6 text-center" data-i18n="buttons.signup">Créer un compte</h1>
+
     <form class="space-y-4">
-      <input id="username" type="text" data-i18n-placeholder="auth.username" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-      <input id="email" type="email" data-i18n-placeholder="auth.email" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-      <input id="password" type="password" data-i18n-placeholder="auth.password" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-      <button type="submit" class="w-full bg-gray-200 text-black py-2 rounded font-semibold" data-i18n="buttons.signup">Créer un compte</button>
+      <input id="username" type="text" data-i18n-placeholder="auth.username"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+      <input id="email" type="email" data-i18n-placeholder="auth.email"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+      <input id="password" type="password" data-i18n-placeholder="auth.password"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+      <button type="submit"
+        class="w-full bg-gray-200 text-black py-2 rounded font-semibold"
+        data-i18n="buttons.signup">Créer un compte</button>
     </form>
+
     <p class="text-sm mt-4 text-center">
       <span data-i18n="auth.haveAccount">Déjà un compte ?</span>
       <a href="/login/" class="text-blue-400" data-i18n="buttons.login">Se connecter</a>
     </p>
+
     <div class="mt-4 text-center">
       <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
         <option value="fr">🇫🇷 FR</option>
@@ -29,34 +43,41 @@
     </div>
   </div>
 
-  <!-- Script Supabase -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "/config.js";
+    import { loadConfig } from "/config.js";
 
+    // Récupération dynamique de la config depuis /vercel-api/config
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const form = document.querySelector("form");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value.trim();
+      const email    = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
-      // Création du compte
+      if (!username || !email || !password) {
+        alert("⚠️ Merci de remplir tous les champs.");
+        return;
+      }
+
+      // 1) Création du compte via Supabase
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) {
         alert("❌ " + error.message);
         return;
       }
 
-      // Création du profil avec pseudo
+      // 2) Création du profil lié (pseudo)
       if (data.user) {
-        const { error: profileError } = await supabase.from("profiles").insert([
-          { id: data.user.id, username }
-        ]);
+        const { error: profileError } = await supabase
+          .from("profiles")
+          .insert([{ id: data.user.id, username }]);
+
         if (profileError) {
-          alert("⚠️ Erreur profil: " + profileError.message);
+          console.error("Erreur profil:", profileError.message);
         }
       }
 
