@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-i18n="add.title">Ajouter une médaille</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
-<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex items-center justify-center">
 
-  <!-- Navbar -->
-  <header class="bg-black border-b border-gray-700 p-4 flex justify-between items-center">
-    <a href="/" class="text-xl font-bold text-gray-200" data-i18n="app.title">Medaldex</a>
-    <div class="flex gap-2">
-      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-        <option value="fr">🇫🇷 FR</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
-      <button id="logoutBtn" class="bg-gray-800 text-gray-200 px-4 py-2 rounded" data-i18n="buttons.logout">Déconnexion</button>
-    </div>
-  </header>
+  <!-- Bouton retour -->
+  <a href="/dashboard/" aria-label="Retour"
+     class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800">
+    ✕
+  </a>
 
-  <!-- Formulaire d'ajout -->
-  <main class="container mx-auto py-12 px-6 max-w-lg">
-    <h1 class="text-3xl font-bold mb-6" data-i18n="add.title">Ajouter une médaille</h1>
-    <form id="medalForm" class="space-y-4">
-      <input id="name" type="text" data-i18n-placeholder="add.name" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-      <input id="country" type="text" data-i18n-placeholder="add.country" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-      <input id="year" type="number" data-i18n-placeholder="add.year" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-      
+  <div class="bg-gray-900 shadow-xl rounded-lg p-8 w-full max-w-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center" data-i18n="add.title">Ajouter une médaille</h1>
+
+    <form id="addMedalForm" class="space-y-4">
+      <input id="name" type="text" data-i18n-placeholder="add.name"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+
+      <input id="country" type="text" data-i18n-placeholder="add.country"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+
+      <input id="year" type="number" data-i18n-placeholder="add.year"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+
       <select id="type" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-        <option value="military" data-i18n="filters.types.military">Militaire / Paramilitaire</option>
-        <option value="civil" data-i18n="filters.types.civil">Civil / Politique</option>
+        <option value="" data-i18n="filters.allTypes">Tous les types</option>
+        <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
+        <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
       </select>
 
       <select id="state" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="" data-i18n="filters.allStates">Tous les états</option>
         <option value="new" data-i18n="filters.states.new">Neuf</option>
         <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
         <option value="good" data-i18n="filters.states.good">Bon</option>
@@ -42,64 +43,69 @@
         <option value="poor" data-i18n="filters.states.poor">Usé</option>
       </select>
 
-      <textarea id="description" data-i18n-placeholder="add.description" class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
-      
-      <input id="image" type="file" accept="image/*" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+      <textarea id="description" rows="3" data-i18n-placeholder="add.description"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
 
-      <button type="submit" class="w-full bg-gray-200 text-black py-2 rounded font-semibold" data-i18n="add.submit">Enregistrer</button>
+      <input id="image" type="file" accept="image/*"
+        class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+
+      <button type="submit"
+        class="w-full bg-gray-200 text-black py-2 rounded font-semibold"
+        data-i18n="add.submit">Enregistrer</button>
     </form>
-  </main>
+  </div>
 
-  <!-- Script Supabase -->
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "/config.js";
+    import { loadConfig } from "/config.js";
 
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Vérifier l'utilisateur connecté
+    // Vérifie que l’utilisateur est connecté
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
+      alert("⚠️ Vous devez être connecté.");
       window.location.href = "/login/";
     }
 
-    // Déconnexion
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      window.location.href = "/login/";
-    });
-
-    // Gestion du formulaire
-    document.getElementById("medalForm").addEventListener("submit", async (e) => {
+    const form = document.getElementById("addMedalForm");
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById("name").value;
-      const country = document.getElementById("country").value;
+      const name = document.getElementById("name").value.trim();
+      const country = document.getElementById("country").value.trim();
       const year = document.getElementById("year").value;
       const type = document.getElementById("type").value;
       const state = document.getElementById("state").value;
-      const description = document.getElementById("description").value;
+      const description = document.getElementById("description").value.trim();
       const file = document.getElementById("image").files[0];
 
-      let imageUrl = null;
+      if (!name) {
+        alert("⚠️ Le nom est obligatoire.");
+        return;
+      }
+
+      let image_url = null;
+
+      // Upload image si présente
       if (file) {
-        // Upload image dans Supabase Storage (bucket "medals" à créer)
-        const filePath = `${user.id}/${Date.now()}-${file.name}`;
+        const fileExt = file.name.split('.').pop();
+        const filePath = `${user.id}/${Date.now()}.${fileExt}`;
         const { error: uploadError } = await supabase.storage
           .from("medals")
           .upload(filePath, file);
 
         if (uploadError) {
-          alert("Erreur upload image: " + uploadError.message);
+          alert("❌ Erreur upload image: " + uploadError.message);
           return;
         }
 
-        // Récupérer l'URL publique
-        const { data } = supabase.storage.from("medals").getPublicUrl(filePath);
-        imageUrl = data.publicUrl;
+        const { data: urlData } = supabase.storage.from("medals").getPublicUrl(filePath);
+        image_url = urlData.publicUrl;
       }
 
-      // Insérer la médaille en BDD
+      // Insertion dans la table medals
       const { error } = await supabase.from("medals").insert([{
         user_id: user.id,
         name,
@@ -108,15 +114,16 @@
         type,
         state,
         description,
-        image_url: imageUrl
+        image_url
       }]);
 
       if (error) {
-        alert("❌ Erreur ajout médaille: " + error.message);
-      } else {
-        alert("✅ Médaille ajoutée !");
-        window.location.href = "/collection/";
+        alert("❌ Erreur enregistrement: " + error.message);
+        return;
       }
+
+      alert("✅ Médaille ajoutée !");
+      window.location.href = "/dashboard/";
     });
   </script>
 </body>
