@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="profile.title">Mon profil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/i18n.js" defer></script>
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="bg-black border-b border-gray-700 p-4 flex justify-between items-center">
+    <a href="/" class="text-xl font-bold text-gray-200" data-i18n="app.title">Medaldex</a>
+    <div class="flex gap-2">
+      <a href="/dashboard/" class="bg-gray-200 text-black px-4 py-2 rounded" data-i18n="profile.backDashboard">Retour Dashboard</a>
+      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="en">🇬🇧 EN</option>
+      </select>
+      <button id="logoutBtn" class="bg-gray-800 text-gray-200 px-4 py-2 rounded" data-i18n="buttons.logout">Déconnexion</button>
+    </div>
+  </header>
+
+  <!-- Contenu -->
+  <main class="container mx-auto py-12 px-6 max-w-lg flex-1">
+    <h1 class="text-3xl font-bold mb-6" data-i18n="profile.title">Mon profil</h1>
+
+    <!-- Infos utilisateur -->
+    <section class="bg-gray-900 p-6 rounded-lg mb-6">
+      <p><strong>Email :</strong> <span id="userEmail"></span></p>
+      <p><strong data-i18n="profile.username">Pseudo :</strong> <span id="currentUsername"></span></p>
+    </section>
+
+    <!-- Modifier pseudo -->
+    <section class="bg-gray-900 p-6 rounded-lg mb-6">
+      <h2 class="text-lg font-bold mb-4" data-i18n="profile.changeUsername">Changer de pseudo</h2>
+      <form id="usernameForm" class="flex gap-2">
+        <input id="newUsername" type="text" data-i18n-placeholder="auth.username" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600">
+        <button type="submit" class="bg-gray-200 text-black px-4 py-2 rounded font-semibold" data-i18n="profile.save">Enregistrer</button>
+      </form>
+    </section>
+
+    <!-- Modifier mot de passe -->
+    <section class="bg-gray-900 p-6 rounded-lg mb-6">
+      <h2 class="text-lg font-bold mb-4" data-i18n="profile.changePassword">Changer le mot de passe</h2>
+      <form id="passwordForm" class="space-y-3">
+        <input id="oldPassword" type="password" data-i18n-placeholder="profile.oldPassword" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+        <input id="newPassword" type="password" data-i18n-placeholder="profile.newPassword" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+        <input id="confirmPassword" type="password" data-i18n-placeholder="profile.confirmPassword" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+        <button type="submit" class="bg-gray-200 text-black px-4 py-2 rounded font-semibold" data-i18n="profile.save">Enregistrer</button>
+      </form>
+    </section>
+
+    <!-- Supprimer compte -->
+    <section class="bg-gray-900 p-6 rounded-lg">
+      <h2 class="text-lg font-bold mb-4 text-red-400" data-i18n="profile.deleteTitle">Supprimer le compte</h2>
+      <p class="mb-4 text-sm text-gray-400" data-i18n="profile.deleteWarning">
+        Attention : cette action est irréversible et supprimera toutes vos données.
+      </p>
+      <button id="deleteAccount" class="bg-red-600 text-white px-4 py-2 rounded font-semibold" data-i18n="profile.deleteBtn">Supprimer mon compte</button>
+    </section>
+  </main>
+
+  <!-- Script Supabase -->
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from "/config.js";
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Vérifier utilisateur connecté
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) window.location.href = "/login/";
+
+    // Charger profil
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", user.id)
+      .single();
+
+    document.getElementById("userEmail").innerText = user.email;
+    document.getElementById("currentUsername").innerText = profile?.username || "—";
+
+    // Modifier pseudo
+    document.getElementById("usernameForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const newUsername = document.getElementById("newUsername").value;
+      if (!newUsername) return alert("⚠️ Merci de saisir un pseudo.");
+
+      const { error } = await supabase
+        .from("profiles")
+        .update({ username: newUsername })
+        .eq("id", user.id);
+
+      if (error) {
+        alert("❌ Erreur: " + error.message);
+      } else {
+        alert("✅ Pseudo mis à jour !");
+        document.getElementById("currentUsername").innerText = newUsername;
+        document.getElementById("newUsername").value = "";
+      }
+    });
+
+    // Modifier mot de passe avec ancien + nouveau + confirmation
+    document.getElementById("passwordForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const oldPassword = document.getElementById("oldPassword").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!oldPassword || !newPassword || !confirmPassword) {
+        alert("⚠️ Merci de remplir tous les champs.");
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        alert("⚠️ Les mots de passe ne correspondent pas.");
+        return;
+      }
+
+      // Vérifier l'ancien mot de passe
+      const { error: loginError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: oldPassword
+      });
+
+      if (loginError) {
+        alert("❌ Ancien mot de passe incorrect.");
+        return;
+      }
+
+      // Mettre à jour
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) {
+        alert("❌ Erreur : " + error.message);
+      } else {
+        alert("✅ Mot de passe mis à jour !");
+        document.getElementById("oldPassword").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+      }
+    });
+
+    // Déconnexion
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "/login/";
+    });
+
+    // Supprimer compte (placeholder sécurisé backend)
+    document.getElementById("deleteAccount").addEventListener("click", async () => {
+      alert("⚠️ Suppression de compte à implémenter via une fonction sécurisée côté serveur.");
+    });
+  </script>
+</body>
+</html>

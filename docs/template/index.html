@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="template.title"></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/i18n.js" defer></script>
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
+
+  <!-- Navbar -->
+  <header class="bg-black border-b border-gray-700">
+    <nav class="container mx-auto flex justify-between items-center p-4">
+      <a href="/" class="text-2xl font-bold text-gray-200 tracking-wide" data-i18n="app.title"></a>
+      <ul class="hidden md:flex gap-6 font-medium">
+        <li><a href="/dashboard/" class="hover:text-gray-400">🏠 Dashboard</a></li>
+        <li><a href="/collection/" class="hover:text-gray-400">📚 <span data-i18n="dashboard.actions.collection"></span></a></li>
+        <li><a href="/add/" class="hover:text-gray-400">➕ <span data-i18n="dashboard.actions.add"></span></a></li>
+        <li><a href="/profile/" class="hover:text-gray-400">👤 Profile</a></li>
+        <li><a href="/about/" class="hover:text-gray-400">ℹ️ <span data-i18n="about.title"></span></a></li>
+      </ul>
+      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="en">🇬🇧 EN</option>
+      </select>
+    </nav>
+  </header>
+
+  <!-- Contenu -->
+  <main class="container mx-auto py-12 px-6 space-y-8">
+    <h1 class="text-3xl font-bold mb-6" data-i18n="template.heading"></h1>
+    <p class="text-gray-300" data-i18n="template.paragraph"></p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-6 text-center mt-12 border-t border-gray-700">
+    <p data-i18n="footer.rights"></p>
+  </footer>
+
+</body>
+</html>

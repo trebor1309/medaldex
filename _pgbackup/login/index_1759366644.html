@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Medaldex</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/i18n.js" defer></script>
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 flex items-center justify-center min-h-screen text-white">
+
+  <!-- Sélecteur langue -->
+  <div class="absolute top-4 right-4">
+    <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+      <option value="fr">🇫🇷 FR</option>
+      <option value="en">🇬🇧 EN</option>
+    </select>
+  </div>
+
+  <!-- Formulaire login -->
+  <div class="w-full max-w-md bg-gray-900 border border-gray-700 rounded-2xl shadow-lg p-8">
+    <h1 class="text-2xl font-bold text-center text-gray-200 mb-6" data-i18n="login.title"></h1>
+
+    <form action="/dashboard/" method="POST" class="space-y-5">
+      <!-- Email -->
+      <div>
+        <label for="email" data-i18n="login.email" class="block text-sm font-medium text-gray-300"></label>
+        <input type="email" id="email" name="email" required
+          class="mt-1 w-full px-4 py-2 border border-gray-600 bg-gray-800 text-gray-200 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none">
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" data-i18n="login.password" class="block text-sm font-medium text-gray-300"></label>
+        <input type="password" id="password" name="password" required
+          class="mt-1 w-full px-4 py-2 border border-gray-600 bg-gray-800 text-gray-200 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none">
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="w-full bg-gray-200 text-black py-2 rounded-lg font-semibold shadow hover:bg-white transition" data-i18n="login.button"></button>
+    </form>
+
+    <!-- Link -->
+    <p class="text-sm text-center text-gray-400 mt-6">
+      <span data-i18n="login.no_account"></span>
+      <a href="/signup/" class="text-gray-200 font-medium hover:underline" data-i18n="login.signup_link"></a>
+    </p>
+  </div>
+
+</body>
+</html>

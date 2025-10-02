@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "Medaldex",
+    "slogan": "Organise et référence ta collection de médailles"
+  },
+  "buttons": {
+    "login": "Se connecter",
+    "signup": "Créer un compte",
+    "logout": "Déconnexion"
+  },
+  "hero": {
+    "desc": "Medaldex est ton Pokédex des médailles militaires : ajoute, gère et explore ta collection comme jamais auparavant."
+  },
+  "features": {
+    "title": "Fonctionnalités principales",
+    "subtitle": "Tout ce qu’il te faut pour gérer ta collection",
+    "organize": "Classe tes médailles par pays, année, rareté.",
+    "search": "Trouve instantanément la médaille que tu veux.",
+    "stats": "Découvre des statistiques sur ta collection."
+  },
+  "footer": {
+    "rights": "© 2025 Medaldex. Tous droits réservés."
+  },
+  "filters": {
+    "search": "Recherche...",
+    "allCountries": "Tous les pays",
+    "allYears": "Toutes les années",
+    "allTypes": "Tous les types",
+    "types": {
+      "military": "Militaires / Paramilitaires",
+      "civil": "Civiles / Politiques"
+    },
+    "allStates": "Tous les états",
+    "states": {
+      "new": "Neuf",
+      "vg": "Très bon état",
+      "good": "Bon",
+      "fair": "Moyen",
+      "poor": "Usé"
+    },
+    "state": "État"
+  },
+  "add": {
+    "title": "Ajouter une médaille",
+    "name": "Nom de la médaille",
+    "country": "Pays",
+    "year": "Année",
+    "type": "Type",
+    "state": "État de conservation",
+    "description": "Description",
+    "image": "Image de la médaille",
+    "submit": "Enregistrer"
+  },
+  "profile": {
+    "title": "Mon profil",
+    "username": "Pseudo",
+    "changeUsername": "Changer de pseudo",
+    "save": "Enregistrer",
+    "changePassword": "Changer le mot de passe",
+    "oldPassword": "Ancien mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "deleteTitle": "Supprimer le compte",
+    "deleteWarning": "Attention : cette action est irréversible et supprimera toutes vos données.",
+    "deleteBtn": "Supprimer mon compte",
+    "backDashboard": "Retour Dashboard",
+    "statsTitle": "Statistiques personnelles",
+    "exportTitle": "Exporter ma collection",
+    "exportCSV": "Exporter en CSV",
+    "exportPDF": "Exporter en PDF"
+  },
+  "auth": {
+    "username": "Pseudo",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "haveAccount": "Déjà un compte ?",
+    "noAccount": "Pas encore de compte ?"
+  }
+}
