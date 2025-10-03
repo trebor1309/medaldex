@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title data-i18n="app.title">Medaldex - Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/i18n.js" defer></script>
+  <script src="/js/i18n.js" defer></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 
   <!-- ✅ Navbar -->
   <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
     <div class="flex space-x-6">
-      <a href="/dashboard/" class="text-blue-400 font-bold" data-i18n="app.title">Dashboard</a>
-      <a href="#" onclick="openAddModal()" class="hover:text-blue-400" data-i18n="add.title">Ajouter</a>
-      <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
+      <!-- Logo ramène vers la landing -->
+      <a href="/" class="text-2xl font-bold text-blue-400" data-i18n="app.title">Medaldex</a>
     </div>
     <div class="flex items-center space-x-4">
       <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
@@ -27,225 +26,122 @@
     </div>
   </nav>
 
-  <!-- ✅ Filtres -->
-  <section class="p-6 bg-gray-800 border-b border-gray-700 flex flex-wrap gap-4">
-    <input id="search" type="text" data-i18n-placeholder="filters.search"
-           class="flex-1 p-2 rounded bg-gray-900 border border-gray-600"/>
+  <!-- ✅ Zone filtres + recherche -->
+  <header class="p-6 border-b border-gray-700">
+    <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
+      <input id="searchInput" type="text" data-i18n-placeholder="filters.search"
+        class="flex-1 p-2 rounded bg-gray-800 border border-gray-600" placeholder="Recherche..."/>
 
-    <select id="country" class="p-2 rounded bg-gray-900 border border-gray-600 appearance-none">
-      <option value="" data-i18n="filters.allCountries">Tous les pays</option>
-      <option value="de" data-i18n="countries.germany">Allemagne</option>
-      <option value="fr" data-i18n="countries.france">France</option>
-      <option value="uk" data-i18n="countries.uk">Royaume-Uni</option>
-      <option value="usa" data-i18n="countries.usa">États-Unis</option>
-      <option value="ussr" data-i18n="countries.ussr">URSS</option>
-      <option value="italy" data-i18n="countries.italy">Italie</option>
-      <option value="japan" data-i18n="countries.japan">Japon</option>
-      <option value="belgium" data-i18n="countries.belgium">Belgique</option>
-      <option value="autre" data-i18n="filters.custom">Autre (saisir…)</option>
-    </select>
-    <input id="countryCustom" type="text" placeholder="Pays personnalisé"
-           class="hidden p-2 rounded bg-gray-900 border border-gray-600"/>
+      <select id="filterCountry" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="all" data-i18n="filters.allCountries">Tous les pays</option>
+      </select>
 
-    <select id="period" class="p-2 rounded bg-gray-900 border border-gray-600 appearance-none">
-      <option value="" data-i18n="filters.allPeriods">Toutes les périodes</option>
-      <option value="1870-1871">1870-1871</option>
-      <option value="1914-1918">1914-1918</option>
-      <option value="1933-1945">1933-1945</option>
-      <option value="1939-1945">1939-1945</option>
-      <option value="1945-1991">1945-1991</option>
-      <option value="autre" data-i18n="filters.custom">Autre (saisir…)</option>
-    </select>
-    <input id="periodCustom" type="text" placeholder="Période personnalisée"
-           class="hidden p-2 rounded bg-gray-900 border border-gray-600"/>
+      <select id="filterPeriod" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="all" data-i18n="filters.allPeriods">Toutes les périodes</option>
+      </select>
 
-    <select id="type" class="p-2 rounded bg-gray-900 border border-gray-600">
-      <option value="" data-i18n="filters.allTypes">Tous les types</option>
-      <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
-      <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
-    </select>
+      <select id="filterType" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="all" data-i18n="filters.allTypes">Tous les types</option>
+      </select>
 
-    <select id="state" class="p-2 rounded bg-gray-900 border border-gray-600">
-      <option value="" data-i18n="filters.allStates">Tous les états</option>
-      <option value="new" data-i18n="filters.states.new">Neuf</option>
-      <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
-      <option value="good" data-i18n="filters.states.good">Bon</option>
-      <option value="fair" data-i18n="filters.states.fair">Moyen</option>
-      <option value="poor" data-i18n="filters.states.poor">Usé</option>
-    </select>
-  </section>
+      <select id="filterState" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="all" data-i18n="filters.allStates">Tous les états</option>
+      </select>
+    </div>
+  </header>
 
-  <!-- ✅ Collection -->
-  <main class="flex-1 p-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6" id="medalGrid">
-    <!-- Cartes injectées en JS -->
+  <!-- ✅ Zone collection -->
+  <main class="flex-1 p-6">
+    <div id="collection" class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <!-- Les cartes des médailles seront injectées ici via dashboard.js -->
+    </div>
   </main>
 
   <!-- ✅ Footer -->
-  <footer class="bg-gray-900 border-t border-gray-700 p-4 text-center text-sm text-gray-400">
-    <p>© 2025 Medaldex</p>
-    <div class="flex justify-center space-x-4 mt-2">
-      <a href="/legal/" class="hover:text-blue-400" data-i18n="footer.legal">Mentions légales</a>
-      <a href="/privacy/" class="hover:text-blue-400" data-i18n="footer.privacy">Confidentialité</a>
-      <a href="/contact/" class="hover:text-blue-400" data-i18n="footer.contact">Contact</a>
-    </div>
+  <footer class="bg-gray-900 border-t border-gray-700 p-4 text-center text-gray-400 text-sm">
+    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
   </footer>
 
-  <!-- ✅ Modal Add/Edit -->
-  <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm hidden items-center justify-center z-50">
+  <!-- ✅ Bouton flottant Ajouter -->
+  <button id="addBtn"
+    class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg text-3xl flex items-center justify-center">
+    +
+  </button>
+
+  <!-- ✅ Modal Ajouter (hidden au départ) -->
+  <div id="addModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center">
     <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 w-full max-w-lg shadow-lg relative">
-      <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-400 hover:text-white">✕</button>
-      <h2 id="modalTitle" class="text-2xl font-bold mb-4" data-i18n="modal.addTitle">➕ Ajouter une entrée</h2>
-      
-      <form id="modalForm" class="space-y-4">
-        <input id="name" type="text" data-i18n-placeholder="add.name"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="countryField" type="text" data-i18n-placeholder="add.country"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="periodField" type="text" data-i18n-placeholder="add.period"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="maker" type="text" data-i18n-placeholder="add.maker"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <select id="typeField" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+      <button id="closeAdd" class="absolute top-2 right-2 text-gray-400 hover:text-white">✕</button>
+      <h2 class="text-xl font-bold mb-4" data-i18n="add.title">Ajouter une entrée</h2>
+      <form id="addForm" class="space-y-4">
+        <input id="name" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.name"/>
+        <input id="country" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.country"/>
+        <input id="period" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.period"/>
+        <input id="maker" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.maker"/>
+        <select id="type" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
           <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
           <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
         </select>
-        <select id="stateField" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+        <select id="state" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
           <option value="new" data-i18n="filters.states.new">Neuf</option>
           <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
           <option value="good" data-i18n="filters.states.good">Bon</option>
           <option value="fair" data-i18n="filters.states.fair">Moyen</option>
           <option value="poor" data-i18n="filters.states.poor">Usé</option>
         </select>
-        <textarea id="description" data-i18n-placeholder="add.description"
-                  class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
-        <input id="image" type="text" data-i18n-placeholder="add.image"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="modal.save">
+        <textarea id="description" class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.description"></textarea>
+        <input id="image" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.image"/>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="add.submit">
+          Enregistrer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Modal Edit -->
+  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center">
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 w-full max-w-lg shadow-lg relative">
+      <button id="closeEdit" class="absolute top-2 right-2 text-gray-400 hover:text-white">✕</button>
+      <h2 class="text-xl font-bold mb-4">✏️ <span data-i18n="edit.title">Éditer une entrée</span></h2>
+      <form id="editForm" class="space-y-4">
+        <input id="editName" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="editCountry" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="editPeriod" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="editMaker" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <select id="editType" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="military" data-i18n="filters.types.military">Militaires / Paramililitaires</option>
+          <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
+        </select>
+        <select id="editState" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="new" data-i18n="filters.states.new">Neuf</option>
+          <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
+          <option value="good" data-i18n="filters.states.good">Bon</option>
+          <option value="fair" data-i18n="filters.states.fair">Moyen</option>
+          <option value="poor" data-i18n="filters.states.poor">Usé</option>
+        </select>
+        <textarea id="editDescription" class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
+        <input id="editImage" type="text" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold">
           💾 Enregistrer
         </button>
       </form>
     </div>
   </div>
 
-  <!-- ✅ JS -->
-  <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { loadConfig } from "/config.js";
+  <!-- ✅ Modal Profil -->
+  <div id="profileModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center">
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 w-full max-w-lg shadow-lg relative">
+      <button id="closeProfile" class="absolute top-2 right-2 text-gray-400 hover:text-white">✕</button>
+      <h2 class="text-xl font-bold mb-4" data-i18n="profile.title">Mon profil</h2>
+      <p id="profileUsername"></p>
+      <p id="profileEmail"></p>
+      <button id="deleteAccountBtn" class="mt-4 bg-red-600 hover:bg-red-700 py-2 px-4 rounded font-semibold">
+        🗑️ <span data-i18n="profile.deleteBtn">Supprimer mon compte</span>
+      </button>
+    </div>
+  </div>
 
-    const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) window.location.href = "/login/";
-
-    const medalGrid = document.getElementById("medalGrid");
-    const modalOverlay = document.getElementById("modalOverlay");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalForm = document.getElementById("modalForm");
-
-    let editingId = null;
-
-    // ✅ Ouvrir modal
-    window.openAddModal = () => {
-      editingId = null;
-      modalTitle.setAttribute("data-i18n", "modal.addTitle");
-      modalTitle.textContent = "➕ Ajouter une entrée";
-      modalForm.reset();
-      modalOverlay.classList.remove("hidden");
-      modalOverlay.classList.add("flex");
-    };
-
-    window.openEditModal = (medal) => {
-      editingId = medal.id;
-      modalTitle.setAttribute("data-i18n", "modal.editTitle");
-      modalTitle.textContent = "✏️ Éditer l'entrée";
-      document.getElementById("name").value = medal.name || "";
-      document.getElementById("countryField").value = medal.country || "";
-      document.getElementById("periodField").value = medal.period || "";
-      document.getElementById("maker").value = medal.maker || "";
-      document.getElementById("typeField").value = medal.type || "military";
-      document.getElementById("stateField").value = medal.state || "good";
-      document.getElementById("description").value = medal.description || "";
-      document.getElementById("image").value = medal.image || "";
-      modalOverlay.classList.remove("hidden");
-      modalOverlay.classList.add("flex");
-    };
-
-    window.closeModal = () => {
-      modalOverlay.classList.add("hidden");
-      modalOverlay.classList.remove("flex");
-    };
-
-    // ✅ Sauvegarde Add/Edit
-    modalForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const data = {
-        user_id: user.id,
-        name: document.getElementById("name").value,
-        country: document.getElementById("countryField").value,
-        period: document.getElementById("periodField").value,
-        maker: document.getElementById("maker").value,
-        type: document.getElementById("typeField").value,
-        state: document.getElementById("stateField").value,
-        description: document.getElementById("description").value,
-        image: document.getElementById("image").value,
-      };
-      let error;
-      if (editingId) {
-        ({ error } = await supabase.from("medals").update(data).eq("id", editingId).eq("user_id", user.id));
-      } else {
-        ({ error } = await supabase.from("medals").insert([data]));
-      }
-      if (error) {
-        alert("❌ Erreur : " + error.message);
-      } else {
-        closeModal();
-        loadMedals();
-      }
-    });
-
-    // ✅ Charger les médailles
-    async function loadMedals() {
-      const { data, error } = await supabase.from("medals").select("*").eq("user_id", user.id);
-      if (error) {
-        console.error(error);
-        return;
-      }
-      medalGrid.innerHTML = "";
-      data.forEach(medal => {
-        const card = document.createElement("div");
-        card.className = "bg-gray-800 rounded-lg p-4 shadow";
-        card.innerHTML = `
-          <img src="${medal.image || 'https://via.placeholder.com/150'}" alt="Medal" class="rounded mb-2"/>
-          <h3 class="font-bold text-lg">${medal.name || "Sans nom"}</h3>
-          <p class="text-sm text-gray-400">${medal.country || "?"} • ${medal.period || "?"}</p>
-          <div class="flex justify-end space-x-2 mt-2">
-            <button onclick='openEditModal(${JSON.stringify(medal)})' 
-              class="bg-yellow-500 hover:bg-yellow-600 px-2 py-1 rounded text-black text-sm">✏️</button>
-            <button onclick='deleteMedal("${medal.id}")' 
-              class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white text-sm">🗑️</button>
-          </div>
-        `;
-        medalGrid.appendChild(card);
-      });
-    }
-
-    // ✅ Supprimer médaille
-    window.deleteMedal = async (id) => {
-      if (confirm("⚠️ Supprimer cette entrée ?")) {
-        const { error } = await supabase.from("medals").delete().eq("id", id).eq("user_id", user.id);
-        if (error) alert("❌ Erreur suppression : " + error.message);
-        else loadMedals();
-      }
-    };
-
-    // ✅ Déconnexion
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      window.location.href = "/";
-    });
-
-    loadMedals();
-  </script>
+  <!-- ✅ Script du Dashboard -->
+  <script type="module" src="/js/dashboard.js"></script>
 </body>
 </html>

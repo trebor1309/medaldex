@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Medaldex",
-    "slogan": "Organise et référence ta collection de décorations"
+    "slogan": "Organise et référence ta collection"
   },
   "buttons": {
     "login": "Se connecter",
@@ -9,27 +9,23 @@
     "logout": "Déconnexion"
   },
   "hero": {
-    "desc": "Medaldex est ton Pokédex des médailles, rubans et insignes : ajoute, gère et explore ta collection comme jamais auparavant."
+    "desc": "Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant."
   },
   "features": {
     "title": "Fonctionnalités principales",
     "subtitle": "Tout ce qu’il te faut pour gérer ta collection",
-    "organize": "Classe tes décorations par pays, période, type et fabricant.",
-    "search": "Trouve instantanément l'entrée que tu veux.",
+    "organize": "Classe tes médailles par pays, période, fabricant.",
+    "search": "Trouve instantanément l’entrée que tu veux.",
     "stats": "Découvre des statistiques sur ta collection."
   },
   "footer": {
-    "rights": "© 2025 Medaldex. Tous droits réservés.",
-    "legal": "Mentions légales",
-    "privacy": "Confidentialité",
-    "contact": "Contact"
+    "rights": "© 2025 Medaldex. Tous droits réservés."
   },
   "filters": {
     "search": "Recherche...",
     "allCountries": "Tous les pays",
     "allPeriods": "Toutes les périodes",
     "allTypes": "Tous les types",
-    "custom": "Autre (saisir…)",
     "types": {
       "military": "Militaires / Paramilitaires",
       "civil": "Civiles / Politiques"
@@ -41,17 +37,8 @@
       "good": "Bon",
       "fair": "Moyen",
       "poor": "Usé"
-    }
-  },
-  "countries": {
-    "germany": "Allemagne",
-    "france": "France",
-    "uk": "Royaume-Uni",
-    "usa": "États-Unis",
-    "ussr": "URSS",
-    "italy": "Italie",
-    "japan": "Japon",
-    "belgium": "Belgique"
+    },
+    "state": "État"
   },
   "add": {
     "title": "Ajouter une entrée",
@@ -62,30 +49,15 @@
     "type": "Type",
     "state": "État de conservation",
     "description": "Description",
-    "image": "URL de l'image",
+    "image": "Image (URL)",
     "submit": "Enregistrer"
   },
-  "modal": {
-    "addTitle": "➕ Ajouter une entrée",
-    "editTitle": "✏️ Éditer l'entrée",
-    "save": "💾 Enregistrer"
+  "edit": {
+    "title": "Éditer une entrée"
   },
   "profile": {
     "title": "Mon profil",
-    "username": "Pseudo",
-    "changeUsername": "Changer de pseudo",
-    "save": "Enregistrer",
-    "deleteTitle": "Supprimer le compte",
-    "deleteWarning": "Attention : cette action est irréversible et supprimera toutes vos données.",
-    "deleteBtn": "Supprimer mon compte",
-    "backDashboard": "Retour Dashboard",
-    "name": "Nom",
-    "email": "Email",
-    "password": "Mot de passe",
-    "statsTitle": "Statistiques personnelles",
-    "exportTitle": "Exporter ma collection",
-    "exportCSV": "Exporter en CSV",
-    "exportPDF": "Exporter en PDF"
+    "deleteBtn": "Supprimer mon compte"
   },
   "auth": {
     "username": "Pseudo",

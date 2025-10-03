@@ -1,35 +1,31 @@
 {
   "app": {
     "title": "Medaldex",
-    "slogan": "Organize and reference your medal collection"
+    "slogan": "Organize and reference your collection"
   },
   "buttons": {
     "login": "Log in",
     "signup": "Sign up",
-    "logout": "Log out"
+    "logout": "Logout"
   },
   "hero": {
-    "desc": "Medaldex is your Pokédex for medals, ribbons and badges: add, manage and explore your collection like never before."
+    "desc": "Medaldex is your Pokédex for decorations: add, manage and explore your collection like never before."
   },
   "features": {
     "title": "Main Features",
     "subtitle": "Everything you need to manage your collection",
-    "organize": "Sort your decorations by country, period, type and maker.",
+    "organize": "Sort your medals by country, period, maker.",
     "search": "Instantly find the entry you want.",
     "stats": "Discover insights and statistics about your collection."
   },
   "footer": {
-    "rights": "© 2025 Medaldex. All rights reserved.",
-    "legal": "Legal Notice",
-    "privacy": "Privacy Policy",
-    "contact": "Contact"
+    "rights": "© 2025 Medaldex. All rights reserved."
   },
   "filters": {
     "search": "Search...",
     "allCountries": "All countries",
     "allPeriods": "All periods",
     "allTypes": "All types",
-    "custom": "Other (enter…)",
     "types": {
       "military": "Military / Paramilitary",
       "civil": "Civil / Political"
@@ -41,17 +37,8 @@
       "good": "Good",
       "fair": "Fair",
       "poor": "Worn"
-    }
-  },
-  "countries": {
-    "germany": "Germany",
-    "france": "France",
-    "uk": "United Kingdom",
-    "usa": "United States",
-    "ussr": "USSR",
-    "italy": "Italy",
-    "japan": "Japan",
-    "belgium": "Belgium"
+    },
+    "state": "Condition"
   },
   "add": {
     "title": "Add an entry",
@@ -62,36 +49,21 @@
     "type": "Type",
     "state": "Condition",
     "description": "Description",
-    "image": "Image URL",
+    "image": "Image (URL)",
     "submit": "Save"
   },
-  "modal": {
-    "addTitle": "➕ Add an entry",
-    "editTitle": "✏️ Edit entry",
-    "save": "💾 Save"
+  "edit": {
+    "title": "Edit an entry"
   },
   "profile": {
     "title": "My profile",
-    "username": "Username",
-    "changeUsername": "Change username",
-    "save": "Save",
-    "deleteTitle": "Delete account",
-    "deleteWarning": "Warning: this action is irreversible and will delete all your data.",
-    "deleteBtn": "Delete my account",
-    "backDashboard": "Back to Dashboard",
-    "name": "Name",
-    "email": "Email",
-    "password": "Password",
-    "statsTitle": "Personal statistics",
-    "exportTitle": "Export my collection",
-    "exportCSV": "Export as CSV",
-    "exportPDF": "Export as PDF"
+    "deleteBtn": "Delete my account"
   },
   "auth": {
     "username": "Username",
     "email": "Email address",
     "password": "Password",
     "haveAccount": "Already have an account?",
-    "noAccount": "Don't have an account yet?"
+    "noAccount": "Don’t have an account yet?"
   }
 }
