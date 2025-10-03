@@ -1,23 +1,21 @@
 {
   "app": {
     "title": "Medaldex",
-    "slogan": "Organize and reference your medal collection"
+    "slogan": "Organize and reference your collection of decorations"
   },
   "buttons": {
     "login": "Log in",
     "signup": "Sign up",
-    "logout": "Log out",
-    "save": "Save",
-    "delete": "Delete"
+    "logout": "Log out"
   },
   "hero": {
-    "desc": "Medaldex is your military medal Pokédex: add, manage and explore your collection like never before."
+    "desc": "Medaldex is your decoration Pokédex: add, manage and explore your collection like never before."
   },
   "features": {
     "title": "Main Features",
     "subtitle": "Everything you need to manage your collection",
-    "organize": "Sort your medals by country, period, maker.",
-    "search": "Instantly find the medal you want.",
+    "organize": "Sort your entries by country, period, type, maker.",
+    "search": "Instantly find the entry you want.",
     "stats": "Discover insights and statistics about your collection."
   },
   "footer": {
@@ -40,25 +38,23 @@
       "fair": "Fair",
       "poor": "Worn"
     },
-    "state": "Condition",
-    "maker": "Maker",
-    "period": "Period"
+    "state": "Condition"
   },
   "add": {
-    "title": "Add a medal",
-    "name": "Medal name",
+    "title": "Add an entry",
+    "name": "Name",
     "country": "Country",
     "period": "Period",
-    "maker": "Maker",
     "type": "Type",
+    "maker": "Maker",
     "state": "Condition",
     "description": "Description",
-    "image": "Medal image",
+    "image": "Image (URL)",
     "submit": "Save"
   },
   "edit": {
-    "title": "Edit a medal",
-    "submit": "Update"
+    "title": "✏️ Edit entry",
+    "save": "Save"
   },
   "profile": {
     "title": "My profile",
@@ -74,14 +70,14 @@
     "password": "Password",
     "statsTitle": "Personal statistics",
     "exportTitle": "Export my collection",
-    "exportCSV": "Export as CSV",
-    "exportPDF": "Export as PDF"
+    "exportCSV": "Export to CSV",
+    "exportPDF": "Export to PDF"
   },
   "auth": {
     "username": "Username",
     "email": "Email address",
     "password": "Password",
     "haveAccount": "Already have an account?",
-    "noAccount": "Don’t have an account yet?"
+    "noAccount": "No account yet?"
   }
 }

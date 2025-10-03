@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medaldex - Médaille</title>
+  <title>Medaldex - Entrée</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 
-  <!-- ✅ Navbar -->
+  <!-- Navbar -->
   <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
     <div class="flex space-x-6">
       <a href="/dashboard/" class="text-blue-400 font-bold" data-i18n="app.title">Dashboard</a>
-      <a href="/add/" class="hover:text-blue-400" data-i18n="add.title">Ajouter</a>
+      <a href="/add/" class="hover:text-blue-400" data-i18n="add.title">Ajouter une entrée</a>
       <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
     </div>
     <div class="flex items-center space-x-4">
@@ -27,15 +27,10 @@
     </div>
   </nav>
 
-  <!-- ✅ Contenu -->
-  <main class="flex-1 p-6 flex flex-col items-center">
-    <div id="medalDetails" class="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-2xl w-full shadow-lg">
-      <p>Chargement...</p>
-    </div>
-
-    <div class="mt-6 flex space-x-4">
-      <button id="editBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded">✏️ Modifier</button>
-      <button id="deleteBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded">🗑️ Supprimer</button>
+  <!-- Détails entrée -->
+  <main class="flex-1 p-6 flex justify-center">
+    <div id="medalCard" class="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-lg w-full shadow-lg">
+      <p class="text-gray-400">Chargement...</p>
     </div>
   </main>
 
@@ -49,10 +44,9 @@
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) window.location.href = "/login/";
 
-    const medalDetails = document.getElementById("medalDetails");
-
-    // ✅ Récupération de l’ID depuis l’URL (/medal/123)
-    const id = window.location.pathname.split("/").pop();
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const card = document.getElementById("medalCard");
 
     async function loadMedal() {
       const { data, error } = await supabase
@@ -63,45 +57,40 @@
         .single();
 
       if (error || !data) {
-        medalDetails.innerHTML = "<p>❌ Médaille introuvable.</p>";
+        card.innerHTML = "<p class='text-red-500'>❌ Entrée introuvable.</p>";
         return;
       }
 
-      medalDetails.innerHTML = `
-        <div class="flex flex-col items-center">
-          <img src="${data.image || '/placeholder.png'}"
-               onerror="this.src='/placeholder.png'"
-               alt="${data.name}"
-               class="w-64 h-64 object-cover rounded mb-4"/>
-          <h1 class="text-3xl font-bold mb-2">${data.name}</h1>
-          <p><strong>Période:</strong> ${data.period || '-'}</p>
-          <p><strong>Pays:</strong> ${data.country || '-'}</p>
-          <p><strong>Fabricant:</strong> ${data.maker || '-'}</p>
-          <p><strong>État:</strong> ${data.state}</p>
-          <p class="mt-4"><strong>Description:</strong><br/> ${data.description || '-'}</p>
+      card.innerHTML = `
+        <img src="${data.image || '/placeholder.png'}" alt="${data.name}" class="w-full h-60 object-cover rounded mb-4"/>
+        <h1 class="text-2xl font-bold mb-2">${data.name}</h1>
+        <p class="text-gray-400 mb-2">${data.country || ''} • ${data.period || ''}</p>
+        <p class="mb-4">${data.description || ''}</p>
+        <div class="flex justify-between">
+          <a href="/edit/?id=${data.id}" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded font-semibold">✏️ Éditer l’entrée</a>
+          <button id="deleteBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold">🗑 Supprimer</button>
         </div>
       `;
-    }
 
-    // ✅ Bouton modifier (redirige vers un futur /edit/)
-    document.getElementById("editBtn").addEventListener("click", () => {
-      window.location.href = "/edit/" + id;
-    });
+      document.getElementById("deleteBtn").addEventListener("click", async () => {
+        if (!confirm("❓ Supprimer définitivement cette entrée ?")) return;
 
-    // ✅ Bouton supprimer
-    document.getElementById("deleteBtn").addEventListener("click", async () => {
-      if (confirm("⚠️ Supprimer cette médaille ?")) {
-        const { error } = await supabase.from("medals").delete().eq("id", id).eq("user_id", user.id);
-        if (error) {
-          alert("❌ Erreur suppression: " + error.message);
+        const { error: deleteError } = await supabase
+          .from("medals")
+          .delete()
+          .eq("id", id)
+          .eq("user_id", user.id);
+
+        if (deleteError) {
+          alert("❌ " + deleteError.message);
           return;
         }
-        alert("✅ Médaille supprimée !");
-        window.location.href = "/dashboard/";
-      }
-    });
 
-    // ✅ Déconnexion
+        alert("✅ Entrée supprimée !");
+        window.location.href = "/dashboard/";
+      });
+    }
+
     document.getElementById("logoutBtn").addEventListener("click", async () => {
       await supabase.auth.signOut();
       window.location.href = "/";

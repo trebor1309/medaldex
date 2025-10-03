@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-i18n="app.title">Medaldex - Dashboard</title>
+  <title>Medaldex - Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
@@ -13,7 +13,7 @@
   <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
     <div class="flex space-x-6">
       <a href="/dashboard/" class="text-blue-400 font-bold" data-i18n="app.title">Dashboard</a>
-      <a href="/add/" class="hover:text-blue-400" data-i18n="add.title">Ajouter</a>
+      <a href="/add/" class="hover:text-blue-400" data-i18n="add.title">Ajouter une entrée</a>
       <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
     </div>
     <div class="flex items-center space-x-4">
@@ -27,46 +27,43 @@
     </div>
   </nav>
 
-  <!-- ✅ Filtres + Switch vue -->
-  <section class="p-6 bg-gray-800 border-b border-gray-700 grid grid-cols-1 md:grid-cols-7 gap-4 items-center">
-    <input id="searchInput" type="text" placeholder="Recherche..." data-i18n-placeholder="filters.search"
-           class="col-span-2 p-2 rounded bg-gray-900 border border-gray-600"/>
-
-    <input id="makerFilter" type="text" placeholder="Fabricant..." data-i18n-placeholder="filters.maker"
-           class="col-span-1 p-2 rounded bg-gray-900 border border-gray-600"/>
-
-    <input id="countryFilter" type="text" placeholder="Pays..." data-i18n-placeholder="filters.allCountries"
-           class="col-span-1 p-2 rounded bg-gray-900 border border-gray-600"/>
-
-    <input id="periodFilter" type="text" placeholder="Période..." data-i18n-placeholder="filters.allPeriods"
-           class="col-span-1 p-2 rounded bg-gray-900 border border-gray-600"/>
-
-    <select id="typeFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
-      <option value="" data-i18n="filters.allTypes">Tous les types</option>
-      <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
-      <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
-    </select>
-
-    <select id="stateFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
-      <option value="" data-i18n="filters.allStates">Tous les états</option>
-      <option value="new" data-i18n="filters.states.new">Neuf</option>
-      <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
-      <option value="good" data-i18n="filters.states.good">Bon</option>
-      <option value="fair" data-i18n="filters.states.fair">Moyen</option>
-      <option value="poor" data-i18n="filters.states.poor">Usé</option>
-    </select>
-
-    <!-- ✅ Switch affichage -->
-    <div class="flex space-x-2">
-      <button id="gridView" class="px-3 py-1 bg-gray-700 rounded">⬜</button>
-      <button id="listView" class="px-3 py-1 bg-gray-700 rounded">📜</button>
-    </div>
-  </section>
-
-  <!-- ✅ Résultats -->
+  <!-- ✅ Contenu principal -->
   <main class="flex-1 p-6">
-    <h1 class="text-2xl font-bold mb-4" data-i18n="app.slogan">Ma collection</h1>
-    <div id="medalList" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    <h1 class="text-2xl font-bold mb-6">📚 Ma collection</h1>
+
+    <!-- Filtres -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+      <input id="search" type="text" data-i18n-placeholder="filters.search"
+             class="p-2 rounded bg-gray-800 border border-gray-600"/>
+      <select id="filterCountry" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="" data-i18n="filters.allCountries">Tous les pays</option>
+      </select>
+      <select id="filterPeriod" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="" data-i18n="filters.allPeriods">Toutes les périodes</option>
+      </select>
+      <select id="filterType" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="" data-i18n="filters.allTypes">Tous les types</option>
+        <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
+        <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
+      </select>
+      <select id="filterState" class="p-2 rounded bg-gray-800 border border-gray-600">
+        <option value="" data-i18n="filters.allStates">Tous les états</option>
+        <option value="new" data-i18n="filters.states.new">Neuf</option>
+        <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
+        <option value="good" data-i18n="filters.states.good">Bon</option>
+        <option value="fair" data-i18n="filters.states.fair">Moyen</option>
+        <option value="poor" data-i18n="filters.states.poor">Usé</option>
+      </select>
+    </div>
+
+    <!-- Switch affichage -->
+    <div class="flex justify-end mb-4 space-x-2">
+      <button id="gridBtn" class="px-3 py-1 bg-gray-700 rounded">🔲 Grille</button>
+      <button id="listBtn" class="px-3 py-1 bg-gray-700 rounded">📋 Liste</button>
+    </div>
+
+    <!-- Résultats -->
+    <div id="collection" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
   </main>
 
   <script type="module">
@@ -77,105 +74,73 @@
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      window.location.href = "/login/";
+    if (!user) window.location.href = "/login/";
+
+    const collectionDiv = document.getElementById("collection");
+    let viewMode = "grid";
+
+    async function loadCollection() {
+      const { data, error } = await supabase
+        .from("medals")
+        .select("*")
+        .eq("user_id", user.id);
+
+      if (error) {
+        alert("❌ " + error.message);
+        return;
+      }
+
+      displayCollection(data);
     }
 
-    const medalList = document.getElementById("medalList");
-    const searchInput = document.getElementById("searchInput");
-    const makerFilter = document.getElementById("makerFilter");
-    const countryFilter = document.getElementById("countryFilter");
-    const periodFilter = document.getElementById("periodFilter");
-    const typeFilter = document.getElementById("typeFilter");
-    const stateFilter = document.getElementById("stateFilter");
-
-    let viewMode = "grid"; // "grid" ou "list"
-
-    async function loadMedals() {
-      let query = supabase.from("medals").select("*").eq("user_id", user.id);
-
-      if (searchInput.value) query = query.ilike("name", `%${searchInput.value}%`);
-      if (makerFilter.value) query = query.ilike("maker", `%${makerFilter.value}%`);
-      if (countryFilter.value) query = query.ilike("country", `%${countryFilter.value}%`);
-      if (periodFilter.value) query = query.ilike("period", `%${periodFilter.value}%`);
-      if (typeFilter.value) query = query.eq("type", typeFilter.value);
-      if (stateFilter.value) query = query.eq("state", stateFilter.value);
-
-      const { data, error } = await query;
-      if (error) {
-        console.error("Erreur chargement médailles:", error);
+    function displayCollection(items) {
+      collectionDiv.innerHTML = "";
+      if (items.length === 0) {
+        collectionDiv.innerHTML = "<p class='text-gray-400'>Aucune entrée.</p>";
         return;
       }
 
       if (viewMode === "grid") {
-        medalList.className = "grid grid-cols-1 md:grid-cols-3 gap-6";
-        medalList.innerHTML = data.length
-          ? data.map(m => `
-            <div onclick="window.location.href='/medal/${m.id}'"
-                 class="cursor-pointer bg-gray-900 border border-gray-700 rounded-lg p-4 shadow hover:scale-105 transition">
-              <img src="${m.image || '/placeholder.png'}"
-                   onerror="this.src='/placeholder.png'"
-                   alt="${m.name}"
-                   class="w-full h-40 object-cover rounded mb-2"/>
-              <h2 class="text-lg font-bold">${m.name}</h2>
-              <p><strong>Période:</strong> ${m.period || '-'}</p>
-              <p><strong>Pays:</strong> ${m.country || '-'}</p>
-              <p><strong>Fabricant:</strong> ${m.maker || '-'}</p>
-              <p><span data-i18n="filters.state">État</span>: ${m.state}</p>
-            </div>
-          `).join("")
-          : "<p>Aucune médaille trouvée.</p>";
+        collectionDiv.className = "grid grid-cols-1 md:grid-cols-3 gap-6";
+        items.forEach(m => {
+          const card = document.createElement("div");
+          card.className = "cursor-pointer bg-gray-900 border border-gray-700 rounded-lg p-4 shadow hover:scale-105 transform-gpu transition";
+          card.innerHTML = `
+            <img src="${m.image || '/placeholder.png'}" alt="${m.name}" class="w-full h-40 object-cover rounded mb-3"/>
+            <h2 class="font-bold">${m.name}</h2>
+            <p class="text-sm text-gray-400">${m.country || ''} • ${m.period || ''}</p>
+          `;
+          card.addEventListener("click", () => {
+            window.location.href = "/medal/?id=" + m.id;
+          });
+          collectionDiv.appendChild(card);
+        });
       } else {
-        medalList.className = "overflow-x-auto";
-        medalList.innerHTML = data.length
-          ? `<table class="w-full text-left border border-gray-700">
-              <thead class="bg-gray-800">
-                <tr>
-                  <th class="p-2">Nom</th>
-                  <th class="p-2">Période</th>
-                  <th class="p-2">Pays</th>
-                  <th class="p-2">Fabricant</th>
-                  <th class="p-2">État</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${data.map(m => `
-                  <tr class="border-t border-gray-700 hover:bg-gray-800 cursor-pointer"
-                      onclick="window.location.href='/medal/${m.id}'">
-                    <td class="p-2">${m.name}</td>
-                    <td class="p-2">${m.period || '-'}</td>
-                    <td class="p-2">${m.country || '-'}</td>
-                    <td class="p-2">${m.maker || '-'}</td>
-                    <td class="p-2">${m.state}</td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>`
-          : "<p>Aucune médaille trouvée.</p>";
+        collectionDiv.className = "space-y-4";
+        items.forEach(m => {
+          const row = document.createElement("div");
+          row.className = "cursor-pointer bg-gray-900 border border-gray-700 rounded-lg p-4 shadow hover:bg-gray-800 transition";
+          row.innerHTML = `
+            <h2 class="font-bold">${m.name}</h2>
+            <p class="text-sm text-gray-400">${m.country || ''} • ${m.period || ''}</p>
+          `;
+          row.addEventListener("click", () => {
+            window.location.href = "/medal/?id=" + m.id;
+          });
+          collectionDiv.appendChild(row);
+        });
       }
     }
 
-    [searchInput, makerFilter, countryFilter, periodFilter, typeFilter, stateFilter].forEach(el =>
-      el.addEventListener("input", loadMedals)
-    );
+    document.getElementById("gridBtn").addEventListener("click", () => { viewMode = "grid"; loadCollection(); });
+    document.getElementById("listBtn").addEventListener("click", () => { viewMode = "list"; loadCollection(); });
 
-    // ✅ Switch Vue
-    document.getElementById("gridView").addEventListener("click", () => {
-      viewMode = "grid";
-      loadMedals();
-    });
-    document.getElementById("listView").addEventListener("click", () => {
-      viewMode = "list";
-      loadMedals();
-    });
-
-    // ✅ Déconnexion
     document.getElementById("logoutBtn").addEventListener("click", async () => {
       await supabase.auth.signOut();
       window.location.href = "/";
     });
 
-    loadMedals();
+    loadCollection();
   </script>
 </body>
 </html>

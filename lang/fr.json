@@ -1,23 +1,21 @@
 {
   "app": {
     "title": "Medaldex",
-    "slogan": "Organise et référence ta collection de médailles"
+    "slogan": "Organise et référence ta collection de décorations"
   },
   "buttons": {
     "login": "Se connecter",
     "signup": "Créer un compte",
-    "logout": "Déconnexion",
-    "save": "Enregistrer",
-    "delete": "Supprimer"
+    "logout": "Déconnexion"
   },
   "hero": {
-    "desc": "Medaldex est ton Pokédex des médailles militaires : ajoute, gère et explore ta collection comme jamais auparavant."
+    "desc": "Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant."
   },
   "features": {
     "title": "Fonctionnalités principales",
     "subtitle": "Tout ce qu’il te faut pour gérer ta collection",
-    "organize": "Classe tes médailles par pays, période, fabricant.",
-    "search": "Trouve instantanément la médaille que tu veux.",
+    "organize": "Classe tes entrées par pays, époque, type, fabricant.",
+    "search": "Trouve instantanément l’entrée que tu veux.",
     "stats": "Découvre des statistiques sur ta collection."
   },
   "footer": {
@@ -40,25 +38,23 @@
       "fair": "Moyen",
       "poor": "Usé"
     },
-    "state": "État",
-    "maker": "Fabricant",
-    "period": "Période"
+    "state": "État"
   },
   "add": {
-    "title": "Ajouter une médaille",
-    "name": "Nom de la médaille",
+    "title": "Ajouter une entrée",
+    "name": "Nom",
     "country": "Pays",
     "period": "Période",
-    "maker": "Fabricant",
     "type": "Type",
+    "maker": "Fabricant",
     "state": "État de conservation",
     "description": "Description",
-    "image": "Image de la médaille",
+    "image": "Image (URL)",
     "submit": "Enregistrer"
   },
   "edit": {
-    "title": "Modifier une médaille",
-    "submit": "Mettre à jour"
+    "title": "✏️ Éditer l’entrée",
+    "save": "Enregistrer"
   },
   "profile": {
     "title": "Mon profil",
