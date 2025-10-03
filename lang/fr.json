@@ -9,38 +9,27 @@
     "logout": "Déconnexion"
   },
   "hero": {
-    "desc": "Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant."
+    "desc": "Medaldex est ton Pokédex des médailles, rubans et insignes : ajoute, gère et explore ta collection comme jamais auparavant."
   },
   "features": {
     "title": "Fonctionnalités principales",
     "subtitle": "Tout ce qu’il te faut pour gérer ta collection",
-    "organize": "Classe tes entrées par pays, époque, type, fabricant.",
-    "search": "Trouve instantanément l’entrée que tu veux.",
+    "organize": "Classe tes décorations par pays, période, type et fabricant.",
+    "search": "Trouve instantanément l'entrée que tu veux.",
     "stats": "Découvre des statistiques sur ta collection."
   },
-  "how": {
-    "title": "🚀 Comment ça marche ?",
-    "step1": {
-      "title": "1️⃣ Crée un compte",
-      "text": "Inscris-toi gratuitement en quelques secondes."
-    },
-    "step2": {
-      "title": "2️⃣ Ajoute tes entrées",
-      "text": "Ajoute médailles, insignes, rubans avec description et photo."
-    },
-    "step3": {
-      "title": "3️⃣ Explore ta collection",
-      "text": "Filtre, recherche et découvre tes statistiques."
-    }
-  },
   "footer": {
-    "rights": "© 2025 Medaldex. Tous droits réservés."
+    "rights": "© 2025 Medaldex. Tous droits réservés.",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité",
+    "contact": "Contact"
   },
   "filters": {
     "search": "Recherche...",
     "allCountries": "Tous les pays",
-    "allPeriods": "Toutes les époques",
+    "allPeriods": "Toutes les périodes",
     "allTypes": "Tous les types",
+    "custom": "Autre (saisir…)",
     "types": {
       "military": "Militaires / Paramilitaires",
       "civil": "Civiles / Politiques"
@@ -52,21 +41,34 @@
       "good": "Bon",
       "fair": "Moyen",
       "poor": "Usé"
-    },
-    "state": "État",
-    "maker": "Fabricant"
+    }
+  },
+  "countries": {
+    "germany": "Allemagne",
+    "france": "France",
+    "uk": "Royaume-Uni",
+    "usa": "États-Unis",
+    "ussr": "URSS",
+    "italy": "Italie",
+    "japan": "Japon",
+    "belgium": "Belgique"
   },
   "add": {
     "title": "Ajouter une entrée",
     "name": "Nom",
     "country": "Pays",
-    "period": "Époque / Période",
+    "period": "Période",
     "maker": "Fabricant",
     "type": "Type",
     "state": "État de conservation",
     "description": "Description",
-    "image": "Image (URL)",
+    "image": "URL de l'image",
     "submit": "Enregistrer"
+  },
+  "modal": {
+    "addTitle": "➕ Ajouter une entrée",
+    "editTitle": "✏️ Éditer l'entrée",
+    "save": "💾 Enregistrer"
   },
   "profile": {
     "title": "Mon profil",
@@ -91,9 +93,5 @@
     "password": "Mot de passe",
     "haveAccount": "Déjà un compte ?",
     "noAccount": "Pas encore de compte ?"
-  },
-  "cookies": {
-    "message": "🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.",
-    "accept": "OK"
   }
 }

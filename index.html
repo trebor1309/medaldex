@@ -78,22 +78,23 @@
 
   <!-- How it works -->
   <section class="py-16 text-center px-6">
-    <h2 class="text-3xl font-bold mb-6">🚀 Comment ça marche ?</h2>
+    <h2 class="text-3xl font-bold mb-6" data-i18n="how.title">🚀 Comment ça marche ?</h2>
     <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
       <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-bold text-xl mb-2">1️⃣ Crée un compte</h3>
-        <p>Inscris-toi gratuitement en quelques secondes.</p>
+        <h3 class="font-bold text-xl mb-2" data-i18n="how.step1.title">1️⃣ Crée un compte</h3>
+        <p data-i18n="how.step1.text">Inscris-toi gratuitement en quelques secondes.</p>
       </div>
       <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-bold text-xl mb-2">2️⃣ Ajoute tes entrées</h3>
-        <p>Ajoute médailles, insignes, rubans avec description et photo.</p>
+        <h3 class="font-bold text-xl mb-2" data-i18n="how.step2.title">2️⃣ Ajoute tes entrées</h3>
+        <p data-i18n="how.step2.text">Ajoute médailles, insignes, rubans avec description et photo.</p>
       </div>
-      <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-bold text-xl mb-2">3️⃣ Explore ta collection</h3>
-        <p>Filtre, recherche et découvre tes statistiques.</p>
+        <div class="bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="font-bold text-xl mb-2" data-i18n="how.step3.title">3️⃣ Explore ta collection</h3>
+        <p data-i18n="how.step3.text">Filtre, recherche et découvre tes statistiques.</p>
       </div>
     </div>
   </section>
+
 
   <!-- Footer -->
   <footer class="bg-gray-900 border-t border-gray-700 p-6 text-center text-gray-400">
@@ -108,9 +109,10 @@
 
   <!-- Cookie Banner -->
   <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-gray-200 p-4 flex justify-between items-center shadow-lg">
-    <p>🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.</p>
-    <button id="acceptCookies" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">OK</button>
+    <p data-i18n="cookies.message">🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.</p>
+    <button id="acceptCookies" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded" data-i18n="cookies.accept">OK</button>
   </div>
+
 
   <!-- Modals -->
   <div id="modalBackdrop" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"></div>
