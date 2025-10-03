@@ -7,7 +7,7 @@ let currentLang = localStorage.getItem("lang") || detectLanguage();
 
 function detectLanguage() {
   const userLang = navigator.language.slice(0, 2);
-  return ["fr", "en"].includes(userLang) ? userLang : "fr";
+  return ["fr", "en"].includes(userLang) ? userLang : "en";
 }
 
 async function loadLanguage(lang = "fr") {
