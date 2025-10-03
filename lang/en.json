@@ -7,7 +7,8 @@
     "login": "Log in",
     "signup": "Sign up",
     "logout": "Log out",
-    "save": "Save"
+    "save": "Save",
+    "delete": "Delete"
   },
   "hero": {
     "desc": "Medaldex is your military medal Pokédex: add, manage and explore your collection like never before."
@@ -15,7 +16,7 @@
   "features": {
     "title": "Main Features",
     "subtitle": "Everything you need to manage your collection",
-    "organize": "Sort your medals by country, year, maker.",
+    "organize": "Sort your medals by country, period, maker.",
     "search": "Instantly find the medal you want.",
     "stats": "Discover insights and statistics about your collection."
   },
@@ -24,9 +25,8 @@
   },
   "filters": {
     "search": "Search...",
-    "maker": "Maker",
     "allCountries": "All countries",
-    "allYears": "All years",
+    "allPeriods": "All periods",
     "allTypes": "All types",
     "types": {
       "military": "Military / Paramilitary",
@@ -40,13 +40,15 @@
       "fair": "Fair",
       "poor": "Worn"
     },
-    "state": "Condition"
+    "state": "Condition",
+    "maker": "Maker",
+    "period": "Period"
   },
   "add": {
     "title": "Add a medal",
     "name": "Medal name",
     "country": "Country",
-    "year": "Year",
+    "period": "Period",
     "maker": "Maker",
     "type": "Type",
     "state": "Condition",
@@ -54,10 +56,15 @@
     "image": "Medal image",
     "submit": "Save"
   },
+  "edit": {
+    "title": "Edit a medal",
+    "submit": "Update"
+  },
   "profile": {
     "title": "My profile",
     "username": "Username",
     "changeUsername": "Change username",
+    "save": "Save",
     "deleteTitle": "Delete account",
     "deleteWarning": "Warning: this action is irreversible and will delete all your data.",
     "deleteBtn": "Delete my account",
@@ -75,6 +82,6 @@
     "email": "Email address",
     "password": "Password",
     "haveAccount": "Already have an account?",
-    "noAccount": "No account yet?"
+    "noAccount": "Don’t have an account yet?"
   }
 }

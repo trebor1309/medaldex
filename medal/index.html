@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medaldex - Médaille</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/i18n.js" defer></script>
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
+
+  <!-- ✅ Navbar -->
+  <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
+    <div class="flex space-x-6">
+      <a href="/dashboard/" class="text-blue-400 font-bold" data-i18n="app.title">Dashboard</a>
+      <a href="/add/" class="hover:text-blue-400" data-i18n="add.title">Ajouter</a>
+      <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
+    </div>
+    <div class="flex items-center space-x-4">
+      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="en">🇬🇧 EN</option>
+      </select>
+      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout">
+        Déconnexion
+      </button>
+    </div>
+  </nav>
+
+  <!-- ✅ Contenu -->
+  <main class="flex-1 p-6 flex flex-col items-center">
+    <div id="medalDetails" class="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-2xl w-full shadow-lg">
+      <p>Chargement...</p>
+    </div>
+
+    <div class="mt-6 flex space-x-4">
+      <button id="editBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded">✏️ Modifier</button>
+      <button id="deleteBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded">🗑️ Supprimer</button>
+    </div>
+  </main>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+    import { loadConfig } from "/config.js";
+
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) window.location.href = "/login/";
+
+    const medalDetails = document.getElementById("medalDetails");
+
+    // ✅ Récupération de l’ID depuis l’URL (/medal/123)
+    const id = window.location.pathname.split("/").pop();
+
+    async function loadMedal() {
+      const { data, error } = await supabase
+        .from("medals")
+        .select("*")
+        .eq("id", id)
+        .eq("user_id", user.id)
+        .single();
+
+      if (error || !data) {
+        medalDetails.innerHTML = "<p>❌ Médaille introuvable.</p>";
+        return;
+      }
+
+      medalDetails.innerHTML = `
+        <div class="flex flex-col items-center">
+          <img src="${data.image || '/placeholder.png'}"
+               onerror="this.src='/placeholder.png'"
+               alt="${data.name}"
+               class="w-64 h-64 object-cover rounded mb-4"/>
+          <h1 class="text-3xl font-bold mb-2">${data.name}</h1>
+          <p><strong>Période:</strong> ${data.period || '-'}</p>
+          <p><strong>Pays:</strong> ${data.country || '-'}</p>
+          <p><strong>Fabricant:</strong> ${data.maker || '-'}</p>
+          <p><strong>État:</strong> ${data.state}</p>
+          <p class="mt-4"><strong>Description:</strong><br/> ${data.description || '-'}</p>
+        </div>
+      `;
+    }
+
+    // ✅ Bouton modifier (redirige vers un futur /edit/)
+    document.getElementById("editBtn").addEventListener("click", () => {
+      window.location.href = "/edit/" + id;
+    });
+
+    // ✅ Bouton supprimer
+    document.getElementById("deleteBtn").addEventListener("click", async () => {
+      if (confirm("⚠️ Supprimer cette médaille ?")) {
+        const { error } = await supabase.from("medals").delete().eq("id", id).eq("user_id", user.id);
+        if (error) {
+          alert("❌ Erreur suppression: " + error.message);
+          return;
+        }
+        alert("✅ Médaille supprimée !");
+        window.location.href = "/dashboard/";
+      }
+    });
+
+    // ✅ Déconnexion
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "/";
+    });
+
+    loadMedal();
+  </script>
+</body>
+</html>

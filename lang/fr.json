@@ -7,7 +7,8 @@
     "login": "Se connecter",
     "signup": "Créer un compte",
     "logout": "Déconnexion",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "delete": "Supprimer"
   },
   "hero": {
     "desc": "Medaldex est ton Pokédex des médailles militaires : ajoute, gère et explore ta collection comme jamais auparavant."
@@ -15,7 +16,7 @@
   "features": {
     "title": "Fonctionnalités principales",
     "subtitle": "Tout ce qu’il te faut pour gérer ta collection",
-    "organize": "Classe tes médailles par pays, année, fabricant.",
+    "organize": "Classe tes médailles par pays, période, fabricant.",
     "search": "Trouve instantanément la médaille que tu veux.",
     "stats": "Découvre des statistiques sur ta collection."
   },
@@ -24,9 +25,8 @@
   },
   "filters": {
     "search": "Recherche...",
-    "maker": "Fabricant",
     "allCountries": "Tous les pays",
-    "allYears": "Toutes les années",
+    "allPeriods": "Toutes les périodes",
     "allTypes": "Tous les types",
     "types": {
       "military": "Militaires / Paramilitaires",
@@ -40,13 +40,15 @@
       "fair": "Moyen",
       "poor": "Usé"
     },
-    "state": "État"
+    "state": "État",
+    "maker": "Fabricant",
+    "period": "Période"
   },
   "add": {
     "title": "Ajouter une médaille",
     "name": "Nom de la médaille",
     "country": "Pays",
-    "year": "Année",
+    "period": "Période",
     "maker": "Fabricant",
     "type": "Type",
     "state": "État de conservation",
@@ -54,10 +56,15 @@
     "image": "Image de la médaille",
     "submit": "Enregistrer"
   },
+  "edit": {
+    "title": "Modifier une médaille",
+    "submit": "Mettre à jour"
+  },
   "profile": {
     "title": "Mon profil",
     "username": "Pseudo",
     "changeUsername": "Changer de pseudo",
+    "save": "Enregistrer",
     "deleteTitle": "Supprimer le compte",
     "deleteWarning": "Attention : cette action est irréversible et supprimera toutes vos données.",
     "deleteBtn": "Supprimer mon compte",

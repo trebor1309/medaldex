@@ -27,21 +27,19 @@
     </div>
   </nav>
 
-  <!-- ✅ Filtres -->
-  <section class="p-6 bg-gray-800 border-b border-gray-700 grid grid-cols-1 md:grid-cols-6 gap-4">
+  <!-- ✅ Filtres + Switch vue -->
+  <section class="p-6 bg-gray-800 border-b border-gray-700 grid grid-cols-1 md:grid-cols-7 gap-4 items-center">
     <input id="searchInput" type="text" placeholder="Recherche..." data-i18n-placeholder="filters.search"
-           class="col-span-1 md:col-span-2 p-2 rounded bg-gray-900 border border-gray-600"/>
+           class="col-span-2 p-2 rounded bg-gray-900 border border-gray-600"/>
 
     <input id="makerFilter" type="text" placeholder="Fabricant..." data-i18n-placeholder="filters.maker"
            class="col-span-1 p-2 rounded bg-gray-900 border border-gray-600"/>
 
-    <select id="countryFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
-      <option value="" data-i18n="filters.allCountries">Tous les pays</option>
-    </select>
+    <input id="countryFilter" type="text" placeholder="Pays..." data-i18n-placeholder="filters.allCountries"
+           class="col-span-1 p-2 rounded bg-gray-900 border border-gray-600"/>
 
-    <select id="yearFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
-      <option value="" data-i18n="filters.allYears">Toutes les années</option>
-    </select>
+    <input id="periodFilter" type="text" placeholder="Période..." data-i18n-placeholder="filters.allPeriods"
+           class="col-span-1 p-2 rounded bg-gray-900 border border-gray-600"/>
 
     <select id="typeFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
       <option value="" data-i18n="filters.allTypes">Tous les types</option>
@@ -57,6 +55,12 @@
       <option value="fair" data-i18n="filters.states.fair">Moyen</option>
       <option value="poor" data-i18n="filters.states.poor">Usé</option>
     </select>
+
+    <!-- ✅ Switch affichage -->
+    <div class="flex space-x-2">
+      <button id="gridView" class="px-3 py-1 bg-gray-700 rounded">⬜</button>
+      <button id="listView" class="px-3 py-1 bg-gray-700 rounded">📜</button>
+    </div>
   </section>
 
   <!-- ✅ Résultats -->
@@ -81,18 +85,19 @@
     const searchInput = document.getElementById("searchInput");
     const makerFilter = document.getElementById("makerFilter");
     const countryFilter = document.getElementById("countryFilter");
-    const yearFilter = document.getElementById("yearFilter");
+    const periodFilter = document.getElementById("periodFilter");
     const typeFilter = document.getElementById("typeFilter");
     const stateFilter = document.getElementById("stateFilter");
 
-    // ✅ Charger les médailles de l'utilisateur
+    let viewMode = "grid"; // "grid" ou "list"
+
     async function loadMedals() {
       let query = supabase.from("medals").select("*").eq("user_id", user.id);
 
       if (searchInput.value) query = query.ilike("name", `%${searchInput.value}%`);
       if (makerFilter.value) query = query.ilike("maker", `%${makerFilter.value}%`);
-      if (countryFilter.value) query = query.eq("country", countryFilter.value);
-      if (yearFilter.value) query = query.eq("year", yearFilter.value);
+      if (countryFilter.value) query = query.ilike("country", `%${countryFilter.value}%`);
+      if (periodFilter.value) query = query.ilike("period", `%${periodFilter.value}%`);
       if (typeFilter.value) query = query.eq("type", typeFilter.value);
       if (stateFilter.value) query = query.eq("state", stateFilter.value);
 
@@ -102,25 +107,67 @@
         return;
       }
 
-      medalList.innerHTML = data.length
-        ? data.map(m => `
-          <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 shadow">
-            <img src="${m.image || '/placeholder.png'}" alt="${m.name}" class="w-full h-40 object-cover rounded mb-2"/>
-            <h2 class="text-lg font-bold">${m.name}</h2>
-            <p><strong>Pays:</strong> ${m.country || '-'}</p>
-            <p><strong>Année:</strong> ${m.year || '-'}</p>
-            <p><strong>Fabricant:</strong> ${m.maker || '-'}</p>
-            <p><span data-i18n="filters.state">État</span>: ${m.state}</p>
-            <p class="text-sm text-gray-400">${m.description || ""}</p>
-          </div>
-        `).join("")
-        : "<p>Aucune médaille trouvée.</p>";
+      if (viewMode === "grid") {
+        medalList.className = "grid grid-cols-1 md:grid-cols-3 gap-6";
+        medalList.innerHTML = data.length
+          ? data.map(m => `
+            <div onclick="window.location.href='/medal/${m.id}'"
+                 class="cursor-pointer bg-gray-900 border border-gray-700 rounded-lg p-4 shadow hover:scale-105 transition">
+              <img src="${m.image || '/placeholder.png'}"
+                   onerror="this.src='/placeholder.png'"
+                   alt="${m.name}"
+                   class="w-full h-40 object-cover rounded mb-2"/>
+              <h2 class="text-lg font-bold">${m.name}</h2>
+              <p><strong>Période:</strong> ${m.period || '-'}</p>
+              <p><strong>Pays:</strong> ${m.country || '-'}</p>
+              <p><strong>Fabricant:</strong> ${m.maker || '-'}</p>
+              <p><span data-i18n="filters.state">État</span>: ${m.state}</p>
+            </div>
+          `).join("")
+          : "<p>Aucune médaille trouvée.</p>";
+      } else {
+        medalList.className = "overflow-x-auto";
+        medalList.innerHTML = data.length
+          ? `<table class="w-full text-left border border-gray-700">
+              <thead class="bg-gray-800">
+                <tr>
+                  <th class="p-2">Nom</th>
+                  <th class="p-2">Période</th>
+                  <th class="p-2">Pays</th>
+                  <th class="p-2">Fabricant</th>
+                  <th class="p-2">État</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(m => `
+                  <tr class="border-t border-gray-700 hover:bg-gray-800 cursor-pointer"
+                      onclick="window.location.href='/medal/${m.id}'">
+                    <td class="p-2">${m.name}</td>
+                    <td class="p-2">${m.period || '-'}</td>
+                    <td class="p-2">${m.country || '-'}</td>
+                    <td class="p-2">${m.maker || '-'}</td>
+                    <td class="p-2">${m.state}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>`
+          : "<p>Aucune médaille trouvée.</p>";
+      }
     }
 
-    // ✅ Listeners
-    [searchInput, makerFilter, countryFilter, yearFilter, typeFilter, stateFilter].forEach(el =>
+    [searchInput, makerFilter, countryFilter, periodFilter, typeFilter, stateFilter].forEach(el =>
       el.addEventListener("input", loadMedals)
     );
+
+    // ✅ Switch Vue
+    document.getElementById("gridView").addEventListener("click", () => {
+      viewMode = "grid";
+      loadMedals();
+    });
+    document.getElementById("listView").addEventListener("click", () => {
+      viewMode = "list";
+      loadMedals();
+    });
 
     // ✅ Déconnexion
     document.getElementById("logoutBtn").addEventListener("click", async () => {
@@ -128,7 +175,6 @@
       window.location.href = "/";
     });
 
-    // Charger initialement
     loadMedals();
   </script>
 </body>
