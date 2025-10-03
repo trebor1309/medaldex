@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Medaldex",
-    "slogan": "Organize and reference your collection of decorations"
+    "slogan": "Organize and reference your decorations collection"
   },
   "buttons": {
     "login": "Log in",
@@ -14,9 +14,24 @@
   "features": {
     "title": "Main Features",
     "subtitle": "Everything you need to manage your collection",
-    "organize": "Sort your entries by country, period, type, maker.",
+    "organize": "Sort your entries by country, period, type, manufacturer.",
     "search": "Instantly find the entry you want.",
     "stats": "Discover insights and statistics about your collection."
+  },
+  "how": {
+    "title": "🚀 How it works?",
+    "step1": {
+      "title": "1️⃣ Create an account",
+      "text": "Sign up for free in a few seconds."
+    },
+    "step2": {
+      "title": "2️⃣ Add your entries",
+      "text": "Add medals, insignia, ribbons with description and photo."
+    },
+    "step3": {
+      "title": "3️⃣ Explore your collection",
+      "text": "Filter, search and discover your stats."
+    }
   },
   "footer": {
     "rights": "© 2025 Medaldex. All rights reserved."
@@ -38,23 +53,20 @@
       "fair": "Fair",
       "poor": "Worn"
     },
-    "state": "Condition"
+    "state": "Condition",
+    "maker": "Manufacturer"
   },
   "add": {
     "title": "Add an entry",
     "name": "Name",
     "country": "Country",
-    "period": "Period",
+    "period": "Period / Era",
+    "maker": "Manufacturer",
     "type": "Type",
-    "maker": "Maker",
     "state": "Condition",
     "description": "Description",
     "image": "Image (URL)",
     "submit": "Save"
-  },
-  "edit": {
-    "title": "✏️ Edit entry",
-    "save": "Save"
   },
   "profile": {
     "title": "My profile",
@@ -70,14 +82,18 @@
     "password": "Password",
     "statsTitle": "Personal statistics",
     "exportTitle": "Export my collection",
-    "exportCSV": "Export to CSV",
-    "exportPDF": "Export to PDF"
+    "exportCSV": "Export as CSV",
+    "exportPDF": "Export as PDF"
   },
   "auth": {
     "username": "Username",
     "email": "Email address",
     "password": "Password",
     "haveAccount": "Already have an account?",
-    "noAccount": "No account yet?"
+    "noAccount": "Don't have an account yet?"
+  },
+  "cookies": {
+    "message": "🍪 This site only uses technical cookies necessary for its operation.",
+    "accept": "Accept"
   }
 }

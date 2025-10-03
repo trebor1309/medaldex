@@ -18,13 +18,28 @@
     "search": "Trouve instantanément l’entrée que tu veux.",
     "stats": "Découvre des statistiques sur ta collection."
   },
+  "how": {
+    "title": "🚀 Comment ça marche ?",
+    "step1": {
+      "title": "1️⃣ Crée un compte",
+      "text": "Inscris-toi gratuitement en quelques secondes."
+    },
+    "step2": {
+      "title": "2️⃣ Ajoute tes entrées",
+      "text": "Ajoute médailles, insignes, rubans avec description et photo."
+    },
+    "step3": {
+      "title": "3️⃣ Explore ta collection",
+      "text": "Filtre, recherche et découvre tes statistiques."
+    }
+  },
   "footer": {
     "rights": "© 2025 Medaldex. Tous droits réservés."
   },
   "filters": {
     "search": "Recherche...",
     "allCountries": "Tous les pays",
-    "allPeriods": "Toutes les périodes",
+    "allPeriods": "Toutes les époques",
     "allTypes": "Tous les types",
     "types": {
       "military": "Militaires / Paramilitaires",
@@ -38,23 +53,20 @@
       "fair": "Moyen",
       "poor": "Usé"
     },
-    "state": "État"
+    "state": "État",
+    "maker": "Fabricant"
   },
   "add": {
     "title": "Ajouter une entrée",
     "name": "Nom",
     "country": "Pays",
-    "period": "Période",
-    "type": "Type",
+    "period": "Époque / Période",
     "maker": "Fabricant",
+    "type": "Type",
     "state": "État de conservation",
     "description": "Description",
     "image": "Image (URL)",
     "submit": "Enregistrer"
-  },
-  "edit": {
-    "title": "✏️ Éditer l’entrée",
-    "save": "Enregistrer"
   },
   "profile": {
     "title": "Mon profil",
@@ -79,5 +91,9 @@
     "password": "Mot de passe",
     "haveAccount": "Déjà un compte ?",
     "noAccount": "Pas encore de compte ?"
+  },
+  "cookies": {
+    "message": "🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.",
+    "accept": "OK"
   }
 }
