@@ -1,64 +1,111 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medaldex</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="app.title">Medaldex</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
-<body class="bg-black text-white font-sans">
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white flex flex-col min-h-screen">
 
-  <!-- Navbar -->
-  <header class="bg-black border-b border-gray-700">
-    <nav class="container mx-auto flex justify-between items-center p-4">
-      <a href="/" class="text-2xl font-bold text-gray-200 tracking-wide" data-i18n="app.title"></a>
-
-      <!-- Sélecteur de langue -->
+  <!-- ✅ Navbar -->
+  <nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+    <a href="/" class="text-2xl font-bold text-silver">Medaldex</a>
+    <div class="flex items-center space-x-4">
+      <a href="/login/" class="hover:text-blue-400" data-i18n="buttons.login">Se connecter</a>
+      <a href="/signup/" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup">Créer un compte</a>
       <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
         <option value="fr">🇫🇷 FR</option>
         <option value="en">🇬🇧 EN</option>
       </select>
-    </nav>
+    </div>
+  </nav>
+
+  <!-- ✅ Hero -->
+  <header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
+    <h1 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="app.slogan">Organise et référence ta collection de décorations</h1>
+    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8" data-i18n="hero.desc">
+      Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant.
+    </p>
+    <div class="flex space-x-4">
+      <a href="/signup/" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.signup">
+        Créer un compte
+      </a>
+      <a href="/login/" class="bg-gray-700 hover:bg-gray-800 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.login">
+        Se connecter
+      </a>
+    </div>
   </header>
 
-  <!-- Hero -->
-  <section class="text-center py-20 px-6 bg-gradient-to-b from-black via-gray-900 to-gray-800">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-lg" data-i18n="app.slogan"></h1>
-    <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-8" data-i18n="hero.desc"></p>
-    <div class="flex justify-center gap-4">
-      <a href="/signup/" class="px-6 py-3 bg-gray-200 text-black font-semibold rounded-xl shadow hover:bg-white transition" data-i18n="buttons.signup"></a>
-      <a href="/login/" class="px-6 py-3 border border-gray-400 text-gray-200 rounded-xl hover:bg-gray-800 transition" data-i18n="buttons.login"></a>
-    </div>
-    <img src="https://via.placeholder.com/800x400" alt="Aperçu Medaldex" class="mx-auto mt-12 rounded-xl shadow-lg border border-gray-700">
-  </section>
-
-  <!-- Fonctionnalités -->
-  <section id="features" class="py-16 bg-black">
-    <div class="container mx-auto text-center mb-12">
-      <h2 class="text-3xl font-bold text-white" data-i18n="features.title"></h2>
-      <p class="text-gray-400 mt-2" data-i18n="features.subtitle"></p>
-    </div>
-    <div class="container mx-auto grid md:grid-cols-3 gap-8">
-      <div class="p-6 bg-gray-900 border border-gray-700 rounded-xl shadow hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold mb-2">📚</h3>
-        <p class="text-gray-300" data-i18n="features.organize"></p>
+  <!-- ✅ Features -->
+  <section class="py-16 bg-gray-900 text-center">
+    <h2 class="text-3xl font-bold mb-4" data-i18n="features.title">Fonctionnalités principales</h2>
+    <p class="text-gray-400 mb-10" data-i18n="features.subtitle">Tout ce qu’il te faut pour gérer ta collection</p>
+    <div class="grid md:grid-cols-3 gap-8 px-6 max-w-5xl mx-auto">
+      <div class="bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="font-semibold text-xl mb-2">📂</h3>
+        <p data-i18n="features.organize">Classe tes entrées par pays, époque, type, fabricant.</p>
       </div>
-      <div class="p-6 bg-gray-900 border border-gray-700 rounded-xl shadow hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold mb-2">🔍</h3>
-        <p class="text-gray-300" data-i18n="features.search"></p>
+      <div class="bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="font-semibold text-xl mb-2">🔎</h3>
+        <p data-i18n="features.search">Trouve instantanément l’entrée que tu veux.</p>
       </div>
-      <div class="p-6 bg-gray-900 border border-gray-700 rounded-xl shadow hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold mb-2">📊</h3>
-        <p class="text-gray-300" data-i18n="features.stats"></p>
+      <div class="bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="font-semibold text-xl mb-2">📊</h3>
+        <p data-i18n="features.stats">Découvre des statistiques sur ta collection.</p>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 py-6 text-center border-t border-gray-700">
-    <p data-i18n="footer.rights"></p>
+  <!-- ✅ How it works -->
+  <section class="py-16 text-center px-6">
+    <h2 class="text-3xl font-bold mb-6">🚀 Comment ça marche ?</h2>
+    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div class="bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="font-bold text-xl mb-2">1️⃣ Crée un compte</h3>
+        <p>Inscris-toi gratuitement en quelques secondes.</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="font-bold text-xl mb-2">2️⃣ Ajoute tes entrées</h3>
+        <p>Ajoute médailles, insignes, rubans avec description et photo.</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="font-bold text-xl mb-2">3️⃣ Explore ta collection</h3>
+        <p>Filtre, recherche et découvre tes statistiques.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Footer -->
+  <footer class="bg-gray-900 border-t border-gray-700 p-6 text-center text-gray-400">
+    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
+    <div class="mt-4 flex justify-center space-x-6 text-sm">
+      <a href="/legal/" class="hover:text-blue-400">Mentions légales</a>
+      <a href="/privacy/" class="hover:text-blue-400">Confidentialité</a>
+      <a href="/terms/" class="hover:text-blue-400">Conditions d’utilisation</a>
+      <a href="/contact/" class="hover:text-blue-400">Contact</a>
+    </div>
   </footer>
 
+  <!-- ✅ Cookie Banner -->
+  <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-gray-200 p-4 flex justify-between items-center shadow-lg">
+    <p>🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.</p>
+    <button id="acceptCookies" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">OK</button>
+  </div>
+
+  <script>
+    const cookieBanner = document.getElementById("cookieBanner");
+    const acceptBtn = document.getElementById("acceptCookies");
+
+    if (localStorage.getItem("cookiesAccepted")) {
+      cookieBanner.style.display = "none";
+    }
+
+    acceptBtn.addEventListener("click", () => {
+      localStorage.setItem("cookiesAccepted", "true");
+      cookieBanner.style.display = "none";
+    });
+  </script>
 </body>
 </html>
