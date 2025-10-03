@@ -45,13 +45,13 @@
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     import { loadConfig } from "/config.js";
 
-    // Charger dynamiquement la config depuis /vercel-api/config
     const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const form = document.querySelector("form");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const email    = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
 
@@ -60,14 +60,14 @@
         return;
       }
 
-      // Tentative de connexion
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+
       if (error) {
         alert("❌ " + error.message);
         return;
       }
 
-      alert("✅ Connexion réussie !");
+      alert("✅ Connecté !");
       window.location.href = "/dashboard/";
     });
   </script>

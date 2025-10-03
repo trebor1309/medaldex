@@ -47,13 +47,14 @@
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     import { loadConfig } from "/config.js";
 
-    // Récupération dynamique de la config depuis /vercel-api/config
+    // Charger la config dynamique depuis /api/config
     const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const form = document.querySelector("form");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const username = document.getElementById("username").value.trim();
       const email    = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
@@ -64,25 +65,26 @@
       }
 
       // 1) Création du compte via Supabase
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data: { user }, error } = await supabase.auth.signUp({ email, password });
+
       if (error) {
         alert("❌ " + error.message);
         return;
       }
 
       // 2) Création du profil lié (pseudo)
-      if (data.user) {
+      if (user) {
         const { error: profileError } = await supabase
           .from("profiles")
-          .insert([{ id: data.user.id, username }]);
+          .insert([{ id: user.id, username }]);
 
         if (profileError) {
-          console.error("Erreur profil:", profileError.message);
-          // On continue quand même vers dashboard
+          console.error("⚠️ Erreur profil:", profileError.message);
+          // on ne bloque pas l'inscription pour ça
         }
       }
 
-      alert("✅ Compte créé !");
+      alert("✅ Compte créé ! Vérifie ton email pour confirmer ton inscription.");
       window.location.href = "/dashboard/";
     });
   </script>

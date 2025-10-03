@@ -5,7 +5,9 @@
   },
   "buttons": {
     "login": "Se connecter",
-    "signup": "Créer un compte"
+    "signup": "Créer un compte",
+    "logout": "Déconnexion",
+    "save": "Enregistrer"
   },
   "hero": {
     "desc": "Medaldex est ton Pokédex des médailles militaires : ajoute, gère et explore ta collection comme jamais auparavant."
@@ -13,7 +15,7 @@
   "features": {
     "title": "Fonctionnalités principales",
     "subtitle": "Tout ce qu’il te faut pour gérer ta collection",
-    "organize": "Classe tes médailles par pays, année, rareté.",
+    "organize": "Classe tes médailles par pays, année, fabricant.",
     "search": "Trouve instantanément la médaille que tu veux.",
     "stats": "Découvre des statistiques sur ta collection."
   },
@@ -22,6 +24,7 @@
   },
   "filters": {
     "search": "Recherche...",
+    "maker": "Fabricant",
     "allCountries": "Tous les pays",
     "allYears": "Toutes les années",
     "allTypes": "Tous les types",
@@ -44,6 +47,7 @@
     "name": "Nom de la médaille",
     "country": "Pays",
     "year": "Année",
+    "maker": "Fabricant",
     "type": "Type",
     "state": "État de conservation",
     "description": "Description",
@@ -54,7 +58,6 @@
     "title": "Mon profil",
     "username": "Pseudo",
     "changeUsername": "Changer de pseudo",
-    "save": "Enregistrer",
     "deleteTitle": "Supprimer le compte",
     "deleteWarning": "Attention : cette action est irréversible et supprimera toutes vos données.",
     "deleteBtn": "Supprimer mon compte",

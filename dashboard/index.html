@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-i18n="app.title">Medaldex - Tableau de bord</title>
+  <title data-i18n="app.title">Medaldex - Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/i18n.js" defer></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 
-  <!-- Header -->
-  <header class="flex justify-between items-center p-4 border-b border-gray-700 bg-gray-900">
-    <h1 class="text-xl font-bold" data-i18n="app.title">Medaldex</h1>
-    <div class="flex items-center gap-4">
+  <!-- ✅ Navbar -->
+  <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
+    <div class="flex space-x-6">
+      <a href="/dashboard/" class="text-blue-400 font-bold" data-i18n="app.title">Dashboard</a>
+      <a href="/add/" class="hover:text-blue-400" data-i18n="add.title">Ajouter</a>
+      <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
+    </div>
+    <div class="flex items-center space-x-4">
       <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
         <option value="fr">🇫🇷 FR</option>
         <option value="en">🇬🇧 EN</option>
       </select>
-      <button id="logoutBtn" class="px-3 py-1 bg-red-600 hover:bg-red-500 rounded">
+      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout">
         Déconnexion
       </button>
     </div>
-  </header>
+  </nav>
 
-  <!-- Main content -->
+  <!-- ✅ Filtres -->
+  <section class="p-6 bg-gray-800 border-b border-gray-700 grid grid-cols-1 md:grid-cols-6 gap-4">
+    <input id="searchInput" type="text" placeholder="Recherche..." data-i18n-placeholder="filters.search"
+           class="col-span-1 md:col-span-2 p-2 rounded bg-gray-900 border border-gray-600"/>
+
+    <input id="makerFilter" type="text" placeholder="Fabricant..." data-i18n-placeholder="filters.maker"
+           class="col-span-1 p-2 rounded bg-gray-900 border border-gray-600"/>
+
+    <select id="countryFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
+      <option value="" data-i18n="filters.allCountries">Tous les pays</option>
+    </select>
+
+    <select id="yearFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
+      <option value="" data-i18n="filters.allYears">Toutes les années</option>
+    </select>
+
+    <select id="typeFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
+      <option value="" data-i18n="filters.allTypes">Tous les types</option>
+      <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
+      <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
+    </select>
+
+    <select id="stateFilter" class="p-2 rounded bg-gray-900 border border-gray-600">
+      <option value="" data-i18n="filters.allStates">Tous les états</option>
+      <option value="new" data-i18n="filters.states.new">Neuf</option>
+      <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
+      <option value="good" data-i18n="filters.states.good">Bon</option>
+      <option value="fair" data-i18n="filters.states.fair">Moyen</option>
+      <option value="poor" data-i18n="filters.states.poor">Usé</option>
+    </select>
+  </section>
+
+  <!-- ✅ Résultats -->
   <main class="flex-1 p-6">
-    <h2 class="text-2xl font-semibold mb-4" data-i18n="features.subtitle">Ma collection</h2>
-
-    <!-- Zone filtres -->
-    <div class="flex flex-wrap gap-2 mb-6">
-      <input type="text" id="search" placeholder="Recherche..." 
-        data-i18n-placeholder="filters.search"
-        class="p-2 rounded bg-gray-800 border border-gray-600 flex-1"/>
-      <select id="filterType" class="p-2 rounded bg-gray-800 border border-gray-600">
-        <option value="" data-i18n="filters.allTypes">Tous les types</option>
-        <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
-        <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
-      </select>
-      <select id="filterState" class="p-2 rounded bg-gray-800 border border-gray-600">
-        <option value="" data-i18n="filters.allStates">Tous les états</option>
-        <option value="new" data-i18n="filters.states.new">Neuf</option>
-        <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
-        <option value="good" data-i18n="filters.states.good">Bon</option>
-        <option value="fair" data-i18n="filters.states.fair">Moyen</option>
-        <option value="poor" data-i18n="filters.states.poor">Usé</option>
-      </select>
-    </div>
-
-    <!-- Collection affichée -->
-    <div id="medalsList" class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <!-- Les médailles seront injectées ici -->
-    </div>
+    <h1 class="text-2xl font-bold mb-4" data-i18n="app.slogan">Ma collection</h1>
+    <div id="medalList" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
   </main>
-
-  <!-- Footer -->
-  <footer class="p-4 text-center border-t border-gray-700 bg-gray-900 text-sm">
-    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
-  </footer>
 
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -65,52 +72,64 @@
     const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const medalsList = document.getElementById("medalsList");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    // Vérifier si un utilisateur est connecté
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      alert("⚠️ Vous devez être connecté.");
       window.location.href = "/login/";
-    } else {
-      loadMedals(user.id);
     }
 
-    // Déconnexion
-    logoutBtn.addEventListener("click", async () => {
+    const medalList = document.getElementById("medalList");
+    const searchInput = document.getElementById("searchInput");
+    const makerFilter = document.getElementById("makerFilter");
+    const countryFilter = document.getElementById("countryFilter");
+    const yearFilter = document.getElementById("yearFilter");
+    const typeFilter = document.getElementById("typeFilter");
+    const stateFilter = document.getElementById("stateFilter");
+
+    // ✅ Charger les médailles de l'utilisateur
+    async function loadMedals() {
+      let query = supabase.from("medals").select("*").eq("user_id", user.id);
+
+      if (searchInput.value) query = query.ilike("name", `%${searchInput.value}%`);
+      if (makerFilter.value) query = query.ilike("maker", `%${makerFilter.value}%`);
+      if (countryFilter.value) query = query.eq("country", countryFilter.value);
+      if (yearFilter.value) query = query.eq("year", yearFilter.value);
+      if (typeFilter.value) query = query.eq("type", typeFilter.value);
+      if (stateFilter.value) query = query.eq("state", stateFilter.value);
+
+      const { data, error } = await query;
+      if (error) {
+        console.error("Erreur chargement médailles:", error);
+        return;
+      }
+
+      medalList.innerHTML = data.length
+        ? data.map(m => `
+          <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 shadow">
+            <img src="${m.image || '/placeholder.png'}" alt="${m.name}" class="w-full h-40 object-cover rounded mb-2"/>
+            <h2 class="text-lg font-bold">${m.name}</h2>
+            <p><strong>Pays:</strong> ${m.country || '-'}</p>
+            <p><strong>Année:</strong> ${m.year || '-'}</p>
+            <p><strong>Fabricant:</strong> ${m.maker || '-'}</p>
+            <p><span data-i18n="filters.state">État</span>: ${m.state}</p>
+            <p class="text-sm text-gray-400">${m.description || ""}</p>
+          </div>
+        `).join("")
+        : "<p>Aucune médaille trouvée.</p>";
+    }
+
+    // ✅ Listeners
+    [searchInput, makerFilter, countryFilter, yearFilter, typeFilter, stateFilter].forEach(el =>
+      el.addEventListener("input", loadMedals)
+    );
+
+    // ✅ Déconnexion
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
       await supabase.auth.signOut();
       window.location.href = "/";
     });
 
-    // Charger les médailles depuis Supabase
-    async function loadMedals(userId) {
-      const { data, error } = await supabase
-        .from("medals")
-        .select("*")
-        .eq("user_id", userId);
-
-      if (error) {
-        console.error("Erreur chargement médailles:", error.message);
-        medalsList.innerHTML = "<p class='text-red-400'>Erreur lors du chargement.</p>";
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        medalsList.innerHTML = "<p class='text-gray-400'>Aucune médaille enregistrée.</p>";
-        return;
-      }
-
-      medalsList.innerHTML = data.map(medal => `
-        <div class="bg-gray-800 rounded-lg p-4 shadow hover:shadow-lg transition">
-          ${medal.image_url ? `<img src="${medal.image_url}" alt="${medal.name}" class="w-full h-32 object-contain mb-2">` : ""}
-          <h3 class="font-semibold">${medal.name}</h3>
-          <p class="text-sm text-gray-400">${medal.country || ""} - ${medal.year || ""}</p>
-          <p class="text-sm"><span data-i18n="filters.state">État</span> : ${medal.state || ""}</p>
-          <p class="text-xs text-gray-500 mt-1">${medal.description || ""}</p>
-        </div>
-      `).join("");
-    }
+    // Charger initialement
+    loadMedals();
   </script>
 </body>
 </html>
