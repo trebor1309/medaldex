@@ -6,8 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title data-i18n="app.title">Medaldex</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-<script defer="True" src="/js/i18n.js"></script></head>
+</head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white flex flex-col min-h-screen">
 <!-- Navbar -->
 <nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
@@ -254,6 +253,9 @@
       localStorage.setItem("cookiesAccepted", "true");
       cookieBanner.style.display = "none";
     });
+    import { initI18n } from "/js/i18n.js";
+    initI18n();
+
   </script>
 </body>
 </html>
