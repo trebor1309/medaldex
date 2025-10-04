@@ -1,10 +1,15 @@
 // /js/i18n.js
-async function loadTranslations(lang = "en") {
+export async function initI18n() {
+  const lang = localStorage.getItem("lang") || "en";
+  await loadTranslations(lang);
+  setupLanguageSwitcher();
+}
+
+async function loadTranslations(lang) {
   try {
     const response = await fetch(`/lang/${lang}.json`);
     const translations = await response.json();
 
-    // Appliquer les traductions à tous les éléments HTML
     document.querySelectorAll("[data-i18n]").forEach(el => {
       const key = el.getAttribute("data-i18n");
       if (translations[key]) el.innerHTML = translations[key];
@@ -23,17 +28,9 @@ function setupLanguageSwitcher() {
   const switcher = document.getElementById("langSwitcher");
   if (!switcher) return;
 
-  const savedLang = localStorage.getItem("lang") || "en";
-  switcher.value = savedLang;
-  loadTranslations(savedLang);
-
-  switcher.addEventListener("change", () => {
-    const lang = switcher.value;
-    localStorage.setItem("lang", lang);
-    loadTranslations(lang);
+  switcher.addEventListener("change", async () => {
+    const newLang = switcher.value;
+    localStorage.setItem("lang", newLang);
+    await loadTranslations(newLang);
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  setupLanguageSwitcher();
-});
