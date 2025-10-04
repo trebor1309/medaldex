@@ -6,9 +6,9 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title data-i18n="buttons.signup">Créer un compte</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script defer="" src="/js/i18n.js"></script>
+
 <script src="/js/signup.js" type="module"></script>
-</head>
+<script defer="True" src="/js/i18n.js"></script></head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex items-center justify-center">
 <!-- Bouton retour/fermer -->
 <a aria-label="Home" class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800" href="/">
@@ -27,15 +27,15 @@
 <a class="text-blue-400" data-i18n="buttons.login" href="/login/">Se connecter</a>
 </p>
 <div class="mt-4 text-center">
-<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
-<option value="fr">🇫🇷 FR</option>
-<option value="en">🇬🇧 EN</option>
-<option value="de">DE</option></select>
- | DE</div>
- | DE</div>
+ <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+    <option value="fr">🇫🇷 FR</option>
+    <option value="en">🇬🇧 EN</option>
+    <option value="de">🇩🇪 DE</option>
+  </select>
+</div>
 <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { loadConfig } from "/config.js";
+    import { loadConfig } from "/js/config.js";
 
     // Charger la config dynamique depuis /api/config
     const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();

@@ -1,6 +1,6 @@
 // js/profile.js
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { loadConfig } from "./config.js";
+import { loadConfig } from "./js/config.js";
 
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

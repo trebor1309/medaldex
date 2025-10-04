@@ -6,8 +6,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Medaldex - Entrée</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script defer="" src="/js/i18n.js"></script>
-</head>
+
+<script defer="True" src="/js/i18n.js"></script></head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 <!-- Navbar -->
 <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
@@ -34,7 +34,7 @@
 </main>
 <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { loadConfig } from "/config.js";
+    import { loadConfig } from "/js/config.js";
 
     const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

@@ -6,8 +6,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title data-i18n="app.title">Medaldex</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script defer="" src="/js/i18n.js"></script>
-</head>
+
+<script defer="True" src="/js/i18n.js"></script></head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white flex flex-col min-h-screen">
 <!-- Navbar -->
 <nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
@@ -26,11 +26,12 @@
 <button class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">
         Déconnexion
       </button>
-<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
-<option value="fr">🇫🇷 FR</option>
-<option value="en">🇬🇧 EN</option>
-<option value="de">DE</option></select>
- | DE</div>
+ <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+    <option value="fr">🇫🇷 FR</option>
+    <option value="en">🇬🇧 EN</option>
+    <option value="de">🇩🇪 DE</option>
+  </select>
+</div>
 </nav>
 <!-- Hero -->
 <header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
@@ -138,7 +139,7 @@
 </div>
 <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { loadConfig } from "/config.js";
+    import { loadConfig } from "/js/config.js";
 
     // Supabase client
     const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();

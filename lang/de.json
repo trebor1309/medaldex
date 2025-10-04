@@ -1,1 +1,110 @@
-{}
+{
+  "app": {
+    "title": "Medaldex",
+    "description": "Deine persönliche Sammlung von Militärmedaillen"
+  },
+  "nav": {
+    "home": "Startseite",
+    "dashboard": "Übersicht",
+    "add": "Hinzufügen",
+    "profile": "Profil",
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
+  },
+  "footer": {
+    "legal": "Impressum",
+    "privacy": "Datenschutzrichtlinie",
+    "cookies": "Cookies",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "auth": {
+    "loginTitle": "Anmelden",
+    "signupTitle": "Registrieren",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "username": "Benutzername",
+    "haveAccount": "Bereits ein Konto?",
+    "noAccount": "Noch kein Konto?",
+    "logoutSuccess": "Erfolgreich abgemeldet.",
+    "errorLogin": "Anmeldung fehlgeschlagen. Bitte überprüfe deine Daten.",
+    "errorSignup": "Registrierung fehlgeschlagen. Bitte erneut versuchen.",
+    "missingFields": "Bitte alle Felder ausfüllen."
+  },
+  "buttons": {
+    "login": "Anmelden",
+    "signup": "Registrieren",
+    "cancel": "Abbrechen",
+    "submit": "Absenden",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "add": "Hinzufügen",
+    "close": "Schließen",
+    "viewMore": "Mehr anzeigen",
+    "back": "Zurück",
+    "switchLanguage": "Sprache ändern"
+  },
+  "dashboard": {
+    "welcome": "Willkommen in deiner Sammlung!",
+    "empty": "Du hast noch keine Medaillen hinzugefügt.",
+    "filter": "Filtern",
+    "search": "Nach Name suchen...",
+    "sort": "Sortieren",
+    "display": "Anzeige",
+    "viewGrid": "Rasteransicht",
+    "viewList": "Listenansicht"
+  },
+  "medal": {
+    "addTitle": "➕ Eintrag hinzufügen",
+    "editTitle": "✏️ Eintrag bearbeiten",
+    "name": "Name",
+    "country": "Land",
+    "period": "Zeitraum",
+    "maker": "Hersteller",
+    "type": "Typ",
+    "state": "Zustand",
+    "description": "Beschreibung",
+    "image": "Bild-URL",
+    "military": "Militärisch / Paramilitärisch",
+    "civil": "Zivil / Politisch",
+    "states": {
+      "new": "Neu",
+      "vg": "Sehr gut",
+      "good": "Gut",
+      "fair": "Mittel",
+      "poor": "Abgenutzt"
+    },
+    "added": "✅ Medaille hinzugefügt!",
+    "updated": "✅ Eintrag aktualisiert!",
+    "deleted": "✅ Eintrag gelöscht!",
+    "errorAdd": "❌ Fehler beim Hinzufügen",
+    "errorUpdate": "❌ Fehler beim Aktualisieren",
+    "errorDelete": "❌ Fehler beim Löschen",
+    "confirmDelete": "Möchtest du diese Medaille wirklich löschen?"
+  },
+  "profile": {
+    "title": "Dein Profil",
+    "username": "Benutzername",
+    "email": "E-Mail-Adresse",
+    "memberSince": "Mitglied seit",
+    "edit": "Profil bearbeiten",
+    "saveChanges": "Änderungen speichern"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "theme": "Design",
+    "notifications": "Benachrichtigungen",
+    "privacy": "Datenschutzeinstellungen"
+  },
+  "cookies": {
+    "consent": "Diese Website verwendet Cookies, um dein Erlebnis zu verbessern.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen"
+  },
+  "errors": {
+    "notFound": "404 - Seite nicht gefunden",
+    "serverError": "Ein Fehler ist aufgetreten. Bitte später erneut versuchen.",
+    "unauthorized": "Zugriff verweigert. Bitte anmelden."
+  }
+}

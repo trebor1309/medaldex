@@ -1,47 +1,62 @@
 {
   "app": {
     "title": "Medaldex",
-    "slogan": "Organise et référence ta collection de médailles"
+    "description": "Votre collection personnelle de médailles militaires"
   },
-  "buttons": {
-    "login": "Se connecter",
-    "signup": "Créer un compte",
-    "logout": "Déconnexion",
-    "add": "➕ Ajouter",
-    "edit": "✏️ Modifier",
-    "delete": "🗑️ Supprimer",
-    "save": "Enregistrer",
-    "cancel": "Annuler"
-  },
-  "dashboard": {
-    "title": "📜 Ma collection",
-    "noName": "(Sans nom)",
-    "noMedals": "Aucune médaille enregistrée."
+  "nav": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "add": "Ajouter",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
   },
   "footer": {
-    "rights": "© 2025 Medaldex. Tous droits réservés."
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "cookies": "Cookies",
+    "rights": "Tous droits réservés."
   },
-  "filters": {
-    "search": "Recherche...",
-    "allCountries": "Tous les pays",
-    "allPeriods": "Toutes les périodes",
-    "allTypes": "Tous les types",
-    "types": {
-      "military": "Militaires / Paramilitaires",
-      "civil": "Civiles / Politiques"
-    },
-    "allStates": "Tous les états",
-    "states": {
-      "new": "Neuf",
-      "vg": "Très bon état",
-      "good": "Bon",
-      "fair": "Moyen",
-      "poor": "Usé"
-    },
-    "state": "État"
+  "auth": {
+    "loginTitle": "Se connecter",
+    "signupTitle": "Créer un compte",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "username": "Nom d'utilisateur",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "noAccount": "Pas encore de compte ?",
+    "logoutSuccess": "Déconnexion réussie.",
+    "errorLogin": "Échec de la connexion. Vérifiez vos identifiants.",
+    "errorSignup": "Erreur lors de l'inscription. Réessayez.",
+    "missingFields": "Merci de remplir tous les champs."
   },
-  "add": {
-    "title": "Ajouter une entrée",
+  "buttons": {
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "cancel": "Annuler",
+    "submit": "Envoyer",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "close": "Fermer",
+    "viewMore": "Voir plus",
+    "back": "Retour",
+    "switchLanguage": "Changer de langue"
+  },
+  "dashboard": {
+    "welcome": "Bienvenue dans votre collection !",
+    "empty": "Vous n'avez encore ajouté aucune médaille.",
+    "filter": "Filtrer",
+    "search": "Rechercher par nom...",
+    "sort": "Trier",
+    "display": "Affichage",
+    "viewGrid": "Affichage en grille",
+    "viewList": "Affichage en liste"
+  },
+  "medal": {
+    "addTitle": "➕ Ajouter une entrée",
+    "editTitle": "✏️ Modifier une entrée",
     "name": "Nom",
     "country": "Pays",
     "period": "Période",
@@ -49,6 +64,47 @@
     "type": "Type",
     "state": "État",
     "description": "Description",
-    "image": "URL de l'image"
+    "image": "URL de l'image",
+    "military": "Militaires / Paramilitaires",
+    "civil": "Civiles / Politiques",
+    "states": {
+      "new": "Neuf",
+      "vg": "Très bon état",
+      "good": "Bon",
+      "fair": "Moyen",
+      "poor": "Usé"
+    },
+    "added": "✅ Médaille ajoutée !",
+    "updated": "✅ Entrée mise à jour !",
+    "deleted": "✅ Entrée supprimée !",
+    "errorAdd": "❌ Erreur lors de l'ajout",
+    "errorUpdate": "❌ Erreur lors de la mise à jour",
+    "errorDelete": "❌ Erreur lors de la suppression",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette médaille ?"
+  },
+  "profile": {
+    "title": "Votre profil",
+    "username": "Nom d'utilisateur",
+    "email": "Adresse e-mail",
+    "memberSince": "Membre depuis",
+    "edit": "Modifier le profil",
+    "saveChanges": "Enregistrer les modifications"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "theme": "Thème",
+    "notifications": "Notifications",
+    "privacy": "Paramètres de confidentialité"
+  },
+  "cookies": {
+    "consent": "Ce site utilise des cookies pour améliorer votre expérience.",
+    "accept": "Accepter",
+    "decline": "Refuser"
+  },
+  "errors": {
+    "notFound": "404 - Page introuvable",
+    "serverError": "Une erreur est survenue. Veuillez réessayer plus tard.",
+    "unauthorized": "Accès non autorisé. Veuillez vous connecter."
   }
 }
