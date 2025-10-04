@@ -6,103 +6,78 @@
   <title>Medaldex - Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/js/i18n.js" defer></script>
-  <script type="module" src="/js/dashboard.js"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 
   <!-- ✅ Navbar -->
   <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
-    <a href="/" class="text-blue-400 font-bold text-xl">Medaldex</a>
+    <div class="flex space-x-6">
+      <a href="/" class="text-blue-400 font-bold" data-i18n="app.title">Medaldex</a>
+      <button id="openAddModal" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded font-semibold">➕ Ajouter</button>
+      <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
+    </div>
     <div class="flex items-center space-x-4">
       <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
         <option value="fr">🇫🇷 FR</option>
         <option value="en">🇬🇧 EN</option>
       </select>
-      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold">
+      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout">
         Déconnexion
       </button>
     </div>
   </nav>
 
-  <!-- ✅ Contenu principal -->
+  <!-- ✅ Collection -->
   <main class="flex-1 p-6">
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">📜 Ma collection</h1>
-      <button id="openAddModal" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold">
-        ➕ Ajouter
-      </button>
-    </div>
-
-    <!-- Liste des médailles -->
-    <div id="medalsList" class="space-y-3"></div>
+    <h1 class="text-2xl font-bold mb-4">📜 Ma collection</h1>
+    <div id="medalList" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
   </main>
 
+  <!-- ✅ Modale Ajouter -->
+  <div id="addModal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-lg p-6 w-full max-w-lg">
+      <h2 class="text-xl font-bold mb-4">➕ Ajouter une entrée</h2>
+      <form id="addForm" class="space-y-4">
+        <input id="add_name" type="text" placeholder="Nom" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="add_country" type="text" placeholder="Pays" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="add_period" type="text" placeholder="Période" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="add_maker" type="text" placeholder="Fabricant" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <select id="add_type" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="military">Militaire / Paramilitaire</option>
+          <option value="civil">Civil / Politique</option>
+        </select>
+        <select id="add_state" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="new">Neuf</option>
+          <option value="vg">Très bon état</option>
+          <option value="good">Bon</option>
+          <option value="fair">Moyen</option>
+          <option value="poor">Usé</option>
+        </select>
+        <textarea id="add_description" placeholder="Description" class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
+        <input id="add_image" type="text" placeholder="URL de l'image" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <div class="flex justify-end space-x-2">
+          <button type="button" id="cancelAdd" class="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded">Annuler</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- ✅ Footer -->
-  <footer class="bg-gray-900 border-t border-gray-700 text-center py-4 text-sm text-gray-400">
-    © 2025 Medaldex. All rights reserved.
+  <footer class="bg-gray-900 border-t border-gray-700 p-4 text-center text-gray-400">
+    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
   </footer>
 
-  <!-- ✅ Modal : Ajouter -->
-  <div id="addModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden">
-    <div class="bg-gray-900 p-6 rounded-lg w-full max-w-lg">
-      <h2 class="text-xl font-bold mb-4">➕ Ajouter une entrée</h2>
-      <form id="addForm" class="space-y-3">
-        <input id="addName" type="text" placeholder="Nom" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="addCountry" type="text" placeholder="Pays" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="addPeriod" type="text" placeholder="Période (ex: 1939-1945)" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="addMaker" type="text" placeholder="Fabricant" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <select id="addType" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-          <option value="military">Militaires / Paramilitaires</option>
-          <option value="civil">Civiles / Politiques</option>
-        </select>
-        <select id="addState" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-          <option value="new">Neuf</option>
-          <option value="vg">Très bon état</option>
-          <option value="good">Bon</option>
-          <option value="fair">Moyen</option>
-          <option value="poor">Usé</option>
-        </select>
-        <textarea id="addDescription" placeholder="Description" class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
-        <input id="addImage" type="text" placeholder="URL image" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <div class="flex justify-end space-x-2">
-          <button type="button" id="closeAddModal" class="bg-gray-600 px-3 py-1 rounded">Annuler</button>
-          <button type="submit" class="bg-blue-600 px-3 py-1 rounded">Enregistrer</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ✅ Modal : Modifier -->
-  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden">
-    <div class="bg-gray-900 p-6 rounded-lg w-full max-w-lg">
-      <h2 class="text-xl font-bold mb-4">✏️ Modifier une entrée</h2>
-      <form id="editForm" class="space-y-3">
-        <input id="editName" type="text" placeholder="Nom" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="editCountry" type="text" placeholder="Pays" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="editPeriod" type="text" placeholder="Période" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="editMaker" type="text" placeholder="Fabricant" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <select id="editType" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-          <option value="military">Militaires / Paramilitaires</option>
-          <option value="civil">Civiles / Politiques</option>
-        </select>
-        <select id="editState" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-          <option value="new">Neuf</option>
-          <option value="vg">Très bon état</option>
-          <option value="good">Bon</option>
-          <option value="fair">Moyen</option>
-          <option value="poor">Usé</option>
-        </select>
-        <textarea id="editDescription" placeholder="Description" class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
-        <input id="editImage" type="text" placeholder="URL image" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <div class="flex justify-end space-x-2">
-          <button type="button" id="closeEditModal" class="bg-gray-600 px-3 py-1 rounded">Annuler</button>
-          <button type="submit" class="bg-blue-600 px-3 py-1 rounded">Mettre à jour</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ✅ Script principal -->
+  <!-- ✅ Script -->
   <script type="module" src="/js/dashboard.js"></script>
+  <script>
+    // Ouvrir/fermer modale
+    document.getElementById("openAddModal")?.addEventListener("click", () => {
+      document.getElementById("addModal").classList.remove("hidden");
+    });
+    document.getElementById("cancelAdd")?.addEventListener("click", () => {
+      document.getElementById("addModal").classList.add("hidden");
+    });
+  </script>
 </body>
 </html>
