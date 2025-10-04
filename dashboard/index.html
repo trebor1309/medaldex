@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Medaldex</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 
+  <!-- ✅ Navbar -->
+  <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
+    <div class="flex space-x-6 items-center">
+      <a href="/" class="text-xl font-bold text-blue-400">Medaldex</a>
+      <button id="openAddModal" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold">➕ <span data-i18n="buttons.add">Ajouter</span></button>
+      <button id="openProfileModal" class="hover:text-blue-400" data-i18n="profile.title">Profil</button>
+    </div>
+    <div class="flex items-center space-x-4">
+      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="en">🇬🇧 EN</option>
+        <option value="de">🇩🇪 DE</option>
+      </select>
+      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout">Déconnexion</button>
+    </div>
+  </nav>
+
+  <!-- ✅ Collection -->
+  <main class="flex-1 p-6">
+    <h1 class="text-2xl font-bold mb-4" data-i18n="dashboard.title">📜 Ma collection</h1>
+    <div id="medalList" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+  </main>
+
+  <!-- ✅ Modal Ajouter/Éditer -->
+  <div id="medalModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 w-full max-w-xl relative">
+      <button id="closeModal" class="absolute top-3 right-3 text-xl">✖</button>
+      <h2 id="medalModalTitle" class="text-xl font-bold mb-4" data-i18n="add.title">➕ Ajouter une entrée</h2>
+      <form id="medalForm" class="space-y-3">
+        <input id="medal_name" placeholder="Nom" class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+        <input id="medal_country" placeholder="Pays" class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+        <input id="medal_period" placeholder="Période" class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+        <input id="medal_maker" placeholder="Fabricant" class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+        <select id="medal_type" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="military">Militaire / Paramilitaire</option>
+          <option value="civil">Civil / Politique</option>
+        </select>
+        <select id="medal_state" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="new">Neuf</option>
+          <option value="vg">Très bon état</option>
+          <option value="good">Bon</option>
+          <option value="fair">Moyen</option>
+          <option value="poor">Usé</option>
+        </select>
+        <textarea id="medal_description" placeholder="Description" class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
+        <input id="medal_image" placeholder="URL image" class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="buttons.save">Enregistrer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Modal Profil (optionnelle) -->
+  <div id="profileModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 w-full max-w-md relative">
+      <button id="closeProfileModal" class="absolute top-3 right-3 text-xl">✖</button>
+      <h2 class="text-xl font-bold mb-4" data-i18n="profile.title">👤 Profil</h2>
+      <p class="text-gray-300">Fonctionnalité à venir...</p>
+    </div>
+  </div>
+
+  <!-- ✅ Footer -->
+  <footer class="bg-gray-900 border-t border-gray-700 p-4 text-center text-gray-400">
+    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
+  </footer>
+
+  <!-- ✅ Script -->
+  <script type="module" src="/js/dashboard.js"></script>
+</body>
+</html>
