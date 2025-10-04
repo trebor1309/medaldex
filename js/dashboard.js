@@ -35,6 +35,7 @@ async function loadMedals() {
 
   data.forEach((medal) => {
     const card = document.createElement("div");
+    card.addEventListener("click", () => openMedalModal(medal));
     card.className = "bg-gray-800 p-4 rounded shadow text-center relative group";
     card.innerHTML = `
       <h3 class='font-bold text-lg'>${medal.name || t("dashboard.noName")}</h3>
