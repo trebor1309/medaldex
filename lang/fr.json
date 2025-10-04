@@ -1,22 +1,22 @@
 {
   "app": {
     "title": "Medaldex",
-    "slogan": "Organise et référence ta collection"
+    "slogan": "Organise et référence ta collection de médailles"
   },
   "buttons": {
     "login": "Se connecter",
     "signup": "Créer un compte",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "add": "➕ Ajouter",
+    "edit": "✏️ Modifier",
+    "delete": "🗑️ Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
   },
-  "hero": {
-    "desc": "Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant."
-  },
-  "features": {
-    "title": "Fonctionnalités principales",
-    "subtitle": "Tout ce qu’il te faut pour gérer ta collection",
-    "organize": "Classe tes médailles par pays, période, fabricant.",
-    "search": "Trouve instantanément l’entrée que tu veux.",
-    "stats": "Découvre des statistiques sur ta collection."
+  "dashboard": {
+    "title": "📜 Ma collection",
+    "noName": "(Sans nom)",
+    "noMedals": "Aucune médaille enregistrée."
   },
   "footer": {
     "rights": "© 2025 Medaldex. Tous droits réservés."
@@ -47,23 +47,8 @@
     "period": "Période",
     "maker": "Fabricant",
     "type": "Type",
-    "state": "État de conservation",
+    "state": "État",
     "description": "Description",
-    "image": "Image (URL)",
-    "submit": "Enregistrer"
-  },
-  "edit": {
-    "title": "Éditer une entrée"
-  },
-  "profile": {
-    "title": "Mon profil",
-    "deleteBtn": "Supprimer mon compte"
-  },
-  "auth": {
-    "username": "Pseudo",
-    "email": "Adresse e-mail",
-    "password": "Mot de passe",
-    "haveAccount": "Déjà un compte ?",
-    "noAccount": "Pas encore de compte ?"
+    "image": "URL de l'image"
   }
 }
