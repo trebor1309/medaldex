@@ -1,48 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-i18n="buttons.login">Se connecter</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/i18n.js" defer></script>
-  <script type="module" src="/js/login.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="buttons.login">Se connecter</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="/js/i18n.js"></script>
+<script src="/js/login.js" type="module"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex items-center justify-center">
-
-  <!-- Bouton retour/fermer -->
-  <a href="/" aria-label="Home"
-     class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800">
+<!-- Bouton retour/fermer -->
+<a aria-label="Home" class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800" href="/">
     ✕
   </a>
-
-  <div class="bg-gray-900 shadow-xl rounded-lg p-8 w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-6 text-center" data-i18n="buttons.login">Se connecter</h1>
-
-    <form class="space-y-4">
-      <input id="email" type="email" data-i18n-placeholder="auth.email"
-        class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-      <input id="password" type="password" data-i18n-placeholder="auth.password"
-        class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-      <button type="submit"
-        class="w-full bg-gray-200 text-black py-2 rounded font-semibold"
-        data-i18n="buttons.login">Se connecter</button>
-    </form>
-
-    <p class="text-sm mt-4 text-center">
-      <span data-i18n="auth.noAccount">Pas encore de compte ?</span>
-      <a href="/signup/" class="text-blue-400" data-i18n="buttons.signup">Créer un compte</a>
-    </p>
-
-    <div class="mt-4 text-center">
-      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-        <option value="fr">🇫🇷 FR</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
-    </div>
-  </div>
-
-  <script type="module">
+<div class="bg-gray-900 shadow-xl rounded-lg p-8 w-full max-w-md">
+<h1 class="text-2xl font-bold mb-6 text-center" data-i18n="buttons.login">Se connecter</h1>
+<form class="space-y-4">
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.email" id="email" type="email"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.password" id="password" type="password"/>
+<button class="w-full bg-gray-200 text-black py-2 rounded font-semibold" data-i18n="buttons.login" type="submit">Se connecter</button>
+</form>
+<p class="text-sm mt-4 text-center">
+<span data-i18n="auth.noAccount">Pas encore de compte ?</span>
+<a class="text-blue-400" data-i18n="buttons.signup" href="/signup/">Créer un compte</a>
+</p>
+<div class="mt-4 text-center">
+<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
+<option value="fr">🇫🇷 FR</option>
+<option value="en">🇬🇧 EN</option>
+<option value="de">DE</option></select>
+ | DE</div>
+ | DE</div>
+<script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     import { loadConfig } from "/config.js";
 

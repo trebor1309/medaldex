@@ -1,84 +1,57 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-i18n="profile.title">Mon profil</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/i18n.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="profile.title">Mon profil</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="/js/i18n.js"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen">
-
-  <!-- Bouton retour -->
-  <a href="/dashboard/" aria-label="Dashboard"
-     class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800">
+<!-- Bouton retour -->
+<a aria-label="Dashboard" class="fixed top-4 left-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-900 border border-gray-700 hover:bg-gray-800" href="/dashboard/">
     ←
   </a>
-
-  <div class="max-w-2xl mx-auto p-8">
-    <h1 class="text-3xl font-bold mb-6 text-center" data-i18n="profile.title">Mon profil</h1>
-
-    <!-- Infos utilisateur -->
-    <div class="bg-gray-900 shadow-md rounded-lg p-6 space-y-4">
-      <p><strong data-i18n="profile.email">Email</strong> : <span id="email"></span></p>
-
-      <label for="username" class="block font-semibold" data-i18n="profile.username">Pseudo</label>
-      <input id="username" type="text"
-             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
-      <button id="saveUsername"
-              class="bg-gray-200 text-black px-4 py-2 rounded font-semibold"
-              data-i18n="profile.changeUsername">Changer de pseudo</button>
-
-      <hr class="border-gray-700"/>
-
-      <!-- Changer mot de passe -->
-      <h2 class="text-xl font-semibold" data-i18n="profile.password">Mot de passe</h2>
-      <input id="oldPassword" type="password" placeholder="Ancien mot de passe"
-             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
-      <input id="newPassword" type="password" placeholder="Nouveau mot de passe"
-             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
-      <input id="confirmPassword" type="password" placeholder="Confirmer mot de passe"
-             class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2"/>
-      <button id="changePassword"
-              class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold"
-              data-i18n="profile.password">Changer le mot de passe</button>
-
-      <hr class="border-gray-700"/>
-
-      <!-- Export collection -->
-      <h2 class="text-xl font-semibold" data-i18n="profile.exportTitle">Exporter ma collection</h2>
-      <div class="flex space-x-4">
-        <button id="exportCSV"
-                class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded font-semibold"
-                data-i18n="profile.exportCSV">Exporter en CSV</button>
-        <button id="exportPDF"
-                class="bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded font-semibold"
-                data-i18n="profile.exportPDF">Exporter en PDF</button>
-      </div>
-
-      <hr class="border-gray-700"/>
-
-      <!-- Supprimer compte -->
-      <h2 class="text-xl font-semibold text-red-400" data-i18n="profile.deleteTitle">Supprimer le compte</h2>
-      <p class="text-sm text-gray-400" data-i18n="profile.deleteWarning">
+<div class="max-w-2xl mx-auto p-8">
+<h1 class="text-3xl font-bold mb-6 text-center" data-i18n="profile.title">Mon profil</h1>
+<!-- Infos utilisateur -->
+<div class="bg-gray-900 shadow-md rounded-lg p-6 space-y-4">
+<p><strong data-i18n="profile.email">Email</strong> : <span id="email"></span></p>
+<label class="block font-semibold" data-i18n="profile.username" for="username">Pseudo</label>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2" id="username" type="text"/>
+<button class="bg-gray-200 text-black px-4 py-2 rounded font-semibold" data-i18n="profile.changeUsername" id="saveUsername">Changer de pseudo</button>
+<hr class="border-gray-700"/>
+<!-- Changer mot de passe -->
+<h2 class="text-xl font-semibold" data-i18n="profile.password">Mot de passe</h2>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2" id="oldPassword" placeholder="Ancien mot de passe" type="password"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2" id="newPassword" placeholder="Nouveau mot de passe" type="password"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-2" id="confirmPassword" placeholder="Confirmer mot de passe" type="password"/>
+<button class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded font-semibold" data-i18n="profile.password" id="changePassword">Changer le mot de passe</button>
+<hr class="border-gray-700"/>
+<!-- Export collection -->
+<h2 class="text-xl font-semibold" data-i18n="profile.exportTitle">Exporter ma collection</h2>
+<div class="flex space-x-4">
+<button class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded font-semibold" data-i18n="profile.exportCSV" id="exportCSV">Exporter en CSV</button>
+<button class="bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded font-semibold" data-i18n="profile.exportPDF" id="exportPDF">Exporter en PDF</button>
+</div>
+<hr class="border-gray-700"/>
+<!-- Supprimer compte -->
+<h2 class="text-xl font-semibold text-red-400" data-i18n="profile.deleteTitle">Supprimer le compte</h2>
+<p class="text-sm text-gray-400" data-i18n="profile.deleteWarning">
         Attention : cette action est irréversible et supprimera toutes vos données.
       </p>
-      <button id="deleteAccount"
-              class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold"
-              data-i18n="profile.deleteBtn">Supprimer mon compte</button>
-    </div>
-
-    <!-- Switcher langue -->
-    <div class="mt-6 text-center">
-      <select id="langSwitcher"
-              class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-        <option value="fr">🇫🇷 FR</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
-    </div>
-  </div>
-
-  <script type="module">
+<button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="profile.deleteBtn" id="deleteAccount">Supprimer mon compte</button>
+</div>
+<!-- Switcher langue -->
+<div class="mt-6 text-center">
+<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
+<option value="fr">🇫🇷 FR</option>
+<option value="en">🇬🇧 EN</option>
+<option value="de">DE</option></select>
+ | DE</div>
+ | DE</div>
+<script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     import { loadConfig } from "/config.js";
 

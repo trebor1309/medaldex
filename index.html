@@ -1,160 +1,142 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-i18n="app.title">Medaldex</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/i18n.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="app.title">Medaldex</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="/js/i18n.js"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white flex flex-col min-h-screen">
-
-  <!-- Navbar -->
-  <nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
-    <a href="/" class="text-2xl font-bold">Medaldex</a>
-    <div class="flex items-center space-x-3" id="navCtas">
-      <!-- Remplacé dynamiquement selon session -->
-      <button id="openLogin" class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" data-i18n="buttons.login">
+<!-- Navbar -->
+<nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+<a class="text-2xl font-bold" href="/">Medaldex</a>
+<div class="flex items-center space-x-3" id="navCtas">
+<!-- Remplacé dynamiquement selon session -->
+<button class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" data-i18n="buttons.login" id="openLogin">
         Se connecter
       </button>
-      <button id="openSignup" class="hidden bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup">
+<button class="hidden bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup" id="openSignup">
         Créer un compte
       </button>
-
-      <a id="goDashboard" href="/dashboard/" class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold">
+<a class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" href="/dashboard/" id="goDashboard">
         Dashboard
       </a>
-      <button id="logoutBtn" class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.logout">
+<button class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">
         Déconnexion
       </button>
-
-      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-        <option value="fr">🇫🇷 FR</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
-    <h1 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="app.slogan">
+<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
+<option value="fr">🇫🇷 FR</option>
+<option value="en">🇬🇧 EN</option>
+<option value="de">DE</option></select>
+ | DE</div>
+</nav>
+<!-- Hero -->
+<header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
+<h1 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="app.slogan">
       Organise et référence ta collection de décorations
     </h1>
-    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8" data-i18n="hero.desc">
+<p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8" data-i18n="hero.desc">
       Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant.
     </p>
-    <div class="flex space-x-4">
-      <button id="heroSignup" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.signup">
+<div class="flex space-x-4">
+<button class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.signup" id="heroSignup">
         Créer un compte
       </button>
-      <button id="heroLogin" class="bg-gray-700 hover:bg-gray-800 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.login">
+<button class="bg-gray-700 hover:bg-gray-800 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.login" id="heroLogin">
         Se connecter
       </button>
-      <a id="heroDashboard" href="/dashboard/" class="hidden bg-gray-700 hover:bg-gray-800 px-6 py-3 rounded font-semibold text-lg">
+<a class="hidden bg-gray-700 hover:bg-gray-800 px-6 py-3 rounded font-semibold text-lg" href="/dashboard/" id="heroDashboard">
         Dashboard
       </a>
-    </div>
-  </header>
-
-  <!-- Features -->
-  <section class="py-16 bg-gray-900 text-center">
-    <h2 class="text-3xl font-bold mb-4" data-i18n="features.title">Fonctionnalités principales</h2>
-    <p class="text-gray-400 mb-10" data-i18n="features.subtitle">Tout ce qu’il te faut pour gérer ta collection</p>
-    <div class="grid md:grid-cols-3 gap-8 px-6 max-w-5xl mx-auto">
-      <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-semibold text-xl mb-2">📂</h3>
-        <p data-i18n="features.organize">Classe tes entrées par pays, époque, type, fabricant.</p>
-      </div>
-      <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-semibold text-xl mb-2">🔎</h3>
-        <p data-i18n="features.search">Trouve instantanément l’entrée que tu veux.</p>
-      </div>
-      <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-semibold text-xl mb-2">📊</h3>
-        <p data-i18n="features.stats">Découvre des statistiques sur ta collection.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="py-16 text-center px-6">
-    <h2 class="text-3xl font-bold mb-6" data-i18n="how.title">🚀 Comment ça marche ?</h2>
-    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-bold text-xl mb-2" data-i18n="how.step1.title">1️⃣ Crée un compte</h3>
-        <p data-i18n="how.step1.text">Inscris-toi gratuitement en quelques secondes.</p>
-      </div>
-      <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-bold text-xl mb-2" data-i18n="how.step2.title">2️⃣ Ajoute tes entrées</h3>
-        <p data-i18n="how.step2.text">Ajoute médailles, insignes, rubans avec description et photo.</p>
-      </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="font-bold text-xl mb-2" data-i18n="how.step3.title">3️⃣ Explore ta collection</h3>
-        <p data-i18n="how.step3.text">Filtre, recherche et découvre tes statistiques.</p>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 border-t border-gray-700 p-6 text-center text-gray-400">
-    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
-    <div class="mt-4 flex justify-center space-x-6 text-sm">
-      <a href="/legal/" class="hover:text-blue-400">Mentions légales</a>
-      <a href="/privacy/" class="hover:text-blue-400">Confidentialité</a>
-      <a href="/terms/" class="hover:text-blue-400">Conditions d’utilisation</a>
-      <a href="/contact/" class="hover:text-blue-400">Contact</a>
-    </div>
-  </footer>
-
-  <!-- Cookie Banner -->
-  <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-gray-200 p-4 flex justify-between items-center shadow-lg">
-    <p data-i18n="cookies.message">🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.</p>
-    <button id="acceptCookies" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded" data-i18n="cookies.accept">OK</button>
-  </div>
-
-
-  <!-- Modals -->
-  <div id="modalBackdrop" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"></div>
-
-  <!-- Login modal -->
-  <div id="loginModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-    <div class="bg-gray-900 border border-gray-700 rounded-xl shadow-xl w-full max-w-md p-6 relative">
-      <button data-close class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700">✕</button>
-      <h3 class="text-xl font-bold mb-4" data-i18n="buttons.login">Se connecter</h3>
-      <form id="loginForm" class="space-y-4">
-        <input id="loginEmail" type="email" data-i18n-placeholder="auth.email"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="loginPassword" type="password" data-i18n-placeholder="auth.password"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="buttons.login">
+</div>
+</header>
+<!-- Features -->
+<section class="py-16 bg-gray-900 text-center">
+<h2 class="text-3xl font-bold mb-4" data-i18n="features.title">Fonctionnalités principales</h2>
+<p class="text-gray-400 mb-10" data-i18n="features.subtitle">Tout ce qu’il te faut pour gérer ta collection</p>
+<div class="grid md:grid-cols-3 gap-8 px-6 max-w-5xl mx-auto">
+<div class="bg-gray-800 p-6 rounded-lg shadow">
+<h3 class="font-semibold text-xl mb-2">📂</h3>
+<p data-i18n="features.organize">Classe tes entrées par pays, époque, type, fabricant.</p>
+</div>
+<div class="bg-gray-800 p-6 rounded-lg shadow">
+<h3 class="font-semibold text-xl mb-2">🔎</h3>
+<p data-i18n="features.search">Trouve instantanément l’entrée que tu veux.</p>
+</div>
+<div class="bg-gray-800 p-6 rounded-lg shadow">
+<h3 class="font-semibold text-xl mb-2">📊</h3>
+<p data-i18n="features.stats">Découvre des statistiques sur ta collection.</p>
+</div>
+</div>
+</section>
+<!-- How it works -->
+<section class="py-16 text-center px-6">
+<h2 class="text-3xl font-bold mb-6" data-i18n="how.title">🚀 Comment ça marche ?</h2>
+<div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+<div class="bg-gray-800 p-6 rounded-lg shadow">
+<h3 class="font-bold text-xl mb-2" data-i18n="how.step1.title">1️⃣ Crée un compte</h3>
+<p data-i18n="how.step1.text">Inscris-toi gratuitement en quelques secondes.</p>
+</div>
+<div class="bg-gray-800 p-6 rounded-lg shadow">
+<h3 class="font-bold text-xl mb-2" data-i18n="how.step2.title">2️⃣ Ajoute tes entrées</h3>
+<p data-i18n="how.step2.text">Ajoute médailles, insignes, rubans avec description et photo.</p>
+</div>
+<div class="bg-gray-800 p-6 rounded-lg shadow">
+<h3 class="font-bold text-xl mb-2" data-i18n="how.step3.title">3️⃣ Explore ta collection</h3>
+<p data-i18n="how.step3.text">Filtre, recherche et découvre tes statistiques.</p>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-gray-900 border-t border-gray-700 p-6 text-center text-gray-400">
+<p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
+<div class="mt-4 flex justify-center space-x-6 text-sm">
+<a class="hover:text-blue-400" href="/legal/">Mentions légales</a>
+<a class="hover:text-blue-400" href="/privacy/">Confidentialité</a>
+<a class="hover:text-blue-400" href="/terms/">Conditions d’utilisation</a>
+<a class="hover:text-blue-400" href="/contact/">Contact</a>
+</div>
+</footer>
+<!-- Cookie Banner -->
+<div class="fixed bottom-0 left-0 right-0 bg-gray-800 text-gray-200 p-4 flex justify-between items-center shadow-lg" id="cookieBanner">
+<p data-i18n="cookies.message">🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.</p>
+<button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded" data-i18n="cookies.accept" id="acceptCookies">OK</button>
+</div>
+<!-- Modals -->
+<div class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40" id="modalBackdrop"></div>
+<!-- Login modal -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" id="loginModal">
+<div class="bg-gray-900 border border-gray-700 rounded-xl shadow-xl w-full max-w-md p-6 relative">
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700" data-close="">✕</button>
+<h3 class="text-xl font-bold mb-4" data-i18n="buttons.login">Se connecter</h3>
+<form class="space-y-4" id="loginForm">
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.email" id="loginEmail" type="email"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.password" id="loginPassword" type="password"/>
+<button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="buttons.login" type="submit">
           Se connecter
         </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Signup modal -->
-  <div id="signupModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-    <div class="bg-gray-900 border border-gray-700 rounded-xl shadow-xl w-full max-w-md p-6 relative">
-      <button data-close class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700">✕</button>
-      <h3 class="text-xl font-bold mb-4" data-i18n="buttons.signup">Créer un compte</h3>
-      <form id="signupForm" class="space-y-4">
-        <input id="signupUsername" type="text" data-i18n-placeholder="auth.username"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="signupEmail" type="email" data-i18n-placeholder="auth.email"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="signupPassword" type="password" data-i18n-placeholder="auth.password"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="buttons.signup">
+</form>
+</div>
+</div>
+<!-- Signup modal -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" id="signupModal">
+<div class="bg-gray-900 border border-gray-700 rounded-xl shadow-xl w-full max-w-md p-6 relative">
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700" data-close="">✕</button>
+<h3 class="text-xl font-bold mb-4" data-i18n="buttons.signup">Créer un compte</h3>
+<form class="space-y-4" id="signupForm">
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.username" id="signupUsername" type="text"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.email" id="signupEmail" type="email"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.password" id="signupPassword" type="password"/>
+<button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="buttons.signup" type="submit">
           Créer un compte
         </button>
-      </form>
-      <p class="text-xs text-gray-400 mt-3">Un e-mail de confirmation peut être nécessaire.</p>
-    </div>
-  </div>
-
-  <script type="module">
+</form>
+<p class="text-xs text-gray-400 mt-3">Un e-mail de confirmation peut être nécessaire.</p>
+</div>
+</div>
+<script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     import { loadConfig } from "/config.js";
 

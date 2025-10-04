@@ -1,40 +1,38 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medaldex - Entrée</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/i18n.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Medaldex - Entrée</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="/js/i18n.js"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
-
-  <!-- Navbar -->
-  <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
-    <div class="flex space-x-6">
-      <a href="/dashboard/" class="text-blue-400 font-bold" data-i18n="app.title">Dashboard</a>
-      <a href="/add/" class="hover:text-blue-400" data-i18n="add.title">Ajouter une entrée</a>
-      <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
-    </div>
-    <div class="flex items-center space-x-4">
-      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-        <option value="fr">🇫🇷 FR</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
-      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout">
+<!-- Navbar -->
+<nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
+<div class="flex space-x-6">
+<a class="text-blue-400 font-bold" data-i18n="app.title" href="/dashboard/">Dashboard</a>
+<a class="hover:text-blue-400" data-i18n="add.title" href="/add/">Ajouter une entrée</a>
+<a class="hover:text-blue-400" data-i18n="profile.title" href="/profile/">Profil</a>
+</div>
+<div class="flex items-center space-x-4">
+<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
+<option value="fr">🇫🇷 FR</option>
+<option value="en">🇬🇧 EN</option>
+<option value="de">DE</option></select>
+<button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">
         Déconnexion
       </button>
-    </div>
-  </nav>
-
-  <!-- Détails entrée -->
-  <main class="flex-1 p-6 flex justify-center">
-    <div id="medalCard" class="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-lg w-full shadow-lg">
-      <p class="text-gray-400">Chargement...</p>
-    </div>
-  </main>
-
-  <script type="module">
+ | DE</div>
+</nav>
+<!-- Détails entrée -->
+<main class="flex-1 p-6 flex justify-center">
+<div class="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-lg w-full shadow-lg" id="medalCard">
+<p class="text-gray-400">Chargement...</p>
+</div>
+</main>
+<script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     import { loadConfig } from "/config.js";
 

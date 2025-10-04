@@ -1,107 +1,94 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Collection - Medaldex</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/i18n.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Collection - Medaldex</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="/js/i18n.js"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white">
-
-  <!-- Navbar -->
-  <header class="bg-black border-b border-gray-700">
-    <nav class="container mx-auto flex justify-between items-center p-4">
-      <a href="/" class="text-2xl font-bold text-gray-200 tracking-wide" data-i18n="app.title"></a>
-      <ul class="hidden md:flex gap-6 font-medium">
-        <li><a href="/dashboard/" class="hover:text-gray-400">🏠 Dashboard</a></li>
-        <li><a href="/collection/" class="text-gray-200 font-semibold">📚 <span data-i18n="dashboard.actions.collection"></span></a></li>
-        <li><a href="/add/" class="hover:text-gray-400">➕ <span data-i18n="dashboard.actions.add"></span></a></li>
-        <li><a href="/profile/" class="hover:text-gray-400">👤 Profile</a></li>
-      </ul>
-      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-        <option value="fr">🇫🇷 FR</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
-    </nav>
-  </header>
-
-  <!-- Contenu -->
-  <main class="container mx-auto py-12 px-6">
-
-    <!-- Titre -->
-    <h1 class="text-3xl font-bold mb-8" data-i18n="dashboard.actions.collection"></h1>
-
-    <!-- Barre de filtres -->
-    <div class="bg-gray-900 border border-gray-700 rounded-xl p-4 mb-8">
-      <form class="grid md:grid-cols-5 gap-4">
-        <!-- Recherche -->
-        <input type="text" placeholder="🔍 Recherche..."
-          data-i18n-placeholder="filters.search"
-          class="col-span-2 px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg focus:ring-2 focus:ring-gray-400">
-
-        <!-- Pays -->
-        <select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
-          <option data-i18n="filters.allCountries"></option>
-          <option>France</option>
-          <option>USA</option>
-          <option>Royaume-Uni</option>
-        </select>
-
-        <!-- Année -->
-        <select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
-          <option data-i18n="filters.allYears"></option>
-          <option>1914-1918</option>
-          <option>1939-1945</option>
-          <option>1945+</option>
-        </select>
-
-        <!-- Type -->
-        <select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
-          <option data-i18n="filters.allTypes"></option>
-          <option data-i18n="filters.types.military"></option>
-          <option data-i18n="filters.types.civil"></option>
-        </select>
-
-        <!-- État -->
-        <select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
-          <option data-i18n="filters.allStates"></option>
-          <option data-i18n="filters.states.new"></option>
-          <option data-i18n="filters.states.vg"></option>
-          <option data-i18n="filters.states.good"></option>
-          <option data-i18n="filters.states.fair"></option>
-          <option data-i18n="filters.states.poor"></option>
-        </select>
-      </form>
-    </div>
-
-    <!-- Grille -->
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-      <!-- Carte exemple -->
-      <div class="bg-gray-900 border border-gray-700 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-        <img src="https://via.placeholder.com/200" alt="Médaille" class="w-full h-32 object-cover border-b border-gray-700">
-        <div class="p-4">
-          <h2 class="font-semibold text-gray-200">Croix de Guerre</h2>
-          <p class="text-sm text-gray-400">France, 1945</p>
-          <p class="text-xs text-gray-500 mt-2"><span data-i18n="filters.state"></span> : Très bon</p>
-        </div>
-      </div>
-
-      <div class="bg-gray-900 border border-gray-700 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-        <img src="https://via.placeholder.com/200" alt="Médaille" class="w-full h-32 object-cover border-b border-gray-700">
-        <div class="p-4">
-          <h2 class="font-semibold text-gray-200">Purple Heart</h2>
-          <p class="text-sm text-gray-400">USA, WWII</p>
-          <p class="text-xs text-gray-500 mt-2"><span data-i18n="filters.state"></span> : Bon</p>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 py-6 text-center mt-12 border-t border-gray-700">
-    <p data-i18n="footer.rights"></p>
-  </footer>
-
+<!-- Navbar -->
+<header class="bg-black border-b border-gray-700">
+<nav class="container mx-auto flex justify-between items-center p-4">
+<a class="text-2xl font-bold text-gray-200 tracking-wide" data-i18n="app.title" href="/"></a>
+<ul class="hidden md:flex gap-6 font-medium">
+<li><a class="hover:text-gray-400" href="/dashboard/">🏠 Dashboard</a></li>
+<li><a class="text-gray-200 font-semibold" href="/collection/">📚 <span data-i18n="dashboard.actions.collection"></span></a></li>
+<li><a class="hover:text-gray-400" href="/add/">➕ <span data-i18n="dashboard.actions.add"></span></a></li>
+<li><a class="hover:text-gray-400" href="/profile/">👤 Profile</a></li>
+</ul>
+<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
+<option value="fr">🇫🇷 FR</option>
+<option value="en">🇬🇧 EN</option>
+<option value="de">DE</option></select>
+</nav>
+</header>
+<!-- Contenu -->
+<main class="container mx-auto py-12 px-6">
+<!-- Titre -->
+<h1 class="text-3xl font-bold mb-8" data-i18n="dashboard.actions.collection"></h1>
+<!-- Barre de filtres -->
+<div class="bg-gray-900 border border-gray-700 rounded-xl p-4 mb-8">
+<form class="grid md:grid-cols-5 gap-4">
+<!-- Recherche -->
+<input class="col-span-2 px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg focus:ring-2 focus:ring-gray-400" data-i18n-placeholder="filters.search" placeholder="🔍 Recherche..." type="text"/>
+<!-- Pays -->
+<select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
+<option data-i18n="filters.allCountries"></option>
+<option>France</option>
+<option>USA</option>
+<option>Royaume-Uni</option>
+</select>
+<!-- Année -->
+<select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
+<option data-i18n="filters.allYears"></option>
+<option>1914-1918</option>
+<option>1939-1945</option>
+<option>1945+</option>
+</select>
+<!-- Type -->
+<select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
+<option data-i18n="filters.allTypes"></option>
+<option data-i18n="filters.types.military"></option>
+<option data-i18n="filters.types.civil"></option>
+</select>
+<!-- État -->
+<select class="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg">
+<option data-i18n="filters.allStates"></option>
+<option data-i18n="filters.states.new"></option>
+<option data-i18n="filters.states.vg"></option>
+<option data-i18n="filters.states.good"></option>
+<option data-i18n="filters.states.fair"></option>
+<option data-i18n="filters.states.poor"></option>
+</select>
+</form>
+</div>
+<!-- Grille -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+<!-- Carte exemple -->
+<div class="bg-gray-900 border border-gray-700 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+<img alt="Médaille" class="w-full h-32 object-cover border-b border-gray-700" src="https://via.placeholder.com/200"/>
+<div class="p-4">
+<h2 class="font-semibold text-gray-200">Croix de Guerre</h2>
+<p class="text-sm text-gray-400">France, 1945</p>
+<p class="text-xs text-gray-500 mt-2"><span data-i18n="filters.state"></span> : Très bon</p>
+</div>
+</div>
+<div class="bg-gray-900 border border-gray-700 rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+<img alt="Médaille" class="w-full h-32 object-cover border-b border-gray-700" src="https://via.placeholder.com/200"/>
+<div class="p-4">
+<h2 class="font-semibold text-gray-200">Purple Heart</h2>
+<p class="text-sm text-gray-400">USA, WWII</p>
+<p class="text-xs text-gray-500 mt-2"><span data-i18n="filters.state"></span> : Bon</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-400 py-6 text-center mt-12 border-t border-gray-700">
+<p data-i18n="footer.rights"></p>
+</footer>
 </body>
 </html>

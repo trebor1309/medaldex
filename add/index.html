@@ -1,69 +1,59 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title data-i18n="add.title">Ajouter une entrée</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/i18n.js" defer></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="add.title">Ajouter une entrée</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="/js/i18n.js"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
-
-  <!-- Navbar -->
-  <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
-    <div class="flex space-x-6">
-      <a href="/dashboard/" class="text-blue-400 font-bold" data-i18n="app.title">Dashboard</a>
-      <a href="/profile/" class="hover:text-blue-400" data-i18n="profile.title">Profil</a>
-    </div>
-    <div class="flex items-center space-x-4">
-      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-        <option value="fr">🇫🇷 FR</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
-      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout">
+<!-- Navbar -->
+<nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
+<div class="flex space-x-6">
+<a class="text-blue-400 font-bold" data-i18n="app.title" href="/dashboard/">Dashboard</a>
+<a class="hover:text-blue-400" data-i18n="profile.title" href="/profile/">Profil</a>
+</div>
+<div class="flex items-center space-x-4">
+<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
+<option value="fr">🇫🇷 FR</option>
+<option value="en">🇬🇧 EN</option>
+<option value="de">DE</option></select>
+<button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">
         Déconnexion
       </button>
-    </div>
-  </nav>
-
-  <!-- Formulaire ajout -->
-  <main class="flex-1 p-6 flex flex-col items-center">
-    <div class="bg-gray-900 border border-gray-700 rounded-lg p-6 w-full max-w-lg shadow-lg">
-      <h1 class="text-2xl font-bold mb-6 text-center" data-i18n="add.title">➕ Ajouter une entrée</h1>
-
-      <form id="addForm" class="space-y-4">
-        <input id="name" type="text" data-i18n-placeholder="add.name"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="country" type="text" data-i18n-placeholder="add.country"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="period" type="text" data-i18n-placeholder="add.period"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <input id="maker" type="text" data-i18n-placeholder="add.maker"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <select id="type" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-          <option value="military" data-i18n="filters.types.military">Militaires / Paramilitaires</option>
-          <option value="civil" data-i18n="filters.types.civil">Civiles / Politiques</option>
-        </select>
-        <select id="state" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
-          <option value="new" data-i18n="filters.states.new">Neuf</option>
-          <option value="vg" data-i18n="filters.states.vg">Très bon état</option>
-          <option value="good" data-i18n="filters.states.good">Bon</option>
-          <option value="fair" data-i18n="filters.states.fair">Moyen</option>
-          <option value="poor" data-i18n="filters.states.poor">Usé</option>
-        </select>
-        <textarea id="description" data-i18n-placeholder="add.description"
-                  class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
-        <input id="image" type="text" data-i18n-placeholder="add.image"
-               class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold"
-                data-i18n="add.submit">
+ | DE</div>
+</nav>
+<!-- Formulaire ajout -->
+<main class="flex-1 p-6 flex flex-col items-center">
+<div class="bg-gray-900 border border-gray-700 rounded-lg p-6 w-full max-w-lg shadow-lg">
+<h1 class="text-2xl font-bold mb-6 text-center" data-i18n="add.title">➕ Ajouter une entrée</h1>
+<form class="space-y-4" id="addForm">
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.name" id="name" type="text"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.country" id="country" type="text"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.period" id="period" type="text"/>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.maker" id="maker" type="text"/>
+<select class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="type">
+<option data-i18n="filters.types.military" value="military">Militaires / Paramilitaires</option>
+<option data-i18n="filters.types.civil" value="civil">Civiles / Politiques</option>
+</select>
+<select class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="state">
+<option data-i18n="filters.states.new" value="new">Neuf</option>
+<option data-i18n="filters.states.vg" value="vg">Très bon état</option>
+<option data-i18n="filters.states.good" value="good">Bon</option>
+<option data-i18n="filters.states.fair" value="fair">Moyen</option>
+<option data-i18n="filters.states.poor" value="poor">Usé</option>
+</select>
+<textarea class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.description" id="description"></textarea>
+<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="add.image" id="image" type="text"/>
+<button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="add.submit" type="submit">
           Enregistrer
         </button>
-      </form>
-    </div>
-  </main>
-
-  <script type="module">
+</form>
+</div>
+</main>
+<script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
     import { loadConfig } from "/config.js";
 
