@@ -80,6 +80,23 @@ function setupDeleteButtons() {
   });
 }
 
+function openMedalModal(medal) {
+  document.getElementById("modalMedalName").textContent = medal.name || "Sans nom";
+  document.getElementById("modalMedalCountry").textContent = medal.country || "-";
+  document.getElementById("modalMedalPeriod").textContent = medal.period || "-";
+  document.getElementById("modalMedalMaker").textContent = medal.maker || "-";
+  document.getElementById("modalMedalType").textContent = medal.type || "-";
+  document.getElementById("modalMedalState").textContent = medal.state || "-";
+  document.getElementById("modalMedalDescription").textContent = medal.description || "-";
+  document.getElementById("modalMedalImage").src = medal.image || "";
+
+  document.getElementById("medalModal").classList.remove("hidden");
+}
+
+document.getElementById("closeMedalModal")?.addEventListener("click", () => {
+  document.getElementById("medalModal").classList.add("hidden");
+});
+
 function setupEditButtons() {
   document.querySelectorAll(".editBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
