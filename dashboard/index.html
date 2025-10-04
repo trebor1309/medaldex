@@ -68,6 +68,21 @@
     </div>
   </div>
 
+  <!-- ✅ Modal : Détails Médaille -->
+  <div id="medalModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+    <div class="bg-gray-900 text-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+      <button id="closeMedalModal" class="absolute top-3 right-3 text-gray-400 hover:text-white">✕</button>
+      <h2 class="text-2xl font-bold mb-2" id="modalMedalName">Nom</h2>
+      <img id="modalMedalImage" src="" alt="medal image" class="w-32 h-32 object-cover rounded mx-auto mb-4" />
+      <p class="text-sm text-gray-400 mb-1" id="modalMedalCountry">Pays</p>
+      <p class="text-sm text-gray-400 mb-1" id="modalMedalPeriod">Période</p>
+      <p class="text-sm text-gray-400 mb-1" id="modalMedalMaker">Fabricant</p>
+      <p class="text-sm text-gray-400 mb-1" id="modalMedalType">Type</p>
+      <p class="text-sm text-gray-400 mb-1" id="modalMedalState">État</p>
+      <p class="text-sm mt-2" id="modalMedalDescription">Description</p>
+    </div>
+  </div>
+
   <!-- ✅ Footer -->
   <footer class="bg-gray-900 border-t border-gray-700 p-4 text-center text-gray-400">
     <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
