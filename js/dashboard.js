@@ -3,21 +3,21 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { loadConfig } from "/js/config.js";
 import { t, initI18n, setupLangSwitcher } from "/js/i18n.js";
 
-// Init config + Supabase
+// ✅ Init config + Supabase
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Init i18n
+// ✅ Init i18n
 await initI18n();
 setupLangSwitcher();
 
-// Vérifier session utilisateur
+// ✅ Vérifier session utilisateur
 const { data: { user }, error: userError } = await supabase.auth.getUser();
 if (!user || userError) {
   window.location.href = "/login/";
 }
 
-// Charger la collection
+// ✅ Charger la collection
 async function loadMedals() {
   const { data, error } = await supabase.from("medals").select("*").eq("user_id", user.id);
   const container = document.getElementById("medalList");
@@ -53,7 +53,7 @@ async function loadMedals() {
   setupDeleteButtons();
 }
 
-// Ajouter ou éditer une médaille
+// ✅ Ajouter ou éditer une médaille
 const form = document.getElementById("medalForm");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -62,15 +62,18 @@ form.addEventListener("submit", async (e) => {
   const medal = Object.fromEntries(fields.map(f => [f, document.getElementById("medal_" + f).value.trim()]));
   medal.user_id = user.id;
 
-  const query = id ? supabase.from("medals").update(medal).eq("id", id) : supabase.from("medals").insert([medal]);
-  const { error } = await query;
+  const query = id
+    ? supabase.from("medals").update(medal).eq("id", id)
+    : supabase.from("medals").insert([medal]);
 
+  const { error } = await query;
   if (error) return alert("❌ " + error.message);
 
   closeMedalModal();
   loadMedals();
 });
 
+// ✅ Supprimer une médaille
 function setupDeleteButtons() {
   document.querySelectorAll(".deleteBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
@@ -81,6 +84,7 @@ function setupDeleteButtons() {
   });
 }
 
+// ✅ Ouvrir la modale d’affichage d’une médaille
 function openMedalModal(medal) {
   document.getElementById("modalMedalName").textContent = medal.name || "Sans nom";
   document.getElementById("modalMedalCountry").textContent = medal.country || "-";
@@ -91,16 +95,15 @@ function openMedalModal(medal) {
   document.getElementById("modalMedalDescription").textContent = medal.description || "-";
   document.getElementById("modalMedalImage").src = medal.image || "";
 
-  document.getElementById("medalModal").classList.remove("hidden");
+  modal.classList.remove("hidden");
 }
 
-document.getElementById("closeMedalModal")?.addEventListener("click", () => {
-  document.getElementById("medalModal").classList.add("hidden");
-});
-
+// ✅ Modifier une médaille
 function setupEditButtons() {
   document.querySelectorAll(".editBtn").forEach(btn => {
-    btn.addEventListener("click", async () => {
+    btn.addEventListener("click", async (e) => {
+      e.stopPropagation(); // Empêche le clic sur la carte d’ouvrir aussi le modal
+
       const { data } = await supabase.from("medals").select("*").eq("id", btn.dataset.id).single();
       if (!data) return;
 
@@ -108,13 +111,14 @@ function setupEditButtons() {
       ["name", "country", "period", "maker", "type", "state", "description", "image"].forEach(f => {
         document.getElementById("medal_" + f).value = data[f] || "";
       });
+
       document.getElementById("medalModalTitle").innerText = t("edit.title");
-      openMedalModal();
+      modal.classList.remove("hidden");
     });
   });
 }
 
-// Gestion modale
+// ✅ Gestion modale
 const modal = document.getElementById("medalModal");
 const openBtn = document.getElementById("openAddModal");
 const closeBtn = document.getElementById("closeModal");
@@ -125,17 +129,23 @@ function closeMedalModal() {
   document.getElementById("medalModalTitle").innerText = t("add.title");
   modal.classList.add("hidden");
 }
-openBtn?.addEventListener("click", openMedalModal);
+
+openBtn?.addEventListener("click", () => {
+  form.reset();
+  delete form.dataset.id;
+  document.getElementById("medalModalTitle").innerText = t("add.title");
+  modal.classList.remove("hidden");
+});
 closeBtn?.addEventListener("click", closeMedalModal);
 
-// Déconnexion
+// ✅ Déconnexion
 const logoutBtn = document.getElementById("logoutBtn");
 logoutBtn?.addEventListener("click", async () => {
   await supabase.auth.signOut();
   window.location.href = "/";
 });
 
-// Profile modale (optionnel)
+// ✅ Modale profil (optionnel)
 document.getElementById("openProfileModal")?.addEventListener("click", () => {
   document.getElementById("profileModal").classList.remove("hidden");
 });
@@ -143,5 +153,5 @@ document.getElementById("closeProfileModal")?.addEventListener("click", () => {
   document.getElementById("profileModal").classList.add("hidden");
 });
 
-// Init
+// ✅ Lancer l’app
 loadMedals();
