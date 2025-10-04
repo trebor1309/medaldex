@@ -1,157 +1,129 @@
-// js/dashboard.js
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { loadConfig } from "./config.js";
+import { loadConfig } from "/js/config.js";
 
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+console.log("🔑 Supabase init:", SUPABASE_URL);
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // Vérif utilisateur
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    window.location.href = "/login/";
+// ✅ Vérifier l’utilisateur connecté
+const { data: { user }, error: userError } = await supabase.auth.getUser();
+if (userError) console.error("❌ Erreur récupération user:", userError);
+console.log("👤 Utilisateur:", user);
+
+if (!user) {
+  console.warn("⚠️ Aucun utilisateur connecté → redirection vers login");
+  window.location.href = "/login/";
+}
+
+// ✅ Fonction pour afficher les médailles
+async function loadMedals() {
+  console.log("📥 Chargement des médailles...");
+  const { data, error } = await supabase
+    .from("medals")
+    .select("*")
+    .eq("user_id", user.id);
+
+  if (error) {
+    console.error("❌ Erreur chargement médailles:", error.message);
     return;
   }
 
-  const medalsList = document.getElementById("medalsList");
-  const addModal = document.getElementById("addModal");
-  const editModal = document.getElementById("editModal");
-  const addForm = document.getElementById("addForm");
-  const editForm = document.getElementById("editForm");
+  console.log("✅ Médailles récupérées:", data);
+  const container = document.getElementById("medalList");
+  container.innerHTML = "";
 
-  let editingId = null;
-
-  // ✅ Charger les médailles
-  async function loadMedals() {
-    medalsList.innerHTML = "";
-    const { data, error } = await supabase
-      .from("medals")
-      .select("*")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Erreur chargement:", error.message);
-      return;
-    }
-
-    if (!data.length) {
-      medalsList.innerHTML = `<p class="text-gray-400">Aucune entrée pour le moment.</p>`;
-      return;
-    }
-
-    data.forEach(medal => {
-      const div = document.createElement("div");
-      div.className = "bg-gray-800 p-4 rounded shadow flex justify-between items-center";
-
-      div.innerHTML = `
-        <div>
-          <h3 class="font-bold">${medal.name}</h3>
-          <p class="text-sm text-gray-400">${medal.country || ""} - ${medal.period || ""}</p>
-        </div>
-        <div class="flex space-x-2">
-          <button class="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-sm" data-id="${medal.id}" data-action="edit">✏️</button>
-          <button class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-sm" data-id="${medal.id}" data-action="delete">🗑️</button>
-        </div>
-      `;
-
-      medalsList.appendChild(div);
-    });
+  if (!data || data.length === 0) {
+    container.innerHTML = `<p class="text-gray-400">Aucune médaille enregistrée.</p>`;
+    return;
   }
 
-  // ✅ Ajouter médaille
-  addForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  data.forEach(medal => {
+    const card = document.createElement("div");
+    card.className = "bg-gray-800 rounded p-4 shadow relative";
 
-    const newMedal = {
-      user_id: user.id,
-      name: document.getElementById("addName").value,
-      country: document.getElementById("addCountry").value,
-      period: document.getElementById("addPeriod").value,
-      maker: document.getElementById("addMaker").value,
-      type: document.getElementById("addType").value,
-      state: document.getElementById("addState").value,
-      description: document.getElementById("addDescription").value,
-      image: document.getElementById("addImage").value,
-    };
+    card.innerHTML = `
+      <h3 class="font-bold text-lg">${medal.name || "(Sans nom)"}</h3>
+      <p class="text-sm text-gray-400">${medal.country || ""} - ${medal.period || ""}</p>
+      <img src="${medal.image || ""}" alt="medal" class="w-24 h-24 object-cover my-2"/>
+      <div class="flex space-x-2 mt-2">
+        <button data-id="${medal.id}" class="editBtn bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded">✏️ Edit</button>
+        <button data-id="${medal.id}" class="deleteBtn bg-red-600 hover:bg-red-700 px-2 py-1 rounded">🗑️ Delete</button>
+      </div>
+    `;
 
-    const { error } = await supabase.from("medals").insert([newMedal]);
-    if (error) {
-      alert("❌ Erreur ajout: " + error.message);
-      return;
-    }
-
-    addModal.classList.add("hidden");
-    addForm.reset();
-    loadMedals();
+    container.appendChild(card);
   });
 
-  // ✅ Edit médaille
-  editForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  setupEditButtons();
+  setupDeleteButtons();
+}
 
-    const updatedMedal = {
-      name: document.getElementById("editName").value,
-      country: document.getElementById("editCountry").value,
-      period: document.getElementById("editPeriod").value,
-      maker: document.getElementById("editMaker").value,
-      type: document.getElementById("editType").value,
-      state: document.getElementById("editState").value,
-      description: document.getElementById("editDescription").value,
-      image: document.getElementById("editImage").value,
-    };
+// ✅ Ajouter une médaille
+document.getElementById("addForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  console.log("➕ Tentative d'ajout...");
 
-    const { error } = await supabase
-      .from("medals")
-      .update(updatedMedal)
-      .eq("id", editingId)
-      .eq("user_id", user.id);
+  const newMedal = {
+    user_id: user.id,
+    name: document.getElementById("add_name").value,
+    country: document.getElementById("add_country").value,
+    period: document.getElementById("add_period").value,
+    maker: document.getElementById("add_maker").value,
+    type: document.getElementById("add_type").value,
+    state: document.getElementById("add_state").value,
+    description: document.getElementById("add_description").value,
+    image: document.getElementById("add_image").value,
+  };
 
-    if (error) {
-      alert("❌ Erreur édition: " + error.message);
-      return;
-    }
+  const { error } = await supabase.from("medals").insert([newMedal]);
+  if (error) {
+    console.error("❌ Erreur ajout médaille:", error.message);
+    alert("Erreur: " + error.message);
+    return;
+  }
 
-    editModal.classList.add("hidden");
-    loadMedals();
-  });
-
-  // ✅ Actions boutons edit/delete
-  medalsList.addEventListener("click", async (e) => {
-    const btn = e.target.closest("button");
-    if (!btn) return;
-
-    const id = btn.dataset.id;
-    const action = btn.dataset.action;
-
-    if (action === "edit") {
-      editingId = id;
-      const { data } = await supabase.from("medals").select("*").eq("id", id).single();
-      if (data) {
-        document.getElementById("editName").value = data.name || "";
-        document.getElementById("editCountry").value = data.country || "";
-        document.getElementById("editPeriod").value = data.period || "";
-        document.getElementById("editMaker").value = data.maker || "";
-        document.getElementById("editType").value = data.type || "";
-        document.getElementById("editState").value = data.state || "";
-        document.getElementById("editDescription").value = data.description || "";
-        document.getElementById("editImage").value = data.image || "";
-        editModal.classList.remove("hidden");
-      }
-    }
-
-    if (action === "delete") {
-      if (!confirm("⚠️ Supprimer cette entrée ?")) return;
-      await supabase.from("medals").delete().eq("id", id).eq("user_id", user.id);
-      loadMedals();
-    }
-  });
-
-  // ✅ Déconnexion
-  document.getElementById("logoutBtn").addEventListener("click", async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/";
-  });
-
+  console.log("✅ Médaille ajoutée:", newMedal);
+  alert("✅ Médaille ajoutée !");
+  document.getElementById("addModal").classList.add("hidden");
   loadMedals();
 });
+
+// ✅ Supprimer
+function setupDeleteButtons() {
+  document.querySelectorAll(".deleteBtn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      console.log("🗑️ Suppression médaille:", id);
+
+      const { error } = await supabase.from("medals").delete().eq("id", id).eq("user_id", user.id);
+      if (error) {
+        console.error("❌ Erreur suppression:", error.message);
+        return;
+      }
+
+      console.log("✅ Médaille supprimée:", id);
+      loadMedals();
+    });
+  });
+}
+
+// ✅ Éditer
+function setupEditButtons() {
+  document.querySelectorAll(".editBtn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      console.log("✏️ Édition médaille:", id);
+      window.location.href = `/edit/${id}`; // pour le moment redirection simple
+    });
+  });
+}
+
+// ✅ Déconnexion
+document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+  console.log("🚪 Déconnexion...");
+  await supabase.auth.signOut();
+  window.location.href = "/";
+});
+
+// Charger les médailles au démarrage
+loadMedals();
