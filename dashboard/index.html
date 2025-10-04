@@ -6,8 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Medaldex - Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-<script defer="True" src="/js/i18n.js"></script></head>
+</head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
 <!-- ✅ Navbar -->
 <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
@@ -66,14 +65,5 @@
 </footer>
 <!-- ✅ Script -->
 <script src="/js/dashboard.js" type="module"></script>
-<script>
-    // Ouvrir/fermer modale
-    document.getElementById("openAddModal")?.addEventListener("click", () => {
-      document.getElementById("addModal").classList.remove("hidden");
-    });
-    document.getElementById("cancelAdd")?.addEventListener("click", () => {
-      document.getElementById("addModal").classList.add("hidden");
-    });
-  </script>
 </body>
 </html>
