@@ -118,9 +118,7 @@ function setupEditButtons() {
 const modal = document.getElementById("medalModal");
 const openBtn = document.getElementById("openAddModal");
 const closeBtn = document.getElementById("closeModal");
-function openMedalModal() {
-  modal.classList.remove("hidden");
-}
+
 function closeMedalModal() {
   form.reset();
   delete form.dataset.id;
