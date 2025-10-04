@@ -1,14 +1,18 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { loadConfig } from "/js/config.js";
+import { t, initI18n, setupLangSwitcher } from "/js/i18n.js";
 
+// ✅ Init config + Supabase
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-console.log("🔑 Supabase init:", SUPABASE_URL);
+
+// ✅ Init i18n
+await initI18n();
+setupLangSwitcher();
 
 // ✅ Vérifier l’utilisateur connecté
 const { data: { user }, error: userError } = await supabase.auth.getUser();
 if (userError) console.error("❌ Erreur récupération user:", userError);
-console.log("👤 Utilisateur:", user);
 
 if (!user) {
   console.warn("⚠️ Aucun utilisateur connecté → redirection vers login");
@@ -17,23 +21,22 @@ if (!user) {
 
 // ✅ Fonction pour afficher les médailles
 async function loadMedals() {
-  console.log("📥 Chargement des médailles...");
   const { data, error } = await supabase
     .from("medals")
     .select("*")
     .eq("user_id", user.id);
 
-  if (error) {
-    console.error("❌ Erreur chargement médailles:", error.message);
-    return;
-  }
-
-  console.log("✅ Médailles récupérées:", data);
   const container = document.getElementById("medalList");
   container.innerHTML = "";
 
+  if (error) {
+    console.error("❌ Erreur chargement médailles:", error.message);
+    container.innerHTML = `<p class="text-red-500">Erreur: ${error.message}</p>`;
+    return;
+  }
+
   if (!data || data.length === 0) {
-    container.innerHTML = `<p class="text-gray-400">Aucune médaille enregistrée.</p>`;
+    container.innerHTML = `<p class="text-gray-400">${t("dashboard.noMedals")}</p>`;
     return;
   }
 
@@ -42,12 +45,12 @@ async function loadMedals() {
     card.className = "bg-gray-800 rounded p-4 shadow relative";
 
     card.innerHTML = `
-      <h3 class="font-bold text-lg">${medal.name || "(Sans nom)"}</h3>
+      <h3 class="font-bold text-lg">${medal.name || t("dashboard.noName")}</h3>
       <p class="text-sm text-gray-400">${medal.country || ""} - ${medal.period || ""}</p>
       <img src="${medal.image || ""}" alt="medal" class="w-24 h-24 object-cover my-2"/>
       <div class="flex space-x-2 mt-2">
-        <button data-id="${medal.id}" class="editBtn bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded">✏️ Edit</button>
-        <button data-id="${medal.id}" class="deleteBtn bg-red-600 hover:bg-red-700 px-2 py-1 rounded">🗑️ Delete</button>
+        <button data-id="${medal.id}" class="editBtn bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded">${t("buttons.edit")}</button>
+        <button data-id="${medal.id}" class="deleteBtn bg-red-600 hover:bg-red-700 px-2 py-1 rounded">${t("buttons.delete")}</button>
       </div>
     `;
 
@@ -61,7 +64,6 @@ async function loadMedals() {
 // ✅ Ajouter une médaille
 document.getElementById("addForm")?.addEventListener("submit", async (e) => {
   e.preventDefault();
-  console.log("➕ Tentative d'ajout...");
 
   const newMedal = {
     user_id: user.id,
@@ -77,13 +79,11 @@ document.getElementById("addForm")?.addEventListener("submit", async (e) => {
 
   const { error } = await supabase.from("medals").insert([newMedal]);
   if (error) {
-    console.error("❌ Erreur ajout médaille:", error.message);
-    alert("Erreur: " + error.message);
+    alert("❌ " + error.message);
     return;
   }
 
-  console.log("✅ Médaille ajoutée:", newMedal);
-  alert("✅ Médaille ajoutée !");
+  alert("✅ " + t("add.title") + " !");
   document.getElementById("addModal").classList.add("hidden");
   loadMedals();
 });
@@ -93,15 +93,18 @@ function setupDeleteButtons() {
   document.querySelectorAll(".deleteBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
-      console.log("🗑️ Suppression médaille:", id);
 
-      const { error } = await supabase.from("medals").delete().eq("id", id).eq("user_id", user.id);
+      const { error } = await supabase
+        .from("medals")
+        .delete()
+        .eq("id", id)
+        .eq("user_id", user.id);
+
       if (error) {
-        console.error("❌ Erreur suppression:", error.message);
+        alert("❌ " + error.message);
         return;
       }
 
-      console.log("✅ Médaille supprimée:", id);
       loadMedals();
     });
   });
@@ -112,15 +115,13 @@ function setupEditButtons() {
   document.querySelectorAll(".editBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
-      console.log("✏️ Édition médaille:", id);
-      window.location.href = `/edit/${id}`; // pour le moment redirection simple
+      window.location.href = `/edit/${id}`; // TODO: remplacer par modal
     });
   });
 }
 
 // ✅ Déconnexion
 document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-  console.log("🚪 Déconnexion...");
   await supabase.auth.signOut();
   window.location.href = "/";
 });
