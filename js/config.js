@@ -1,16 +1,6 @@
 export async function loadConfig() {
-  try {
-    const res = await fetch("/api/config"); // appelle l’API Vercel
-    if (!res.ok) {
-      throw new Error("Impossible de charger la config Supabase");
-    }
-
-    const data = await res.json();
-    console.log("✅ Config chargée :", data); // 🔍 Vérifie dans la console navigateur
-
-    return data;
-  } catch (err) {
-    console.error("❌ Erreur loadConfig:", err);
-    throw err;
-  }
+  return {
+    SUPABASE_URL: "https://xwdvnjodqvwqvorbnxln.supabase.co",
+    SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3ZHZuam9kcXZ3cXZvcmJueGxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNDkzMzAsImV4cCI6MjA3NDkyNTMzMH0.219yAB1IUJTRbTAR3gt8h9ufkI50-TJqKej-iW9KOmM"
+  };
 }
