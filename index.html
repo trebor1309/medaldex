@@ -137,125 +137,112 @@
 </div>
 </div>
 <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-    import { loadConfig } from "/js/config.js";
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  import { loadConfig } from "/js/config.js";
+  import { initI18n } from "/js/i18n.js";
+  initI18n();
 
-    // Supabase client
-    const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Elements
-    const openLogin = document.getElementById("openLogin");
-    const openSignup = document.getElementById("openSignup");
-    const heroLogin = document.getElementById("heroLogin");
-    const heroSignup = document.getElementById("heroSignup");
-    const heroDashboard = document.getElementById("heroDashboard");
-    const goDashboard = document.getElementById("goDashboard");
-    const logoutBtn = document.getElementById("logoutBtn");
+  const openLogin = document.getElementById("openLogin");
+  const openSignup = document.getElementById("openSignup");
+  const heroLogin = document.getElementById("heroLogin");
+  const heroSignup = document.getElementById("heroSignup");
+  const heroDashboard = document.getElementById("heroDashboard");
+  const goDashboard = document.getElementById("goDashboard");
+  const logoutBtn = document.getElementById("logoutBtn");
 
-    const modalBackdrop = document.getElementById("modalBackdrop");
-    const loginModal = document.getElementById("loginModal");
-    const signupModal = document.getElementById("signupModal");
+  const modalBackdrop = document.getElementById("modalBackdrop");
+  const loginModal = document.getElementById("loginModal");
+  const signupModal = document.getElementById("signupModal");
 
-    // Session detection
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      // connecté
-      openLogin.classList.add("hidden");
-      openSignup.classList.add("hidden");
-      heroLogin.classList.add("hidden");
-      heroSignup.classList.add("hidden");
+  const { data: { user } } = await supabase.auth.getUser();
+  if (user) {
+    openLogin.classList.add("hidden");
+    openSignup.classList.add("hidden");
+    heroLogin.classList.add("hidden");
+    heroSignup.classList.add("hidden");
 
-      goDashboard.classList.remove("hidden");
-      heroDashboard.classList.remove("hidden");
-      logoutBtn.classList.remove("hidden");
-    } else {
-      // pas connecté
-      openLogin.classList.remove("hidden");
-      openSignup.classList.remove("hidden");
-      heroLogin.classList.remove("hidden");
-      heroSignup.classList.remove("hidden");
+    goDashboard.classList.remove("hidden");
+    heroDashboard.classList.remove("hidden");
+    logoutBtn.classList.remove("hidden");
+  } else {
+    openLogin.classList.remove("hidden");
+    openSignup.classList.remove("hidden");
+    heroLogin.classList.remove("hidden");
+    heroSignup.classList.remove("hidden");
 
-      goDashboard.classList.add("hidden");
-      heroDashboard.classList.add("hidden");
-      logoutBtn.classList.add("hidden");
+    goDashboard.classList.add("hidden");
+    heroDashboard.classList.add("hidden");
+    logoutBtn.classList.add("hidden");
+  }
+
+  function openModal(which) {
+    modalBackdrop.classList.remove("hidden");
+    (which === "login" ? loginModal : signupModal).classList.remove("hidden");
+  }
+
+  function closeModals() {
+    modalBackdrop.classList.add("hidden");
+    loginModal.classList.add("hidden");
+    signupModal.classList.add("hidden");
+  }
+
+  openLogin?.addEventListener("click", () => openModal("login"));
+  heroLogin?.addEventListener("click", () => openModal("login"));
+  openSignup?.addEventListener("click", () => openModal("signup"));
+  heroSignup?.addEventListener("click", () => openModal("signup"));
+
+  document.querySelectorAll("[data-close]").forEach(btn => btn.addEventListener("click", closeModals));
+  modalBackdrop.addEventListener("click", closeModals);
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModals(); });
+
+  document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return alert("❌ " + error.message);
+
+    window.location.href = "/dashboard/";
+  });
+
+  document.getElementById("signupForm")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("signupUsername").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
+
+    if (!username || !email || !password) return alert("⚠️ Merci de remplir tous les champs.");
+
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) return alert("❌ " + error.message);
+
+    if (data.user) {
+      const { error: pErr } = await supabase.from("profiles").insert([{ id: data.user.id, username }]);
+      if (pErr) console.warn("⚠️ Profile:", pErr.message);
     }
 
-    // Open/close modal helpers
-    function openModal(which) {
-      modalBackdrop.classList.remove("hidden");
-      (which === "login" ? loginModal : signupModal).classList.remove("hidden");
-    }
-    function closeModals() {
-      modalBackdrop.classList.add("hidden");
-      loginModal.classList.add("hidden");
-      signupModal.classList.add("hidden");
-    }
+    alert("✅ Compte créé ! Vérifie ton e-mail si nécessaire.");
+    window.location.href = "/dashboard/";
+  });
 
-    // Open modal buttons
-    openLogin?.addEventListener("click", () => openModal("login"));
-    heroLogin?.addEventListener("click", () => openModal("login"));
-    openSignup?.addEventListener("click", () => openModal("signup"));
-    heroSignup?.addEventListener("click", () => openModal("signup"));
+  logoutBtn?.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/";
+  });
 
-    // Close modal (X buttons + backdrop + ESC)
-    document.querySelectorAll("[data-close]").forEach(btn => btn.addEventListener("click", closeModals));
-    modalBackdrop.addEventListener("click", closeModals);
-    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModals(); });
-
-    // Auth: login
-    document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value;
-
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) return alert("❌ " + error.message);
-
-      window.location.href = "/dashboard/";
-    });
-
-    // Auth: signup (+ create profile if possible)
-    document.getElementById("signupForm")?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const username = document.getElementById("signupUsername").value.trim();
-      const email = document.getElementById("signupEmail").value.trim();
-      const password = document.getElementById("signupPassword").value;
-
-      if (!username || !email || !password) return alert("⚠️ Merci de remplir tous les champs.");
-
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) return alert("❌ " + error.message);
-
-      if (data.user) {
-        // tenter de créer le profil (si la conf email n'empêche pas la session immédiate)
-        const { error: pErr } = await supabase.from("profiles").insert([{ id: data.user.id, username }]);
-        if (pErr) console.warn("⚠️ Profile:", pErr.message);
-      }
-
-      alert("✅ Compte créé ! Vérifie ton e-mail si nécessaire.");
-      window.location.href = "/dashboard/";
-    });
-
-    // Logout
-    logoutBtn?.addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      window.location.href = "/";
-    });
-
-    // Cookie banner
-    const cookieBanner = document.getElementById("cookieBanner");
-    const acceptBtn = document.getElementById("acceptCookies");
-    if (localStorage.getItem("cookiesAccepted")) {
-      cookieBanner.style.display = "none";
-    }
-    acceptBtn.addEventListener("click", () => {
-      localStorage.setItem("cookiesAccepted", "true");
-      cookieBanner.style.display = "none";
-    });
-    import { initI18n } from "/js/i18n.js";
-    initI18n();
-
-  </script>
+  const cookieBanner = document.getElementById("cookieBanner");
+  const acceptBtn = document.getElementById("acceptCookies");
+  if (localStorage.getItem("cookiesAccepted")) {
+    cookieBanner.style.display = "none";
+  }
+  acceptBtn.addEventListener("click", () => {
+    localStorage.setItem("cookiesAccepted", "true");
+    cookieBanner.style.display = "none";
+  });
+</script>
 </body>
 </html>
