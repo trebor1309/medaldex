@@ -88,7 +88,7 @@ document.getElementById("addForm")?.addEventListener("submit", async (e) => {
   loadMedals();
 });
 
-// ✅ Supprimer
+// ✅ Supprimer une médaille
 function setupDeleteButtons() {
   document.querySelectorAll(".deleteBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
@@ -110,12 +110,12 @@ function setupDeleteButtons() {
   });
 }
 
-// ✅ Éditer
+// ✅ Éditer une médaille (bientôt modal)
 function setupEditButtons() {
   document.querySelectorAll(".editBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
       const id = btn.dataset.id;
-      window.location.href = `/edit/${id}`; // TODO: remplacer par modal
+      window.location.href = `/edit/${id}`; // TODO: remplacer par une modale
     });
   });
 }
@@ -126,5 +126,13 @@ document.getElementById("logoutBtn")?.addEventListener("click", async () => {
   window.location.href = "/";
 });
 
-// Charger les médailles au démarrage
+// ✅ Modale "Ajouter"
+document.getElementById("openAddModal")?.addEventListener("click", () => {
+  document.getElementById("addModal").classList.remove("hidden");
+});
+document.getElementById("cancelAdd")?.addEventListener("click", () => {
+  document.getElementById("addModal").classList.add("hidden");
+});
+
+// ✅ Charger les médailles au démarrage
 loadMedals();
