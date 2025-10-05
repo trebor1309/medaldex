@@ -67,28 +67,34 @@
                     <!-- Nom -->                     
                     <input id="medal_name" type="text" placeholder="Nom" data-i18n-placeholder="add.name" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/> 
                     <!-- Pays -->                     
-                    <div> 
-                        <label for="medal_country" class="block text-sm mb-1" data-i18n="add.country">Pays</label>                         
+                    <div class="flex flex-col gap-1"> 
+                        <label class="text-sm text-gray-400">🌍 <span data-i18n="filters.country">Pays</span></label>                         
                         <div class="flex gap-2"> 
-                            <select id="medal_country" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600"></select>                             
-                            <button type="button" id="addCountryBtn" class="bg-gray-700 hover:bg-gray-600 px-2 rounded text-sm whitespace-nowrap" data-i18n="add.addCountry">➕ Ajouter</button>                             
-                        </div>                         
+                            <select id="medal_country" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600"></select>
+                            <button type="button" id="manualCountryBtn" class="bg-gray-700 hover:bg-gray-600 px-2 rounded text-sm">Manuel</button>
+                        </div>
+                        <input id="manual_country_input" type="text" placeholder="Entrer un pays" 
+                                class="hidden p-2 rounded bg-gray-800 border border-gray-600 mt-1" />                         
                     </div>                     
                     <!-- Période -->                     
-                    <div> 
-                        <label for="medal_period" class="block text-sm mb-1" data-i18n="add.period">Période</label>                         
-                        <div class="flex gap-2"> 
-                            <select id="medal_period" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600"></select>                             
-                            <button type="button" id="addPeriodBtn" class="bg-gray-700 hover:bg-gray-600 px-2 rounded text-sm whitespace-nowrap" data-i18n="add.addPeriod">➕ Ajouter</button>                             
-                        </div>                         
-                    </div>                     
+                    <div class="flex flex-col gap-1">
+                        <label class="text-sm text-gray-400">📅 <span data-i18n="filters.period">Période</span></label>
+                        <div class="flex gap-2">
+                            <select id="medal_period" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600"></select>
+                            <button type="button" id="manualPeriodBtn" class="bg-gray-700 hover:bg-gray-600 px-2 rounded text-sm">Manuel</button>
+                        </div>
+                        <input id="manual_period_input" type="text" placeholder="Entrer une période" 
+                                class="hidden p-2 rounded bg-gray-800 border border-gray-600 mt-1" />
+                    </div>                    
                     <!-- Type -->                     
-                    <div> 
-                        <label for="medal_type" class="block text-sm mb-1" data-i18n="add.type">Type</label>                         
-                        <div class="flex gap-2"> 
-                            <select id="medal_type" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600"></select>                             
-                            <button type="button" id="addTypeBtn" class="bg-gray-700 hover:bg-gray-600 px-2 rounded text-sm whitespace-nowrap" data-i18n="add.addType">➕ Ajouter</button>                             
-                        </div>                         
+                    <div class="flex flex-col gap-1">
+                        <label class="text-sm text-gray-400">🎖️ <span data-i18n="filters.type">Type</span></label>
+                        <div class="flex gap-2">
+                            <select id="medal_type" class="flex-1 p-2 rounded bg-gray-800 border border-gray-600"></select>
+                            <button type="button" id="manualTypeBtn" class="bg-gray-700 hover:bg-gray-600 px-2 rounded text-sm">Manuel</button>
+                        </div>
+                        <input id="manual_type_input" type="text" placeholder="Entrer un type" 
+                                class="hidden p-2 rounded bg-gray-800 border border-gray-600 mt-1" />
                     </div>                     
                     <!-- État -->                     
                     <div> 

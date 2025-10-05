@@ -339,6 +339,60 @@ async function openEditModal(medal) {
   document.getElementById("medalModalTitle").innerText = t("edit.title") || "✏️ Modifier une entrée";
   document.getElementById("medalModal").classList.remove("hidden");
 }
+// ==========================
+// ✍️ Gestion des champs "Manuel" (pays / période / type)
+// ==========================
+const manualConfig = [
+  { button: "manualCountryBtn", input: "manual_country_input", select: "medal_country", storage: "manual_countries" },
+  { button: "manualPeriodBtn", input: "manual_period_input", select: "medal_period", storage: "manual_periods" },
+  { button: "manualTypeBtn", input: "manual_type_input", select: "medal_type", storage: "manual_types" },
+];
+
+manualConfig.forEach(({ button, input, select, storage }) => {
+  const btn = document.getElementById(button);
+  const inp = document.getElementById(input);
+  const sel = document.getElementById(select);
+
+  if (!btn || !inp || !sel) return;
+
+  // 🔘 Afficher / cacher le champ manuel
+  btn.addEventListener("click", () => {
+    inp.classList.toggle("hidden");
+    inp.focus();
+  });
+
+  // 💾 Quand l’utilisateur valide (Enter)
+  inp.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && inp.value.trim()) {
+      const newVal = inp.value.trim();
+      const existing = JSON.parse(localStorage.getItem(storage) || "[]");
+
+      if (!existing.includes(newVal)) {
+        existing.push(newVal);
+        localStorage.setItem(storage, JSON.stringify(existing));
+      }
+
+      // Ajouter dans le select
+      const opt = document.createElement("option");
+      opt.value = newVal;
+      opt.textContent = newVal;
+      sel.appendChild(opt);
+      sel.value = newVal;
+
+      inp.value = "";
+      inp.classList.add("hidden");
+    }
+  });
+
+  // ✅ Recharger les valeurs manuelles sauvegardées
+  const saved = JSON.parse(localStorage.getItem(storage) || "[]");
+  saved.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    sel.appendChild(opt);
+  });
+});
 
 // ✅ Ferme le modal
 function closeMedalModal() {
