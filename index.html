@@ -1,248 +1,82 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title data-i18n="app.title">Medaldex</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="app.title">Medaldex</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white flex flex-col min-h-screen">
-<!-- Navbar -->
-<nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
-<a class="text-2xl font-bold" href="/">Medaldex</a>
-<div class="flex items-center space-x-3" id="navCtas">
-<!-- Remplacé dynamiquement selon session -->
-<button class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" data-i18n="buttons.login" id="openLogin">
-        Se connecter
-      </button>
-<button class="hidden bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup" id="openSignup">
-        Créer un compte
-      </button>
-<a class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" href="/dashboard/" id="goDashboard">
-        Dashboard
-      </a>
-<button class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">
-        Déconnexion
-      </button>
- <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-    <option value="fr">🇫🇷 FR</option>
-    <option value="en">🇬🇧 EN</option>
-    <option value="de">🇩🇪 DE</option>
-  </select>
-</div>
-</nav>
-<!-- Hero -->
-<header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
-<h1 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="app.slogan">
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+    <a class="text-2xl font-bold" href="/">Medaldex</a>
+    <div class="flex items-center space-x-3" id="navCtas">
+      <!-- Boutons dynamiques selon session -->
+      <button class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" data-i18n="buttons.login" id="openLogin">Se connecter</button>
+      <button class="hidden bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup" id="openSignup">Créer un compte</button>
+      <a class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" href="/dashboard/" id="goDashboard">Dashboard</a>
+      <button class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">Déconnexion</button>
+      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="en">🇬🇧 EN</option>
+        <option value="de">🇩🇪 DE</option>
+      </select>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
+    <h1 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="app.slogan">
       Organise et référence ta collection de décorations
     </h1>
-<p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8" data-i18n="hero.desc">
+    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8" data-i18n="hero.desc">
       Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant.
     </p>
-<div class="flex space-x-4">
-<button class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.signup" id="heroSignup">
-        Créer un compte
-      </button>
-<button class="bg-gray-700 hover:bg-gray-800 px-6 py-3 rounded font-semibold text-lg" data-i18n="buttons.login" id="heroLogin">
-        Se connecter
-      </button>
-<a class="hidden bg-gray-700 hover:bg-gray-800 px-6 py-3 rounded font-semibold text-lg" href="/dashboard/" id="heroDashboard">
-        Dashboard
-      </a>
-</div>
-</header>
-<!-- Features -->
-<section class="py-16 bg-gray-900 text-center">
-<h2 class="text-3xl font-bold mb-4" data-i18n="features.title">Fonctionnalités principales</h2>
-<p class="text-gray-400 mb-10" data-i18n="features.subtitle">Tout ce qu’il te faut pour gérer ta collection</p>
-<div class="grid md:grid-cols-3 gap-8 px-6 max-w-5xl mx-auto">
-<div class="bg-gray-800 p-6 rounded-lg shadow">
-<h3 class="font-semibold text-xl mb-2">📂</h3>
-<p data-i18n="features.organize">Classe tes entrées par pays, époque, type, fabricant.</p>
-</div>
-<div class="bg-gray-800 p-6 rounded-lg shadow">
-<h3 class="font-semibold text-xl mb-2">🔎</h3>
-<p data-i18n="features.search">Trouve instantanément l’entrée que tu veux.</p>
-</div>
-<div class="bg-gray-800 p-6 rounded-lg shadow">
-<h3 class="font-semibold text-xl mb-2">📊</h3>
-<p data-i18n="features.stats">Découvre des statistiques sur ta collection.</p>
-</div>
-</div>
-</section>
-<!-- How it works -->
-<section class="py-16 text-center px-6">
-<h2 class="text-3xl font-bold mb-6" data-i18n="how.title">🚀 Comment ça marche ?</h2>
-<div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-<div class="bg-gray-800 p-6 rounded-lg shadow">
-<h3 class="font-bold text-xl mb-2" data-i18n="how.step1.title">1️⃣ Crée un compte</h3>
-<p data-i18n="how.step1.text">Inscris-toi gratuitement en quelques secondes.</p>
-</div>
-<div class="bg-gray-800 p-6 rounded-lg shadow">
-<h3 class="font-bold text-xl mb-2" data-i18n="how.step2.title">2️⃣ Ajoute tes entrées</h3>
-<p data-i18n="how.step2.text">Ajoute médailles, insignes, rubans avec description et photo.</p>
-</div>
-<div class="bg-gray-800 p-6 rounded-lg shadow">
-<h3 class="font-bold text-xl mb-2" data-i18n="how.step3.title">3️⃣ Explore ta collection</h3>
-<p data-i18n="how.step3.text">Filtre, recherche et découvre tes statistiques.</p>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer class="bg-gray-900 border-t border-gray-700 p-6 text-center text-gray-400">
-<p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
-<div class="mt-4 flex justify-center space-x-6 text-sm">
-<a class="hover:text-blue-400" href="/legal/">Mentions légales</a>
-<a class="hover:text-blue-400" href="/privacy/">Confidentialité</a>
-<a class="hover:text-blue-400" href="/terms/">Conditions d’utilisation</a>
-<a class="hover:text-blue-400" href="/contact/">Contact</a>
-</div>
-</footer>
-<!-- Cookie Banner -->
-<div class="fixed bottom-0 left-0 right-0 bg-gray-800 text-gray-200 p-4 flex justify-between items-center shadow-lg" id="cookieBanner">
-<p data-i18n="cookies.message">🍪 Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement.</p>
-<button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded" data-i18n="cookies.accept" id="acceptCookies">OK</button>
-</div>
-<!-- Modals -->
-<div class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40" id="modalBackdrop"></div>
-<!-- Login modal -->
-<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" id="loginModal">
-<div class="bg-gray-900 border border-gray-700 rounded-xl shadow-xl w-full max-w-md p-6 relative">
-<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700" data-close="">✕</button>
-<h3 class="text-xl font-bold mb-4" data-i18n="buttons.login">Se connecter</h3>
-<form class="space-y-4" id="loginForm">
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.email" id="loginEmail" type="email"/>
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.password" id="loginPassword" type="password"/>
-<button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="buttons.login" type="submit">
-          Se connecter
-        </button>
-</form>
-</div>
-</div>
-<!-- Signup modal -->
-<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" id="signupModal">
-<div class="bg-gray-900 border border-gray-700 rounded-xl shadow-xl w-full max-w-md p-6 relative">
-<button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-800 hover:bg-gray-700" data-close="">✕</button>
-<h3 class="text-xl font-bold mb-4" data-i18n="buttons.signup">Créer un compte</h3>
-<form class="space-y-4" id="signupForm">
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.username" id="signupUsername" type="text"/>
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.email" id="signupEmail" type="email"/>
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" data-i18n-placeholder="auth.password" id="signupPassword" type="password"/>
-<button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold" data-i18n="buttons.signup" type="submit">
-          Créer un compte
-        </button>
-</form>
-<p class="text-xs text-gray-400 mt-3">Un e-mail de confirmation peut être nécessaire.</p>
-</div>
-</div>
-<script type="module">
-  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-  import { loadConfig } from "/js/config.js";
-  import { initI18n } from "/js/i18n.js";
-  initI18n();
+    <div class="flex space-x-4">
+      <button class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded font-semibold" data-i18n="buttons.signup" id="openSignupHero">Créer un compte</button>
+      <button class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded font-semibold" data-i18n="buttons.login" id="openLoginHero">Se connecter</button>
+    </div>
+  </header>
 
-  const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <!-- Footer -->
+  <footer class="p-4 bg-gray-900 border-t border-gray-700 text-center">
+    <p class="text-gray-400 text-sm" data-i18n="footer.rights">Tous droits réservés.</p>
+  </footer>
 
-  const openLogin = document.getElementById("openLogin");
-  const openSignup = document.getElementById("openSignup");
-  const heroLogin = document.getElementById("heroLogin");
-  const heroSignup = document.getElementById("heroSignup");
-  const heroDashboard = document.getElementById("heroDashboard");
-  const goDashboard = document.getElementById("goDashboard");
-  const logoutBtn = document.getElementById("logoutBtn");
+  <!-- Cookie Banner -->
+  <div id="cookieBanner" class="fixed bottom-0 inset-x-0 bg-gray-800 text-white p-4 flex justify-between items-center">
+    <span data-i18n="cookies.message">Nous utilisons des cookies pour améliorer votre expérience.</span>
+    <button id="acceptCookies" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="cookies.accept">Accepter</button>
+  </div>
 
-  const modalBackdrop = document.getElementById("modalBackdrop");
-  const loginModal = document.getElementById("loginModal");
-  const signupModal = document.getElementById("signupModal");
+  <!-- Scripts -->
+  <script type="module" src="/js/index.js"></script>
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden">
+  <div class="bg-gray-900 rounded-lg p-6 w-full max-w-md relative">
+    <button id="closeLogin" class="absolute top-2 right-2 text-gray-400 hover:text-white">✖</button>
+    <h2 class="text-2xl font-bold mb-4" data-i18n="buttons.login">Se connecter</h2>
+    <form id="loginForm" class="space-y-4">
+      <input type="email" id="loginEmail" data-i18n-placeholder="auth.email" placeholder="Adresse e-mail" class="w-full p-2 rounded bg-gray-800 border border-gray-700"/>
+      <input type="password" id="loginPassword" data-i18n-placeholder="auth.password" placeholder="Mot de passe" class="w-full p-2 rounded bg-gray-800 border border-gray-700"/>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.login">Se connecter</button>
+    </form>
+  </div>
+  </div>
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (user) {
-    openLogin.classList.add("hidden");
-    openSignup.classList.add("hidden");
-    heroLogin.classList.add("hidden");
-    heroSignup.classList.add("hidden");
+  <!-- Signup Modal -->
+  <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden">
+  <div class="bg-gray-900 rounded-lg p-6 w-full max-w-md relative">
+    <button id="closeSignup" class="absolute top-2 right-2 text-gray-400 hover:text-white">✖</button>
+    <h2 class="text-2xl font-bold mb-4" data-i18n="buttons.signup">Créer un compte</h2>
+    <form id="signupForm" class="space-y-4">
+      <input type="text" id="signupUsername" data-i18n-placeholder="auth.username" placeholder="Nom d'utilisateur" class="w-full p-2 rounded bg-gray-800 border border-gray-700"/>
+      <input type="email" id="signupEmail" data-i18n-placeholder="auth.email" placeholder="Adresse e-mail" class="w-full p-2 rounded bg-gray-800 border border-gray-700"/>
+      <input type="password" id="signupPassword" data-i18n-placeholder="auth.password" placeholder="Mot de passe" class="w-full p-2 rounded bg-gray-800 border border-gray-700"/>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup">Créer un compte</button>
+    </form>
+  </div>
+  </div>
 
-    goDashboard.classList.remove("hidden");
-    heroDashboard.classList.remove("hidden");
-    logoutBtn.classList.remove("hidden");
-  } else {
-    openLogin.classList.remove("hidden");
-    openSignup.classList.remove("hidden");
-    heroLogin.classList.remove("hidden");
-    heroSignup.classList.remove("hidden");
-
-    goDashboard.classList.add("hidden");
-    heroDashboard.classList.add("hidden");
-    logoutBtn.classList.add("hidden");
-  }
-
-  function openModal(which) {
-    modalBackdrop.classList.remove("hidden");
-    (which === "login" ? loginModal : signupModal).classList.remove("hidden");
-  }
-
-  function closeModals() {
-    modalBackdrop.classList.add("hidden");
-    loginModal.classList.add("hidden");
-    signupModal.classList.add("hidden");
-  }
-
-  openLogin?.addEventListener("click", () => openModal("login"));
-  heroLogin?.addEventListener("click", () => openModal("login"));
-  openSignup?.addEventListener("click", () => openModal("signup"));
-  heroSignup?.addEventListener("click", () => openModal("signup"));
-
-  document.querySelectorAll("[data-close]").forEach(btn => btn.addEventListener("click", closeModals));
-  modalBackdrop.addEventListener("click", closeModals);
-  window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModals(); });
-
-  document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
-
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return alert("❌ " + error.message);
-
-    window.location.href = "/dashboard/";
-  });
-
-  document.getElementById("signupForm")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const username = document.getElementById("signupUsername").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value;
-
-    if (!username || !email || !password) return alert("⚠️ Merci de remplir tous les champs.");
-
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) return alert("❌ " + error.message);
-
-    if (data.user) {
-      const { error: pErr } = await supabase.from("profiles").insert([{ id: data.user.id, username }]);
-      if (pErr) console.warn("⚠️ Profile:", pErr.message);
-    }
-
-    alert("✅ Compte créé ! Vérifie ton e-mail si nécessaire.");
-    window.location.href = "/dashboard/";
-  });
-
-  logoutBtn?.addEventListener("click", async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/";
-  });
-
-  const cookieBanner = document.getElementById("cookieBanner");
-  const acceptBtn = document.getElementById("acceptCookies");
-  if (localStorage.getItem("cookiesAccepted")) {
-    cookieBanner.style.display = "none";
-  }
-  acceptBtn.addEventListener("click", () => {
-    localStorage.setItem("cookiesAccepted", "true");
-    cookieBanner.style.display = "none";
-  });
-</script>
 </body>
 </html>
