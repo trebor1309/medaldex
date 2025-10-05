@@ -55,5 +55,19 @@
   "signup.has_account": "Bereits ein Konto?",
   "signup.login_link": "Anmelden",
   "signup.note": "Eine Bestätigungs-E-Mail kann erforderlich sein.",
-  "modals.close": "Schließen"
+  "modals.close": "Schließen",
+
+  "filters": 
+  {
+    "country": "🌍 Land",
+    "period": "📅 Zeitraum",
+    "type": "🎖️ Typ",
+    "state": "💎 Zustand"
+  },
+  "add": {
+    "title": "➕ Eintrag hinzufügen"
+  },
+  "edit": {
+    "title": "✏️ Eintrag bearbeiten"
+  }
 }

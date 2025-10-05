@@ -48,6 +48,77 @@ function fillSelect(id, options) {
   if (!select) return;
   select.innerHTML += options.map(opt => `<option value="${opt}">${opt}</option>`).join("");
 }
+// ==========================
+// 🧠 Gestion des filtres dynamiques dans le modal
+// ==========================
+import { addUserCustomValue } from "/js/filters.js";
+
+let currentFilters = {};
+
+async function populateModalFilters() {
+  const defaults = getDefaultFilters();
+  const customs = await loadUserCustomFilters(supabase, user.id);
+
+  // Fusionner les données
+  currentFilters = {
+    countries: { ...defaults.countries },
+    types: [...defaults.types, ...customs.type],
+  };
+
+  customs.country.forEach(c => {
+    if (!currentFilters.countries[c]) currentFilters.countries[c] = [];
+  });
+
+  // 🧭 Pays
+  const countrySelect = document.getElementById("medal_country");
+  countrySelect.innerHTML = Object.keys(currentFilters.countries)
+    .map(c => `<option value="${c}">${c}</option>`).join("");
+
+  // 🕰️ Périodes
+  const periodSelect = document.getElementById("medal_period");
+  const firstCountry = Object.keys(currentFilters.countries)[0];
+  updatePeriodsForCountry(firstCountry);
+
+  // 🎖️ Types
+  const typeSelect = document.getElementById("medal_type");
+  typeSelect.innerHTML = currentFilters.types.map(t => `<option value="${t}">${t}</option>`).join("");
+
+  // 🌍 Changement de pays → met à jour les périodes
+  countrySelect.addEventListener("change", (e) => {
+    updatePeriodsForCountry(e.target.value);
+  });
+}
+
+function updatePeriodsForCountry(country) {
+  const periodSelect = document.getElementById("medal_period");
+  const periods = currentFilters.countries[country] || [];
+  periodSelect.innerHTML = periods.map(p => `<option value="${p}">${p}</option>`).join("");
+}
+
+// ==========================
+// ➕ Ajout personnalisé (pays / période / type)
+// ==========================
+document.getElementById("addCountryBtn")?.addEventListener("click", async () => {
+  const newVal = prompt("🌍 Nouveau pays :");
+  if (!newVal) return;
+  await addUserCustomValue(supabase, user.id, "country", newVal);
+  await populateModalFilters();
+});
+
+document.getElementById("addPeriodBtn")?.addEventListener("click", async () => {
+  const country = document.getElementById("medal_country").value;
+  const newVal = prompt(`📅 Nouvelle période pour ${country} :`);
+  if (!newVal) return;
+  await addUserCustomValue(supabase, user.id, "period", `${country}::${newVal}`);
+  await populateModalFilters();
+});
+
+document.getElementById("addTypeBtn")?.addEventListener("click", async () => {
+  const newVal = prompt("🎖️ Nouveau type :");
+  if (!newVal) return;
+  await addUserCustomValue(supabase, user.id, "type", newVal);
+  await populateModalFilters();
+});
 
 // ==========================
 // 📥 Chargement des médailles
@@ -246,9 +317,59 @@ medalForm?.addEventListener("submit", async (e) => {
 });
 
 // ==========================
-// 🪶 Modals Add / Edit
+// 🪶 Modals Add / Edit + Filtres dynamiques
 // ==========================
-function openAddModal() {
+
+// ✅ Remplit les <select> du modal avec les valeurs disponibles
+async function populateModalFilters() {
+  // Récupération des filtres combinés
+  const defaults = getDefaultFilters();
+  const customs = await loadUserCustomFilters(supabase, user.id);
+
+  // Fusionne les valeurs (évite les doublons)
+  const allCountries = [...new Set([...Object.keys(defaults.countries), ...customs.country])];
+  const allTypes = [...new Set([...defaults.types, ...customs.type])];
+  const allStates = [...new Set(defaults.states)];
+
+  // On cible les <select> dans le modal
+  const selCountry = document.getElementById("medal_country");
+  const selPeriod = document.getElementById("medal_period");
+  const selType = document.getElementById("medal_type");
+  const selState = document.getElementById("medal_state");
+
+  // Réinitialise
+  selCountry.innerHTML = `<option value="">${t("filters.country") || "🌍 Pays"}</option>`;
+  selPeriod.innerHTML = `<option value="">${t("filters.period") || "📅 Période"}</option>`;
+  selType.innerHTML = `<option value="">${t("filters.type") || "🎖️ Type"}</option>`;
+  selState.innerHTML = `<option value="">${t("filters.state") || "💎 État"}</option>`;
+
+  // Remplit les options
+  allCountries.forEach(c => {
+    selCountry.innerHTML += `<option value="${c}">${c}</option>`;
+  });
+
+  // Si un pays est choisi → on ajuste les périodes
+  selCountry.addEventListener("change", (e) => {
+    const selected = e.target.value;
+    const periods = defaults.countries[selected] || [];
+    selPeriod.innerHTML = `<option value="">${t("filters.period") || "📅 Période"}</option>`;
+    periods.forEach(p => {
+      selPeriod.innerHTML += `<option value="${p}">${p}</option>`;
+    });
+  });
+
+  allTypes.forEach(t_ => {
+    selType.innerHTML += `<option value="${t_}">${t_}</option>`;
+  });
+
+  allStates.forEach(s => {
+    selState.innerHTML += `<option value="${s}">${s}</option>`;
+  });
+}
+
+// ✅ Ouvre le modal d’ajout
+async function openAddModal() {
+  await populateModalFilters();
   medalForm.reset();
   delete medalForm.dataset.id;
   document.getElementById("medalModalTitle").innerText = t("add.title") || "➕ Ajouter une entrée";
@@ -259,7 +380,10 @@ function openAddModal() {
   preview.src = "";
 }
 
-function openEditModal(medal) {
+// ✅ Ouvre le modal d’édition
+async function openEditModal(medal) {
+  await populateModalFilters();
+
   medalForm.dataset.id = medal.id;
   ["name", "country", "period", "maker", "type", "state", "description"].forEach(f => {
     document.getElementById("medal_" + f).value = medal[f] || "";
@@ -287,6 +411,7 @@ function openEditModal(medal) {
   document.getElementById("medalModal").classList.remove("hidden");
 }
 
+// ✅ Ferme le modal
 function closeMedalModal() {
   medalForm.reset();
   delete medalForm.dataset.id;
@@ -297,6 +422,7 @@ function closeMedalModal() {
   preview.src = "";
 }
 
+// ✅ Boutons d’action
 document.getElementById("openAddModal")?.addEventListener("click", openAddModal);
 document.getElementById("cancelModal")?.addEventListener("click", closeMedalModal);
 document.getElementById("closeModal")?.addEventListener("click", closeMedalModal);

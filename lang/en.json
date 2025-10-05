@@ -55,5 +55,19 @@
   "signup.has_account": "Already have an account?",
   "signup.login_link": "Log in",
   "signup.note": "A confirmation email may be required.",
-  "modals.close": "Close"
+  "modals.close": "Close",
+  
+  "filters": 
+  {
+    "country": "🌍 Country",
+    "period": "📅 Period",
+    "type": "🎖️ Type",
+    "state": "💎 Condition"
+  },
+  "add": {
+    "title": "➕ Add an entry"
+  },
+  "edit": {
+    "title": "✏️ Edit entry"
+  }
 }

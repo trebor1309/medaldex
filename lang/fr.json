@@ -55,5 +55,19 @@
   "signup.has_account": "Déjà un compte ?",
   "signup.login_link": "Se connecter",
   "signup.note": "Un e-mail de confirmation peut être nécessaire.",
-  "modals.close": "Fermer"
+  "modals.close": "Fermer",
+
+  "filters": 
+  {
+    "country": "🌍 Pays",
+    "period": "📅 Période",
+    "type": "🎖️ Type",
+    "state": "💎 État"
+  },
+  "add": {
+    "title": "➕ Ajouter une entrée"
+  },
+  "edit": {
+    "title": "✏️ Modifier une entrée"
+  }
 }
