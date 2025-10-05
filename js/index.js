@@ -1,6 +1,7 @@
-console.log("✅ index.js chargé !");
 import { supabase } from "./config.js";
 import { initI18n, setupLangSwitcher } from "./i18n.js";
+
+console.log("✅ index.js chargé !");
 
 // Initialisation i18n
 initI18n();
