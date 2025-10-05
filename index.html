@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
 <meta charset="utf-8"/>
@@ -8,36 +7,29 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white flex flex-col min-h-screen">
-<!-- Navbar -->
-<nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
-<a class="text-2xl font-bold" href="/">Medaldex</a>
-<div class="flex items-center space-x-3" id="navCtas">
-<!-- Remplacé dynamiquement selon session -->
-<button class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" data-i18n="buttons.login" id="openLogin">
-        Se connecter
-      </button>
-<button class="hidden bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup" id="openSignup">
-        Créer un compte
-      </button>
-<a class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" href="/dashboard/" id="goDashboard">
-        Dashboard
-      </a>
-<button class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">
-        Déconnexion
-      </button>
- <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
-    <option value="fr">🇫🇷 FR</option>
-    <option value="en">🇬🇧 EN</option>
-    <option value="de">🇩🇪 DE</option>
-  </select>
-</div>
-</nav>
-<!-- Hero -->
-<header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
-<h1 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="app.slogan">
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+    <a class="text-2xl font-bold" href="/">Medaldex</a>
+    <div class="flex items-center space-x-3" id="navCtas">
+      <!-- Boutons dynamiques selon session -->
+      <button class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" data-i18n="buttons.login" id="openLogin">Se connecter</button>
+      <button class="hidden bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.signup" id="openSignup">Créer un compte</button>
+      <a class="hidden bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded font-semibold" href="/dashboard/" id="goDashboard">Dashboard</a>
+      <button class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">Déconnexion</button>
+      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="en">🇬🇧 EN</option>
+        <option value="de">🇩🇪 DE</option>
+      </select>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="flex-1 flex flex-col justify-center items-center text-center px-6 py-16">
+    <h1 class="text-4xl md:text-6xl font-bold mb-6" data-i18n="app.slogan">
       Organise et référence ta collection de décorations
     </h1>
-<p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8" data-i18n="hero.desc">
+    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8" data-i18n="hero.desc">
       Medaldex est ton Pokédex des décorations : ajoute, gère et explore ta collection comme jamais auparavant.
     </p>
 <div class="flex space-x-4">
