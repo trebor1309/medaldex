@@ -67,5 +67,9 @@
   "signup.confirm": "Confirmer le mot de passe",
   "signup.button": "Créer un compte",
   "signup.has_account": "Déjà un compte ?",
-  "signup.login_link": "Se connecter"
+  "signup.login_link": "Se connecter",
+  "footer.privacy": "Politique de confidentialité",
+  "footer.terms": "Conditions d'utilisation",
+  "footer.contact": "Contact"
+
 }

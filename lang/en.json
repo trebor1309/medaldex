@@ -67,5 +67,9 @@
   "signup.confirm": "Confirm password",
   "signup.button": "Sign up",
   "signup.has_account": "Already have an account?",
-  "signup.login_link": "Log in"
+  "signup.login_link": "Log in",
+  "footer.privacy": "Privacy Policy",
+  "footer.terms": "Terms of Use",
+  "footer.contact": "Contact"
+
 }

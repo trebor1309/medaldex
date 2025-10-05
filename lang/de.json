@@ -67,5 +67,9 @@
   "signup.confirm": "Passwort bestätigen",
   "signup.button": "Registrieren",
   "signup.has_account": "Sie haben bereits ein Konto?",
-  "signup.login_link": "Anmelden"
+  "signup.login_link": "Anmelden",
+  "footer.privacy": "Datenschutzrichtlinie",
+  "footer.terms": "Nutzungsbedingungen",
+  "footer.contact": "Kontakt"
+
 }
