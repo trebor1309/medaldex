@@ -363,16 +363,19 @@ manualConfig.forEach(({ button, input, select, storage }) => {
 
   // 💾 Quand l’utilisateur valide (Enter)
   inp.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && inp.value.trim()) {
+    if (e.key === "Enter") {
+      e.preventDefault(); // 🧠 Empêche la soumission du formulaire
+      e.stopPropagation();
       const newVal = inp.value.trim();
-      const existing = JSON.parse(localStorage.getItem(storage) || "[]");
+      if (!newVal) return;
 
+      const existing = JSON.parse(localStorage.getItem(storage) || "[]");
       if (!existing.includes(newVal)) {
         existing.push(newVal);
         localStorage.setItem(storage, JSON.stringify(existing));
-      }
+    }
 
-      // Ajouter dans le select
+    // Ajouter dans le select et sélectionner
       const opt = document.createElement("option");
       opt.value = newVal;
       opt.textContent = newVal;
@@ -381,8 +384,9 @@ manualConfig.forEach(({ button, input, select, storage }) => {
 
       inp.value = "";
       inp.classList.add("hidden");
-    }
-  });
+  }
+});
+
 
   // ✅ Recharger les valeurs manuelles sauvegardées
   const saved = JSON.parse(localStorage.getItem(storage) || "[]");
