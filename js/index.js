@@ -1,27 +1,77 @@
-import { supabase } from "/js/config.js";
+// /js/index.js
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { loadConfig } from "/js/config.js";
 import { initI18n, setupLangSwitcher } from "/js/i18n.js";
 
 console.log("✅ index.js chargé !");
 
-// Initialisation i18n
-initI18n();
+// ===========================
+// ⚙️  Initialisation globale
+// ===========================
+const { SUPABASE_URL, SUPABASE_ANON_KEY } = await loadConfig();
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// --- Initialisation i18n ---
+await initI18n();
 setupLangSwitcher();
 
-// --- Navbar dynamic session handling ---
-const loginBtn = document.getElementById("openLogin");
-const signupBtn = document.getElementById("openSignup");
-const dashboardLink = document.getElementById("goDashboard");
-const logoutBtn = document.getElementById("logoutBtn");
+// ===========================
+// 🧭 Gestion de la session
+// ===========================
+async function checkSession() {
+  const { data } = await supabase.auth.getSession();
 
-// --- Hero CTA ---
-const loginHero = document.getElementById("openLoginHero");
-const signupHero = document.getElementById("openSignupHero");
+  const loginBtn = document.getElementById("openLogin");
+  const signupBtn = document.getElementById("openSignup");
+  const dashboardLink = document.getElementById("goDashboard");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const loginHero = document.getElementById("openLoginHero");
+  const signupHero = document.getElementById("openSignupHero");
 
-// --- Cookie banner ---
+  if (data.session) {
+    loginBtn?.classList.add("hidden");
+    signupBtn?.classList.add("hidden");
+    loginHero?.classList.add("hidden");
+    signupHero?.classList.add("hidden");
+    dashboardLink?.classList.remove("hidden");
+    logoutBtn?.classList.remove("hidden");
+  } else {
+    loginBtn?.classList.remove("hidden");
+    signupBtn?.classList.remove("hidden");
+    loginHero?.classList.remove("hidden");
+    signupHero?.classList.remove("hidden");
+    dashboardLink?.classList.add("hidden");
+    logoutBtn?.classList.add("hidden");
+  }
+}
+await checkSession();
+
+// ===========================
+// 🚪 Déconnexion
+// ===========================
+document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+  await supabase.auth.signOut();
+  window.location.href = "/";
+});
+
+// ===========================
+// 🍪 Cookie consent
+// ===========================
 const cookieBanner = document.getElementById("cookieBanner");
 const acceptBtn = document.getElementById("acceptCookies");
 
-// --- Modals ---
+if (localStorage.getItem("cookiesAccepted")) {
+  cookieBanner.style.display = "none";
+}
+
+acceptBtn?.addEventListener("click", () => {
+  localStorage.setItem("cookiesAccepted", "true");
+  cookieBanner.style.display = "none";
+});
+
+// ===========================
+// 🪟 Gestion des modals
+// ===========================
 const loginModal = document.getElementById("loginModal");
 const signupModal = document.getElementById("signupModal");
 const closeLogin = document.getElementById("closeLogin");
@@ -29,7 +79,6 @@ const closeSignup = document.getElementById("closeSignup");
 const loginForm = document.getElementById("loginForm");
 const signupForm = document.getElementById("signupForm");
 
-// Helpers pour ouvrir/fermer les modals
 function openModal(modal) {
   modal.classList.remove("hidden");
 }
@@ -37,53 +86,21 @@ function closeModal(modal) {
   modal.classList.add("hidden");
 }
 
-// --- Session ---
-async function checkSession() {
-  const { data } = await supabase.auth.getSession();
-  if (data.session) {
-    loginBtn.classList.add("hidden");
-    signupBtn.classList.add("hidden");
-    loginHero.classList.add("hidden");
-    signupHero.classList.add("hidden");
-    dashboardLink.classList.remove("hidden");
-    logoutBtn.classList.remove("hidden");
-  } else {
-    loginBtn.classList.remove("hidden");
-    signupBtn.classList.remove("hidden");
-    loginHero.classList.remove("hidden");
-    signupHero.classList.remove("hidden");
-    dashboardLink.classList.add("hidden");
-    logoutBtn.classList.add("hidden");
-  }
-}
-checkSession();
+// --- Ouvrir ---
+document.getElementById("openLogin")?.addEventListener("click", () => openModal(loginModal));
+document.getElementById("openSignup")?.addEventListener("click", () => openModal(signupModal));
+document.getElementById("openLoginHero")?.addEventListener("click", () => openModal(loginModal));
+document.getElementById("openSignupHero")?.addEventListener("click", () => openModal(signupModal));
 
-// --- Logout ---
-logoutBtn?.addEventListener("click", async () => {
-  await supabase.auth.signOut();
-  window.location.href = "/";
-});
-
-// --- Cookie consent ---
-if (localStorage.getItem("cookiesAccepted")) {
-  cookieBanner.style.display = "none";
-}
-acceptBtn?.addEventListener("click", () => {
-  localStorage.setItem("cookiesAccepted", "true");
-  cookieBanner.style.display = "none";
-});
-
-// --- Ouvrir les modals ---
-loginBtn?.addEventListener("click", () => openModal(loginModal));
-signupBtn?.addEventListener("click", () => openModal(signupModal));
-loginHero?.addEventListener("click", () => openModal(loginModal));
-signupHero?.addEventListener("click", () => openModal(signupModal));
-
-// --- Fermer les modals ---
+// --- Fermer ---
 closeLogin?.addEventListener("click", () => closeModal(loginModal));
 closeSignup?.addEventListener("click", () => closeModal(signupModal));
 
-// --- Login form ---
+// ===========================
+// 🔐 Authentification
+// ===========================
+
+// --- Connexion ---
 loginForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = document.getElementById("loginEmail").value.trim();
@@ -97,7 +114,7 @@ loginForm?.addEventListener("submit", async (e) => {
   window.location.href = "/dashboard/";
 });
 
-// --- Signup form ---
+// --- Inscription ---
 signupForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const username = document.getElementById("signupUsername").value.trim();
