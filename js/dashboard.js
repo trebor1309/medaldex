@@ -1,4 +1,5 @@
 // /js/dashboard.js — version enrichie (filtres dynamiques + upload image + patchs)
+console.log("✅ dashboard.js chargé !");
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { loadConfig } from "/js/config.js";
 import { t, initI18n, setupLangSwitcher } from "/js/i18n.js";
