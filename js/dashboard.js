@@ -3,7 +3,7 @@ console.log("✅ dashboard.js chargé !");
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { loadConfig } from "/js/config.js";
 import { t, initI18n, setupLangSwitcher } from "/js/i18n.js";
-import { defaultFilters, loadUserCustomFilters } from "/js/filters.js";
+import { getDefaultFilters, loadUserCustomFilters } from "/js/filters.js";
 
 // ==========================
 // ⚙️ Initialisation
