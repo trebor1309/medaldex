@@ -1,65 +1,94 @@
+/**
+ * Vérification et synchronisation automatique des traductions i18n
+ * ---------------------------------------------------------------
+ * Usage :
+ *   node check-i18n.js          → vérifie seulement
+ *   node check-i18n.js --fix    → corrige les clés manquantes
+ */
+
 import fs from "fs";
 import path from "path";
 
-// Dossiers à scanner
-const LANG_DIR = "./lang";
-const ROOT_DIR = "./";
+const langDir = "./lang";
+const files = ["fr.json", "en.json", "de.json"];
+const autoFix = process.argv.includes("--fix");
 
-// Charger les fichiers JSON de langues
-const languages = ["fr", "en", "de"];
-const translations = {};
-for (const lang of languages) {
-  const file = path.join(LANG_DIR, `${lang}.json`);
-  translations[lang] = JSON.parse(fs.readFileSync(file, "utf-8"));
+function loadJson(file) {
+  const fullPath = path.join(langDir, file);
+  const content = fs.readFileSync(fullPath, "utf8");
+  return JSON.parse(content);
 }
 
-// Fonction récursive pour récupérer tous les fichiers HTML
-function getAllHtmlFiles(dir) {
-  let results = [];
-  const list = fs.readdirSync(dir);
-  list.forEach((file) => {
-    const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
-    if (stat && stat.isDirectory()) {
-      results = results.concat(getAllHtmlFiles(fullPath));
-    } else if (file.endsWith(".html")) {
-      results.push(fullPath);
-    }
-  });
-  return results;
+function saveJson(file, data) {
+  const fullPath = path.join(langDir, file);
+  fs.writeFileSync(fullPath, JSON.stringify(data, null, 2) + "\n", "utf8");
 }
 
-// Extraire toutes les clés data-i18n
-const htmlFiles = getAllHtmlFiles(ROOT_DIR);
-const allKeys = new Set();
-
-htmlFiles.forEach((file) => {
-  const content = fs.readFileSync(file, "utf-8");
-  const matches = content.match(/data-i18n(?:-placeholder)?="([^"]+)"/g) || [];
-  matches.forEach((m) => {
-    const key = m.split("=")[1].replace(/"/g, "");
-    allKeys.add(key);
-  });
-});
-
-// Vérification des clés
-let missing = {};
-languages.forEach((lang) => {
-  missing[lang] = [];
-  allKeys.forEach((key) => {
-    if (!(key in translations[lang])) {
-      missing[lang].push(key);
+function flatten(obj, prefix = "") {
+  return Object.keys(obj).reduce((acc, k) => {
+    const pre = prefix.length ? `${prefix}.` : "";
+    if (typeof obj[k] === "object" && obj[k] !== null) {
+      Object.assign(acc, flatten(obj[k], pre + k));
+    } else {
+      acc[pre + k] = obj[k];
     }
-  });
-});
+    return acc;
+  }, {});
+}
 
-// Rapport
-console.log("🔍 Vérification des traductions :");
-languages.forEach((lang) => {
-  if (missing[lang].length === 0) {
-    console.log(`✅ ${lang}.json est complet`);
-  } else {
-    console.log(`⚠️ ${lang}.json manque ${missing[lang].length} clé(s) :`);
-    console.log(missing[lang].join(", "));
+function unflatten(data) {
+  const result = {};
+  for (const key in data) {
+    key.split(".").reduce((acc, part, i, arr) => {
+      if (i === arr.length - 1) acc[part] = data[key];
+      else acc[part] = acc[part] || {};
+      return acc[part];
+    }, result);
   }
-});
+  return result;
+}
+
+console.log("🔍 Vérification des traductions i18n...\n");
+
+const base = loadJson("fr.json");
+const flatBase = flatten(base);
+
+let ok = true;
+
+for (const f of files) {
+  const data = loadJson(f);
+  const flat = flatten(data);
+
+  const missing = Object.keys(flatBase).filter((k) => !(k in flat));
+  const extra = Object.keys(flat).filter((k) => !(k in flatBase));
+
+  if (missing.length || extra.length) {
+    console.log(`⚠️  ${f} :`);
+    if (missing.length) {
+      console.log(`   ❌ Clés manquantes (${missing.length}):`, missing.join(", "));
+
+      if (autoFix && f !== "fr.json") {
+        console.log(`   🛠️  Ajout des clés manquantes depuis fr.json...`);
+        for (const key of missing) {
+          flat[key] = `(TODO) ${flatBase[key]}`;
+        }
+        const updated = unflatten(flat);
+        saveJson(f, updated);
+        console.log(`   ✅ ${f} mis à jour.`);
+      }
+    }
+    if (extra.length) console.log(`   ⚠️ Clés supplémentaires (${extra.length}):`, extra.join(", "));
+    ok = false;
+  } else {
+    console.log(`✅ ${f} : OK (${Object.keys(flat).length} clés)`);
+  }
+}
+
+if (ok) {
+  console.log("\n🎉 Toutes les traductions sont synchronisées !");
+} else if (autoFix) {
+  console.log("\n✅ Synchronisation terminée : les fichiers manquants ont été mis à jour avec des valeurs '(TODO)'.");
+  console.log("💡 Pense à traduire ces entrées avant le prochain déploiement !");
+} else {
+  console.log("\n🚨 Certaines différences existent — exécute : node check-i18n.js --fix pour corriger automatiquement.");
+}
