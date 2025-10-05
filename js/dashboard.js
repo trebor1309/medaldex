@@ -31,12 +31,12 @@ let searchQuery = "";
 // 🧭 Chargement des filtres
 // ==========================
 async function initFilters() {
-  const defaults = defaultFilters;
+  const defaults = getDefaultFilters(); 
   const customs = await loadUserCustomFilters(supabase, user.id);
 
-  const countries = [...defaults.countries, ...customs.country];
-  const periods = [...defaults.periods, ...customs.period];
-  const types = [...defaults.types, ...customs.type];
+  const countries = Object.keys(defaults.countries).concat(customs.country);
+  const periods = Object.values(defaults.countries).flat().concat(customs.period);
+  const types = defaults.types.concat(customs.type);
 
   fillSelect("filterCountry", countries);
   fillSelect("filterPeriod", periods);
