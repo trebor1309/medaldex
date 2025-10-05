@@ -1,79 +1,148 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Medaldex - Dashboard</title>
-<script src="https://cdn.tailwindcss.com"></script>
-
-<script defer="True" src="/js/i18n.js"></script></head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medaldex - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 <body class="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white min-h-screen flex flex-col">
-<!-- ✅ Navbar -->
-<nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
-<div class="flex space-x-6">
-<a class="text-blue-400 font-bold" data-i18n="app.title" href="/">Medaldex</a>
-<button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded font-semibold" id="openAddModal">➕ Ajouter</button>
-<a class="hover:text-blue-400" data-i18n="profile.title" href="/profile/">Profil</a>
-</div>
-<div class="flex items-center space-x-4">
-<select class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1" id="langSwitcher">
-<option value="fr">🇫🇷 FR</option>
-<option value="en">🇬🇧 EN</option>
-<option value="de">🇩🇪 DE</option></select>
-<button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout" id="logoutBtn">
-        Déconnexion
+
+  <!-- ✅ Navbar -->
+  <nav class="bg-gray-900 border-b border-gray-700 p-4 flex justify-between items-center">
+    <div class="flex space-x-6 items-center">
+      <a href="/" class="text-blue-400 font-bold text-xl" data-i18n="app.title">Medaldex</a>
+      <button id="openAddModal" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded font-semibold">
+        ➕ <span data-i18n="buttons.add">Ajouter</span>
       </button>
-</div>
-</nav>
-<!-- ✅ Collection -->
-<main class="flex-1 p-6">
-<h1 class="text-2xl font-bold mb-4">📜 Ma collection</h1>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="medalList"></div>
-</main>
-<!-- ✅ Modale Ajouter -->
-<div class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50" id="addModal">
-<div class="bg-gray-900 rounded-lg p-6 w-full max-w-lg">
-<h2 class="text-xl font-bold mb-4">➕ Ajouter une entrée</h2>
-<form class="space-y-4" id="addForm">
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_name" placeholder="Nom" type="text"/>
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_country" placeholder="Pays" type="text"/>
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_period" placeholder="Période" type="text"/>
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_maker" placeholder="Fabricant" type="text"/>
-<select class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_type">
-<option value="military">Militaire / Paramilitaire</option>
-<option value="civil">Civil / Politique</option>
-</select>
-<select class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_state">
-<option value="new">Neuf</option>
-<option value="vg">Très bon état</option>
-<option value="good">Bon</option>
-<option value="fair">Moyen</option>
-<option value="poor">Usé</option>
-</select>
-<textarea class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_description" placeholder="Description"></textarea>
-<input class="w-full p-2 rounded bg-gray-800 border border-gray-600" id="add_image" placeholder="URL de l'image" type="text"/>
-<div class="flex justify-end space-x-2">
-<button class="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded" id="cancelAdd" type="button">Annuler</button>
-<button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded" type="submit">Enregistrer</button>
-</div>
-</form>
-</div>
-</div>
-<!-- ✅ Footer -->
-<footer class="bg-gray-900 border-t border-gray-700 p-4 text-center text-gray-400">
-<p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
-</footer>
-<!-- ✅ Script -->
-<script src="/js/dashboard.js" type="module"></script>
-<script>
-    // Ouvrir/fermer modale
-    document.getElementById("openAddModal")?.addEventListener("click", () => {
-      document.getElementById("addModal").classList.remove("hidden");
-    });
-    document.getElementById("cancelAdd")?.addEventListener("click", () => {
-      document.getElementById("addModal").classList.add("hidden");
-    });
-  </script>
+    </div>
+    <div class="flex items-center space-x-4">
+      <select id="langSwitcher" class="bg-gray-800 text-gray-200 border border-gray-600 rounded p-1">
+        <option value="fr">🇫🇷 FR</option>
+        <option value="en">🇬🇧 EN</option>
+        <option value="de">🇩🇪 DE</option>
+      </select>
+      <button id="openProfileModal" class="hover:text-blue-400" data-i18n="profile.title">Profil</button>
+      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold" data-i18n="buttons.logout">Déconnexion</button>
+    </div>
+  </nav>
+
+  <!-- ✅ Filtres / recherche -->
+  <section class="p-4 bg-gray-800 border-b border-gray-700 flex flex-wrap gap-3 items-center">
+    <input type="text" id="searchInput" placeholder="🔎 Recherche..." 
+           class="p-2 rounded bg-gray-700 border border-gray-600 flex-1 min-w-[200px]" data-i18n-placeholder="dashboard.search">
+
+    <select id="filterCountry" class="p-2 rounded bg-gray-700 border border-gray-600">
+      <option value="">🌍 <span data-i18n="filters.country">Pays</span></option>
+    </select>
+
+    <select id="filterPeriod" class="p-2 rounded bg-gray-700 border border-gray-600">
+      <option value="">📅 <span data-i18n="filters.period">Période</span></option>
+    </select>
+
+    <select id="filterType" class="p-2 rounded bg-gray-700 border border-gray-600">
+      <option value="">🎖️ <span data-i18n="filters.type">Type</span></option>
+      <option value="military">Militaire</option>
+      <option value="civil">Civil</option>
+    </select>
+
+    <button id="toggleView" class="ml-auto bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded">
+      🟦 <span data-i18n="dashboard.grid">Grille</span>
+    </button>
+  </section>
+
+  <!-- ✅ Collection -->
+  <main class="flex-1 p-6">
+    <h1 class="text-2xl font-bold mb-4" data-i18n="dashboard.title">📜 Ma collection</h1>
+    <div id="medalList" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+  </main>
+
+  <!-- ✅ Modal Add/Edit -->
+  <div id="medalModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-lg p-6 w-full max-w-lg relative">
+      <button id="closeModal" class="absolute top-3 right-3">✖</button>
+      <h2 id="medalModalTitle" class="text-xl font-bold mb-4" data-i18n="add.title">➕ Ajouter une entrée</h2>
+      <form id="medalForm" class="space-y-3">
+        <input id="medal_name" type="text" placeholder="Nom" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="medal_country" type="text" placeholder="Pays" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="medal_period" type="text" placeholder="Période" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <input id="medal_maker" type="text" placeholder="Fabricant" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <select id="medal_type" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="military">Militaire</option>
+          <option value="civil">Civil</option>
+        </select>
+        <select id="medal_state" class="w-full p-2 rounded bg-gray-800 border border-gray-600">
+          <option value="new">Neuf</option>
+          <option value="vg">Très bon état</option>
+          <option value="good">Bon</option>
+          <option value="fair">Moyen</option>
+          <option value="poor">Usé</option>
+        </select>
+        <textarea id="medal_description" placeholder="Description" class="w-full p-2 rounded bg-gray-800 border border-gray-600"></textarea>
+        <input id="medal_image" type="text" placeholder="URL image" class="w-full p-2 rounded bg-gray-800 border border-gray-600"/>
+        <div class="flex justify-end space-x-2">
+          <button type="button" id="cancelModal" class="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded">Annuler</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">💾 Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Modal Details -->
+  <div id="detailsModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-lg p-6 w-full max-w-lg relative">
+      <button id="closeDetailsModal" class="absolute top-3 right-3">✖</button>
+      <h2 id="detailsName" class="text-xl font-bold mb-4">Nom médaille</h2>
+      <img id="detailsImage" src="" alt="medal" class="w-32 h-32 object-cover mx-auto mb-4 rounded"/>
+      <p><strong>Pays:</strong> <span id="detailsCountry"></span></p>
+      <p><strong>Période:</strong> <span id="detailsPeriod"></span></p>
+      <p><strong>Fabricant:</strong> <span id="detailsMaker"></span></p>
+      <p><strong>Type:</strong> <span id="detailsType"></span></p>
+      <p><strong>État:</strong> <span id="detailsState"></span></p>
+      <p><strong>Description:</strong> <span id="detailsDescription"></span></p>
+    </div>
+  </div>
+
+  <!-- ✅ Modal Delete -->
+  <div id="deleteModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-lg p-6 w-full max-w-md text-center">
+      <h2 class="text-xl font-bold mb-4">❌ Confirmation</h2>
+      <p class="mb-4">Voulez-vous vraiment supprimer cette entrée ?</p>
+      <div class="flex justify-center gap-3">
+        <button id="cancelDelete" class="bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded">Annuler</button>
+        <button id="confirmDelete" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Modal Profile -->
+  <div id="profileModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-lg p-6 w-full max-w-md relative">
+      <button id="closeProfileModal" class="absolute top-3 right-3">✖</button>
+      <h2 class="text-xl font-bold mb-4">👤 Profil</h2>
+      <p>Ici on affichera/modifiera les infos utilisateur.</p>
+    </div>
+  </div>
+
+  <!-- ✅ Footer -->
+  <footer class="bg-gray-900 border-t border-gray-700 p-4 text-center text-gray-400">
+    <p data-i18n="footer.rights">© 2025 Medaldex. Tous droits réservés.</p>
+    <div class="mt-2 flex justify-center gap-4 text-sm">
+      <a href="/legal/" class="hover:text-blue-400">Mentions légales</a>
+      <a href="/privacy/" class="hover:text-blue-400">Confidentialité</a>
+      <a href="/terms/" class="hover:text-blue-400">Conditions</a>
+      <a href="/contact/" class="hover:text-blue-400">Contact</a>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="/js/dashboard.js" type="module"></script>
+
+<script type="module">
+  import { initI18n, setupLangSwitcher } from "/js/i18n.js";
+  initI18n();
+  setupLangSwitcher();
+</script>
+
 </body>
 </html>

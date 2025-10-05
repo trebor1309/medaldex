@@ -1,58 +1,49 @@
 let translations = {};
-let currentLang = "en"; // langue par défaut
+let currentLang = "en";
 
-// ✅ Fonction pour traduire une clé
-export function t(key) {
-  return key.split(".").reduce((o, i) => (o ? o[i] : null), translations) || key;
+function t(key) {
+  return translations[key] || key;
 }
 
-// ✅ Charger un fichier JSON de langue
-async function loadLang(lang) {
-  try {
-    const res = await fetch(`/lang/${lang}.json`);
-    if (!res.ok) throw new Error("Lang file not found");
-    translations = await res.json();
-    currentLang = lang;
-    localStorage.setItem("lang", lang);
-    applyTranslations();
-  } catch (e) {
-    console.error("❌ Erreur chargement langue:", e.message);
-  }
+async function initI18n() {
+  currentLang = localStorage.getItem("lang") || "en";
+  await loadTranslations(currentLang);
+  applyTranslations();
 }
 
-// ✅ Appliquer les traductions à la page
-function applyTranslations() {
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    el.textContent = t(key);
-  });
-
-  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
-    const key = el.getAttribute("data-i18n-placeholder");
-    el.placeholder = t(key);
-  });
-
-  document.querySelectorAll("[data-i18n-title]").forEach(el => {
-    const key = el.getAttribute("data-i18n-title");
-    el.title = t(key);
-  });
-}
-
-// ✅ Initialiser i18n
-export async function initI18n() {
-  const saved = localStorage.getItem("lang");
-  const lang = saved || navigator.language.split("-")[0] || "en";
-  await loadLang(lang);
-}
-
-// ✅ Gérer le sélecteur de langue
-export function setupLangSwitcher() {
+function setupLangSwitcher() {
   const switcher = document.getElementById("langSwitcher");
   if (!switcher) return;
 
   switcher.value = currentLang;
-
-  switcher.addEventListener("change", async (e) => {
-    await loadLang(e.target.value);
+  switcher.addEventListener("change", async () => {
+    const lang = switcher.value;
+    localStorage.setItem("lang", lang);
+    await loadTranslations(lang);
+    applyTranslations();
   });
 }
+
+async function loadTranslations(lang) {
+  try {
+    const response = await fetch(`/lang/${lang}.json`);
+    translations = await response.json();
+  } catch (err) {
+    console.error("❌ Erreur chargement i18n:", err);
+    translations = {};
+  }
+}
+
+function applyTranslations() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[key]) el.innerHTML = translations[key];
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (translations[key]) el.setAttribute("placeholder", translations[key]);
+  });
+}
+
+export { t, initI18n, setupLangSwitcher };
